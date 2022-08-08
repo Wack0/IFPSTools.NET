@@ -92,6 +92,8 @@ Instruction operands have several forms:
 - Operands that refer to a variable only (the obsolete `setstacktype` instruction) do so via the variable name.
 - Other operands can refer to a variable (via its name), a constant (via the syntax `type(value)`; function pointers use the function name, strings use quoted literals); or an array or record variable indexed by integer constant (`RecordOrArrayVar[0]`) or by variable name (`RecordOrArrayVar[IndexVar]`).
 
+`import` can be used as a synonym for `export`; in some cases it makes more sense to use one over the other (for example, external functions, types used by internally-implemented functions, and global variables initialised by the host application like `WizardForm` in Inno Setup).
+
 ## Examples
 
 The `examples` directory contains a few example scripts, intended to be used with uninno:
