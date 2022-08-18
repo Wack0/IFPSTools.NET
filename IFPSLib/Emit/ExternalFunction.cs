@@ -27,7 +27,7 @@ namespace IFPSLib.Emit
             protected const string ClassString = "class:";
             protected const string ComString = "intf:.";
 
-            internal static Base Load(BinaryReader br)
+            internal static Base Load(BinaryReader br, Script script)
             {
                 var fdeclLen = br.Read<uint>();
                 using (var fdeclMem = new NativeMemoryArray<byte>(fdeclLen, true))
@@ -39,21 +39,21 @@ namespace IFPSLib.Emit
                         if (fdeclSpan.EqualsAsciiString(0, DllString))
                         {
                             brDecl.BaseStream.Position = DllString.Length;
-                            return DLL.Load(brDecl);
+                            return DLL.Load(brDecl, script);
                         }
                         else if (fdeclSpan.EqualsAsciiString(0, ClassString))
                         {
                             brDecl.BaseStream.Position = ClassString.Length;
-                            return Class.Load(brDecl);
+                            return Class.Load(brDecl, script);
                         }
                         else if (fdeclSpan.EqualsAsciiString(0, ComString))
                         {
                             brDecl.BaseStream.Position = ComString.Length;
-                            return COM.Load(brDecl);
+                            return COM.Load(brDecl, script);
                         }
                         else
                         {
-                            return Internal.Load(brDecl);
+                            return Internal.Load(brDecl, script);
                         }
                     }
                 }
@@ -124,14 +124,17 @@ namespace IFPSLib.Emit
 
             internal override string Name => string.Format("{0}!{1}", DllName, ProcedureName);
 
-            internal static new DLL Load(BinaryReader br)
+            internal static new DLL Load(BinaryReader br, Script script)
             {
                 var ret = new DLL();
                 ret.DllName = br.ReadAsciiStringTerminated();
                 ret.ProcedureName = br.ReadAsciiStringTerminated();
                 ret.CallingConvention = (NativeCallingConvention)br.ReadByte();
-                ret.DelayLoad = br.ReadByte() != 0;
-                ret.LoadWithAlteredSearchPath = br.ReadByte() != 0;
+                if (script.FileVersion >= Script.VERSION_MIN_DLL_LOAD_FLAGS)
+                {
+                    ret.DelayLoad = br.ReadByte() != 0;
+                    ret.LoadWithAlteredSearchPath = br.ReadByte() != 0;
+                }
 
                 ret.LoadArguments(br);
 
@@ -164,8 +167,11 @@ namespace IFPSLib.Emit
                 bw.WriteAsciiStringTerminated(DllName);
                 bw.WriteAsciiStringTerminated(ProcedureName);
                 bw.Write(CallingConvention);
-                bw.Write<byte>((byte)(DelayLoad ? 1 : 0));
-                bw.Write<byte>((byte)(LoadWithAlteredSearchPath ? 1 : 0));
+                if (ctx.FileVersion >= Script.VERSION_MIN_DLL_LOAD_FLAGS)
+                {
+                    bw.Write<byte>((byte)(DelayLoad ? 1 : 0));
+                    bw.Write<byte>((byte)(LoadWithAlteredSearchPath ? 1 : 0));
+                }
                 SaveArguments(bw);
             }
         }
@@ -181,7 +187,7 @@ namespace IFPSLib.Emit
 
             private const byte TERMINATOR = (byte)'|';
 
-            internal static new Class Load(BinaryReader br)
+            internal static new Class Load(BinaryReader br, Script script)
             {
                 var ret = new Class();
 
@@ -297,7 +303,7 @@ namespace IFPSLib.Emit
 
             internal override string Name => string.Format("CoInterface->vtbl[{0}]", VTableIndex);
 
-            internal static new COM Load(BinaryReader br)
+            internal static new COM Load(BinaryReader br, Script script)
             {
                 var ret = new COM();
                 ret.VTableIndex = br.Read<uint>();
@@ -325,7 +331,7 @@ namespace IFPSLib.Emit
 
         public sealed class Internal : Base
         {
-            internal static new Internal Load(BinaryReader br)
+            internal static new Internal Load(BinaryReader br, Script script)
             {
                 var ret = new Internal();
                 ret.LoadArguments(br);
@@ -378,7 +384,7 @@ namespace IFPSLib.Emit
                 ret.Name = br.ReadAsciiString(namelen);
             if (exported)
             {
-                ret.Declaration = FDecl.Base.Load(br);
+                ret.Declaration = FDecl.Base.Load(br, script);
                 if (ret.Declaration.HasReturnArgument) ret.ReturnArgument = UnknownType.Instance;
                 if (string.IsNullOrEmpty(ret.Name)) ret.Name = ret.Declaration.Name;
             }

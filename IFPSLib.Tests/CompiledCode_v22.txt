@@ -1,0 +1,3175 @@
+.version 23
+
+.entry !MAIN
+
+.type primitive(Pointer) Pointer
+.type primitive(U32) U32
+.type primitive(Variant) Variant
+.type primitive(PChar) PChar
+.type primitive(Currency) Currency
+.type primitive(Extended) Extended
+.type primitive(Double) Double
+.type primitive(Single) Single
+.type primitive(S64) S64
+.type primitive(String) String
+.type primitive(U32) U32_2
+.type primitive(S32) S32
+.type primitive(S16) S16
+.type primitive(U16) U16
+.type primitive(S8) S8
+.type(export) funcptr(void()) ANYMETHOD
+.type primitive(String) String_2
+.type primitive(UnicodeString) UnicodeString
+.type primitive(UnicodeString) UnicodeString_2
+.type primitive(String) String_3
+.type primitive(UnicodeString) UnicodeString_3
+.type primitive(WideString) WideString
+.type primitive(WideChar) WideChar
+.type primitive(WideChar) WideChar_2
+.type primitive(Char) Char
+.type primitive(U8) U8
+.type primitive(U16) U16_2
+.type primitive(U32) U32_3
+.type(export) primitive(U8) BOOLEAN
+.type primitive(U8) U8_2
+.type(export) class(TWIZARDFORM) TWIZARDFORM
+.type(export) class(TMAINFORM) TMAINFORM
+.type(export) class(TUNINSTALLPROGRESSFORM) TUNINSTALLPROGRESSFORM
+.type(export) class(TDOWNLOADWIZARDPAGE) TDOWNLOADWIZARDPAGE
+.type(export) class(TPANEL) TPANEL
+.type(export) class(TBITMAPIMAGE) TBITMAPIMAGE
+.type funcptr(void(__in,__in,__in)) Type36
+.type(export) class(TFONT) TFONT
+.type(export) array(Pointer) !OPENARRAYOFCONST
+.type array(Variant) Type39
+.type(export) class(TBITMAP) TBITMAP
+.type(export) class(TCONTROL) TCONTROL
+.type(export) class(TWINCONTROL) TWINCONTROL
+.type(export) class(TNEWBUTTON) TNEWBUTTON
+.type(export) class(TNEWSTATICTEXT) TNEWSTATICTEXT
+.type(export) interface("00020400-0000-0000-c000-000000000046") IDISPATCH
+.type(export) array(Variant) !OPENARRAYOFVARIANT
+.type(export) funcptr(returnsval(__in,__in,__in,__in)) TONDOWNLOADPROGRESS
+.type(export) primitive(U16) TSETUPMESSAGEID
+.type(export) class(TNEWPROGRESSBAR) TNEWPROGRESSBAR
+.type(export) class(TNEWRADIOBUTTON) TNEWRADIOBUTTON
+.type(export) class(TCOMPONENT) TCOMPONENT
+.type(export) class(TNEWNOTEBOOKPAGE) TNEWNOTEBOOKPAGE
+.type(export) primitive(U8) TPANELBEVEL
+.type(export) primitive(U8) TEXECWAIT
+.type(export) primitive(U8) TMSGBOXTYPE
+.type(export) class(TOBJECT) TOBJECT
+.type(export) funcptr(void(__in)) TNOTIFYEVENT
+.type(export) primitive(U8) TUNINSTALLSTEP
+.type(export) primitive(U8) TSETUPSTEP
+
+.global(import) TWIZARDFORM WIZARDFORM
+.global(import) TMAINFORM MAINFORM
+.global(import) TUNINSTALLPROGRESSFORM UNINSTALLPROGRESSFORM
+.global TDOWNLOADWIZARDPAGE Global3
+.global TPANEL Global4
+.global S32 Global5
+.global S32 Global6
+.global S32 Global7
+.global S32 Global8
+.global S32 Global9
+.global TBITMAPIMAGE Global10
+
+.function(export) void !MAIN()
+	ret
+
+.function(import) external dll("files:mediaplayer.dll","DSGetLastError") __stdcall returnsval files:mediaplayer.dll!DSGetLastError(__out __unknown)
+
+.function(import) external dll("files:mediaplayer.dll","DSPlayMediaFile") __stdcall returnsval files:mediaplayer.dll!DSPlayMediaFile()
+
+.function(import) external dll("files:mediaplayer.dll","DSStopMediaPlay") __stdcall returnsval files:mediaplayer.dll!DSStopMediaPlay()
+
+.function(import) external dll("files:mediaplayer.dll","DSSetVolume") __stdcall returnsval files:mediaplayer.dll!DSSetVolume(__in __unknown)
+
+.function(import) external dll("files:mediaplayer.dll","DSSetBalance") __stdcall returnsval files:mediaplayer.dll!DSSetBalance(__in __unknown)
+
+.function(import) external dll("files:mediaplayer.dll","DSInitializeAudioFile") __stdcall returnsval files:mediaplayer.dll!DSInitializeAudioFile(__in __unknown,__in __unknown)
+
+.function(import) external dll("files:mediaplayer.dll","DSInitializeVideoFile") __stdcall returnsval files:mediaplayer.dll!DSInitializeVideoFile(__in __unknown,__in __unknown,__out __unknown,__out __unknown,__in __unknown)
+
+.function(import) external dll("kernel32.dll","ExitProcess") __stdcall void kernel32.dll!ExitProcess(__in __unknown)
+
+.function(export) S32 GETSCALINGFACTOR()
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TFONT ; StackCount = 3
+	pushtype TWIZARDFORM ; StackCount = 4
+	assign Var4, WIZARDFORM
+	pushvar Var3 ; StackCount = 5
+	call TFORM->FONT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TFONT->PIXELSPERINCH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	ge Var1, Var2, S32(168)
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_70
+	assign RetVal, S32(175)
+	jump loc_22b
+loc_70:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TFONT ; StackCount = 3
+	pushtype TWIZARDFORM ; StackCount = 4
+	assign Var4, WIZARDFORM
+	pushvar Var3 ; StackCount = 5
+	call TFORM->FONT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TFONT->PIXELSPERINCH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	ge Var1, Var2, S32(144)
+	pop ; StackCount = 1
+	jz loc_125, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	pushtype TFONT ; StackCount = 4
+	pushtype TWIZARDFORM ; StackCount = 5
+	assign Var5, WIZARDFORM
+	pushvar Var4 ; StackCount = 6
+	call TFORM->FONT
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pushvar Var3 ; StackCount = 5
+	call TFONT->PIXELSPERINCH
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	lt Var2, Var3, S32(168)
+	pop ; StackCount = 2
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_125:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_146
+	assign RetVal, S32(150)
+	jump loc_22b
+loc_146:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TFONT ; StackCount = 3
+	pushtype TWIZARDFORM ; StackCount = 4
+	assign Var4, WIZARDFORM
+	pushvar Var3 ; StackCount = 5
+	call TFORM->FONT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TFONT->PIXELSPERINCH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	ge Var1, Var2, S32(120)
+	pop ; StackCount = 1
+	jz loc_1fb, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	pushtype TFONT ; StackCount = 4
+	pushtype TWIZARDFORM ; StackCount = 5
+	assign Var5, WIZARDFORM
+	pushvar Var4 ; StackCount = 6
+	call TFORM->FONT
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pushvar Var3 ; StackCount = 5
+	call TFONT->PIXELSPERINCH
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	lt Var2, Var3, S32(144)
+	pop ; StackCount = 2
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_1fb:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_21c
+	assign RetVal, S32(125)
+	jump loc_22b
+loc_21c:
+	assign RetVal, S32(100)
+loc_22b:
+	ret
+
+.function(import) external class(TFORM, FONT) __pascal void TFORM->FONT(__in __unknown,__in __unknown)
+
+.function(import) external class(TFONT, PIXELSPERINCH) __pascal void TFONT->PIXELSPERINCH(__in __unknown,__in __unknown)
+
+.function(export) void LOADEMBEDEDSCALEDBITMAP(__in TBITMAPIMAGE Arg1,__in UnicodeString_2 Arg2)
+	pushtype UnicodeString_2 ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushtype !OPENARRAYOFCONST ; StackCount = 3
+	pushtype !OPENARRAYOFCONST ; StackCount = 4
+	pushtype S32 ; StackCount = 5
+	assign Var5, S32(2)
+	pushvar Var4 ; StackCount = 6
+	call SETARRAYLENGTH
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	cpval Var4[0], Arg2
+	pushtype S32 ; StackCount = 5
+	pushvar Var5 ; StackCount = 6
+	call GETSCALINGFACTOR
+	pop ; StackCount = 5
+	cpval Var4[1], Var5
+	pop ; StackCount = 4
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushtype UnicodeString_2 ; StackCount = 4
+	assign Var4, UnicodeString_3("%s %d.bmp")
+	pushvar Var1 ; StackCount = 5
+	call FORMAT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, Var1
+	call EXTRACTTEMPORARYFILE
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_3 ; StackCount = 4
+	assign Var4, UnicodeString_3("{tmp}\\")
+	add Var4, Var1
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call EXPANDCONSTANT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, Var2
+	pushtype TBITMAP ; StackCount = 4
+	pushtype TBITMAPIMAGE ; StackCount = 5
+	assign Var5, Arg1
+	pushvar Var4 ; StackCount = 6
+	call TBITMAPIMAGE->BITMAP
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	call TGRAPHIC->LOADFROMFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype BOOLEAN ; StackCount = 3
+	pushtype UnicodeString_2 ; StackCount = 4
+	assign Var4, Var2
+	pushvar Var3 ; StackCount = 5
+	call DELETEFILE
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	ret
+
+.function(import) external internal returnsval FORMAT(__in __unknown,__in __unknown)
+
+.function(import) external internal void SETARRAYLENGTH()
+
+.function(import) external internal void EXTRACTTEMPORARYFILE(__in __unknown)
+
+.function(import) external internal returnsval EXPANDCONSTANT(__in __unknown)
+
+.function(import) external class(TBITMAPIMAGE, BITMAP) __pascal void TBITMAPIMAGE->BITMAP(__in __unknown,__in __unknown)
+
+.function(import) external class(TGRAPHIC, LOADFROMFILE) __fastcall void TGRAPHIC->LOADFROMFILE(__in __unknown)
+
+.function(import) external internal returnsval DELETEFILE(__in __unknown)
+
+.function(export) void CENTERINPARENT2(__in TCONTROL Arg1)
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	pushvar Var1 ; StackCount = 3
+	call !ASSIGNED
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	jz loc_6d, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype TWINCONTROL ; StackCount = 3
+	pushtype TCONTROL ; StackCount = 4
+	assign Var4, Arg1
+	pushvar Var3 ; StackCount = 5
+	call TCONTROL->PARENT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call !ASSIGNED
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_6d:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_14d
+	pushtype S32 ; StackCount = 1
+	pushtype TWINCONTROL ; StackCount = 2
+	pushtype TCONTROL ; StackCount = 3
+	assign Var3, Arg1
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->PARENT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call TCONTROL->WIDTH
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TCONTROL ; StackCount = 3
+	assign Var3, Arg1
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->WIDTH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	sub Var1, Var2
+	pop ; StackCount = 1
+	div Var1, S32(2)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->LEFT
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 2
+	assign Var2, Global3
+	pushvar Var1 ; StackCount = 3
+	call TWIZARDPAGE->SURFACEHEIGHT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	sub Var1, S32(40)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_14d:
+	ret
+
+.function(import) external internal returnsval !ASSIGNED(__in __unknown)
+
+.function(import) external class(TCONTROL, PARENT) __pascal void TCONTROL->PARENT(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, WIDTH) __pascal void TCONTROL->WIDTH(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, LEFT, property) __pascal void TCONTROL->LEFT(__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDPAGE, SURFACEHEIGHT) __pascal void TWIZARDPAGE->SURFACEHEIGHT(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, TOP, property) __pascal void TCONTROL->TOP(__in __unknown,__in __unknown)
+
+.function(export) void CENTERINPARENT(__in TCONTROL Arg1)
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	pushvar Var1 ; StackCount = 3
+	call !ASSIGNED
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	jz loc_6d, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype TWINCONTROL ; StackCount = 3
+	pushtype TCONTROL ; StackCount = 4
+	assign Var4, Arg1
+	pushvar Var3 ; StackCount = 5
+	call TCONTROL->PARENT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call !ASSIGNED
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_6d:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_42a
+	pushtype S32 ; StackCount = 1
+	pushtype TWINCONTROL ; StackCount = 2
+	pushtype TCONTROL ; StackCount = 3
+	assign Var3, Arg1
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->PARENT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call TCONTROL->WIDTH
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TCONTROL ; StackCount = 3
+	assign Var3, Arg1
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->WIDTH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	sub Var1, Var2
+	pop ; StackCount = 1
+	div Var1, S32(2)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->LEFT
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	ge Var1, Global5, Global6
+	jz loc_147, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	lt Var2, Global5, Global7
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_147:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_1da
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(20)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(500)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->WIDTH_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(300)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	jump loc_42a
+loc_1da:
+	pushtype BOOLEAN ; StackCount = 1
+	ge Var1, Global5, Global7
+	jz loc_21d, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	lt Var2, Global5, Global8
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_21d:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_2b0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(20)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(634)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->WIDTH_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(382)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	jump loc_42a
+loc_2b0:
+	pushtype BOOLEAN ; StackCount = 1
+	le Var1, Global5, Global8
+	jz loc_2f3, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	gt Var2, Global9, Global8
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_2f3:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_386
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(20)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(779)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->WIDTH_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(469)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	jump loc_42a
+loc_386:
+	pushtype BOOLEAN ; StackCount = 1
+	ge Var1, Global5, Global9
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_42a
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(20)
+	pushtype TCONTROL ; StackCount = 2
+	assign Var2, Arg1
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(975)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->WIDTH_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(585)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_42a:
+	ret
+
+.function(import) external class(TCONTROL, WIDTH, property) __pascal void TCONTROL->WIDTH_2(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, HEIGHT, property) __pascal void TCONTROL->HEIGHT(__in __unknown,__in __unknown)
+
+.function(export) BOOLEAN ONDOWNLOADPROGRESS(__in UnicodeString_2 Arg1,__in UnicodeString_2 Arg2,__in S64 Arg3,__in S64 Arg4)
+	pushtype BOOLEAN ; StackCount = 1
+	assign Var1, BOOLEAN(0)
+	pushtype TNEWBUTTON ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TDOWNLOADWIZARDPAGE->ABORTBUTTON
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	assign Var1, BOOLEAN(0)
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 2
+	assign Var2, Global3
+	pushvar Var1 ; StackCount = 3
+	call TWIZARDPAGE->SURFACEHEIGHT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	sub Var1, S32(70)
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("en")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_1be
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("Downloading Additional Files")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_1be:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("fr")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_286
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("Téléchargement de fichiers additionnels")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_286:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("de")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_340
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("Zusätliche Dateien herunterladen")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_340:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("it")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_3f0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("Download di file aggiuntivi")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_3f0:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("es")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_4aa
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("Descargando archivos adicionales")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_4aa:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("jp")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_540
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("追加ファイルをダウンロード中")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_540:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ACTIVELANGUAGE
+	pop ; StackCount = 2
+	eq Var1, Var2, UnicodeString_3("ko")
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_5ce
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("추가 파일 다운로드")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_5ce:
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	assign Var1, BOOLEAN(0)
+	pushtype TNEWBUTTON ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TDOWNLOADWIZARDPAGE->ABORTBUTTON
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(16777215)
+	pushtype TPANEL ; StackCount = 2
+	assign Var2, Global4
+	call TPANEL->COLOR
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	eq Var1, Arg3, Arg4
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_7d2
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	pushtype !OPENARRAYOFCONST ; StackCount = 2
+	pushtype !OPENARRAYOFCONST ; StackCount = 3
+	pushtype S32 ; StackCount = 4
+	assign Var4, S32(1)
+	pushvar Var3 ; StackCount = 5
+	call SETARRAYLENGTH
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	cpval Var3[0], Arg2
+	assign Var2, Var3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, UnicodeString_3("Successfully downloaded file to {tmp}: %s")
+	pushvar Var1 ; StackCount = 4
+	call FORMAT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	call LOG
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_7d2:
+	pushtype BOOLEAN ; StackCount = 1
+	ne Var1, Arg4, S32(0)
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_926
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	pushtype !OPENARRAYOFCONST ; StackCount = 2
+	pushtype !OPENARRAYOFCONST ; StackCount = 3
+	pushtype S32 ; StackCount = 4
+	assign Var4, S32(2)
+	pushvar Var3 ; StackCount = 5
+	call SETARRAYLENGTH
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	cpval Var3[0], Arg3
+	cpval Var3[1], Arg4
+	assign Var2, Var3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, UnicodeString_3("  %d of %d bytes done.")
+	pushvar Var1 ; StackCount = 4
+	call FORMAT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	call LOG
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	jump loc_a33
+loc_926:
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	pushtype !OPENARRAYOFCONST ; StackCount = 2
+	pushtype !OPENARRAYOFCONST ; StackCount = 3
+	pushtype S32 ; StackCount = 4
+	assign Var4, S32(1)
+	pushvar Var3 ; StackCount = 5
+	call SETARRAYLENGTH
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	cpval Var3[0], Arg3
+	assign Var2, Var3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, UnicodeString_3("  %d bytes done.")
+	pushvar Var1 ; StackCount = 4
+	call FORMAT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	call LOG
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_a33:
+	assign RetVal, BOOLEAN(1)
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	ret
+
+.function(import) external class(TDOWNLOADWIZARDPAGE, ABORTBUTTON) __pascal void TDOWNLOADWIZARDPAGE->ABORTBUTTON(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, VISIBLE, property) __pascal void TCONTROL->VISIBLE(__in __unknown,__in __unknown)
+
+.function(import) external class(TOUTPUTPROGRESSWIZARDPAGE, MSG2LABEL) __pascal void TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL(__in __unknown,__in __unknown)
+
+.function(import) external class(TNEWSTATICTEXT, CAPTION, property) __pascal void TNEWSTATICTEXT->CAPTION(__in __unknown,__in __unknown)
+
+.function(import) external class(TOUTPUTPROGRESSWIZARDPAGE, MSG1LABEL) __pascal void TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL(__in __unknown,__in __unknown)
+
+.function(import) external internal returnsval ACTIVELANGUAGE()
+
+.function(import) external class(TPANEL, COLOR, property) __pascal void TPANEL->COLOR(__in __unknown,__in __unknown)
+
+.function(import) external internal void LOG(__in __unknown)
+
+.function(export) void UNZIP(__in PChar Arg1,__in PChar Arg2)
+	pushtype Variant ; StackCount = 1
+	pushtype Variant ; StackCount = 2
+	pushtype Variant ; StackCount = 3
+	pushtype Variant ; StackCount = 4
+	pushtype Variant ; StackCount = 5
+	pushtype Variant ; StackCount = 6
+	pushtype BOOLEAN ; StackCount = 7
+	pushtype UnicodeString_2 ; StackCount = 8
+	assign Var8, Arg1
+	pushvar Var7 ; StackCount = 9
+	call FILEEXISTS
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	sfz Var7
+	pop ; StackCount = 6
+	jf loc_32f
+	pushtype BOOLEAN ; StackCount = 7
+	pushtype UnicodeString_2 ; StackCount = 8
+	assign Var8, Arg2
+	pushvar Var7 ; StackCount = 9
+	call FORCEDIRECTORIES
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushtype IDISPATCH ; StackCount = 7
+	pushtype UnicodeString_2 ; StackCount = 8
+	assign Var8, UnicodeString_3("Shell.Application")
+	pushvar Var7 ; StackCount = 9
+	call CREATEOLEOBJECT
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	assign Var1, Var7
+	pop ; StackCount = 6
+	assign Var2, Arg1
+	assign Var3, Arg2
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 7
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(1)
+	pushvar Var8 ; StackCount = 10
+	call SETARRAYLENGTH
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	assign Var8[0], Var2
+	assign Var7, Var8
+	pop ; StackCount = 7
+	pushtype String_3 ; StackCount = 8
+	assign Var8, String_3("NameSpace")
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype IDISPATCH ; StackCount = 10
+	assign Var10, Var1
+	pushvar Var4 ; StackCount = 11
+	call IDISPATCHINVOKE
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 7
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(1)
+	pushvar Var8 ; StackCount = 10
+	call SETARRAYLENGTH
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	assign Var8[0], Var3
+	assign Var7, Var8
+	pop ; StackCount = 7
+	pushtype String_3 ; StackCount = 8
+	assign Var8, String_3("NameSpace")
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype IDISPATCH ; StackCount = 10
+	assign Var10, Var1
+	pushvar Var5 ; StackCount = 11
+	call IDISPATCHINVOKE
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 7
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(0)
+	pushvar Var8 ; StackCount = 10
+	call SETARRAYLENGTH
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	assign Var7, Var8
+	pop ; StackCount = 7
+	pushtype String_3 ; StackCount = 8
+	assign Var8, String_3("Items")
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype IDISPATCH ; StackCount = 10
+	assign Var10, Var4
+	pushvar Var6 ; StackCount = 11
+	call IDISPATCHINVOKE
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushtype Variant ; StackCount = 7
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 8
+	pushtype !OPENARRAYOFVARIANT ; StackCount = 9
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(2)
+	pushvar Var9 ; StackCount = 11
+	call SETARRAYLENGTH
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	assign Var9[0], Var6
+	assign Var9[1], S32(20)
+	assign Var8, Var9
+	pop ; StackCount = 8
+	pushtype String_3 ; StackCount = 9
+	assign Var9, String_3("CopyHere")
+	pushtype BOOLEAN ; StackCount = 10
+	assign Var10, BOOLEAN(0)
+	pushtype IDISPATCH ; StackCount = 11
+	assign Var11, Var5
+	pushvar Var7 ; StackCount = 12
+	call IDISPATCHINVOKE
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+loc_32f:
+	ret
+
+.function(import) external internal returnsval FILEEXISTS(__in __unknown)
+
+.function(import) external internal returnsval FORCEDIRECTORIES(__in __unknown)
+
+.function(import) external internal returnsval CREATEOLEOBJECT(__in __unknown)
+
+.function(import) external internal returnsval IDISPATCHINVOKE(__in __unknown,__in __unknown,__in __unknown,__in __unknown)
+
+.function(export) void INITIALIZEWIZARD()
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call GETSCALINGFACTOR
+	pop ; StackCount = 2
+	eq Var1, Var2, S32(125)
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_df
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("WizardImage")
+	pushtype TBITMAPIMAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->WIZARDBITMAPIMAGE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call LOADEMBEDEDSCALEDBITMAP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("WizardImage")
+	pushtype TBITMAPIMAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->WIZARDBITMAPIMAGE2
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call LOADEMBEDEDSCALEDBITMAP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_df:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call GETSCALINGFACTOR
+	pop ; StackCount = 2
+	eq Var1, Var2, S32(150)
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_1be
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("WizardImage")
+	pushtype TBITMAPIMAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->WIZARDBITMAPIMAGE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call LOADEMBEDEDSCALEDBITMAP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("WizardImage")
+	pushtype TBITMAPIMAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->WIZARDBITMAPIMAGE2
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call LOADEMBEDEDSCALEDBITMAP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_1be:
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call GETSCALINGFACTOR
+	pop ; StackCount = 2
+	eq Var1, Var2, S32(175)
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_29d
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("WizardImage")
+	pushtype TBITMAPIMAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->WIZARDBITMAPIMAGE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call LOADEMBEDEDSCALEDBITMAP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("WizardImage")
+	pushtype TBITMAPIMAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->WIZARDBITMAPIMAGE2
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call LOADEMBEDEDSCALEDBITMAP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_29d:
+	pushtype TFONT ; StackCount = 1
+	pushtype TWIZARDFORM ; StackCount = 2
+	assign Var2, WIZARDFORM
+	pushvar Var1 ; StackCount = 3
+	call TFORM->FONT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushvar Global5 ; StackCount = 2
+	call TFONT->PIXELSPERINCH
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	assign Global6, S32(96)
+	assign Global7, S32(120)
+	assign Global8, S32(144)
+	assign Global9, S32(168)
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("Animation-with-icon.avi")
+	call EXTRACTTEMPORARYFILE
+	pop ; StackCount = 0
+	pushtype TONDOWNLOADPROGRESS ; StackCount = 1
+	assign Var1, TONDOWNLOADPROGRESS(ONDOWNLOADPROGRESS)
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushtype TSETUPMESSAGEID ; StackCount = 3
+	assign Var3, TSETUPMESSAGEID(152)
+	pushvar Var2 ; StackCount = 4
+	call SETUPMESSAGE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype TSETUPMESSAGEID ; StackCount = 4
+	assign Var4, TSETUPMESSAGEID(252)
+	pushvar Var3 ; StackCount = 5
+	call SETUPMESSAGE
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Global3 ; StackCount = 4
+	call CREATEDOWNLOADPAGE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	ge Var1, Global5, Global6
+	jz loc_43b, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	lt Var2, Global5, Global7
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_43b:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_47d
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("500x300.bmp")
+	call EXTRACTTEMPORARYFILE
+	pop ; StackCount = 0
+	jump loc_5da
+loc_47d:
+	pushtype BOOLEAN ; StackCount = 1
+	ge Var1, Global5, Global7
+	jz loc_4c0, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	lt Var2, Global5, Global8
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_4c0:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_502
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("634x382.bmp")
+	call EXTRACTTEMPORARYFILE
+	pop ; StackCount = 0
+	jump loc_5da
+loc_502:
+	pushtype BOOLEAN ; StackCount = 1
+	le Var1, Global5, Global8
+	jz loc_545, Var1
+	pushtype BOOLEAN ; StackCount = 2
+	gt Var2, Global9, Global8
+	and Var1, Var2
+	pop ; StackCount = 1
+loc_545:
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_587
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("779x469.bmp")
+	call EXTRACTTEMPORARYFILE
+	pop ; StackCount = 0
+	jump loc_5da
+loc_587:
+	pushtype BOOLEAN ; StackCount = 1
+	ge Var1, Global5, Global9
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_5da
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("975x585.bmp")
+	call EXTRACTTEMPORARYFILE
+	pop ; StackCount = 0
+loc_5da:
+	pushtype S32 ; StackCount = 1
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 2
+	assign Var2, Global3
+	pushvar Var1 ; StackCount = 3
+	call TWIZARDPAGE->SURFACEHEIGHT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	sub Var1, S32(40)
+	pushtype TNEWPROGRESSBAR ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->PROGRESSBAR
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TCONTROL->TOP
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	assign Var1, BOOLEAN(0)
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 2
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 3
+	assign Var3, Global3
+	pushvar Var2 ; StackCount = 4
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype BOOLEAN ; StackCount = 1
+	assign Var1, BOOLEAN(1)
+	pushtype TNEWRADIOBUTTON ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->LICENSEACCEPTEDRADIO
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TRADIOBUTTON->CHECKED
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	assign Var1, S32(9)
+	pushtype TFONT ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 4
+	call TFORM->FONT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	call TFONT->SIZE
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	ret
+
+.function(import) external class(TWIZARDFORM, WIZARDBITMAPIMAGE) __pascal void TWIZARDFORM->WIZARDBITMAPIMAGE(__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDFORM, WIZARDBITMAPIMAGE2) __pascal void TWIZARDFORM->WIZARDBITMAPIMAGE2(__in __unknown,__in __unknown)
+
+.function(import) external internal returnsval CREATEDOWNLOADPAGE(__in __unknown,__in __unknown,__in __unknown)
+
+.function(import) external internal returnsval SETUPMESSAGE(__in __unknown)
+
+.function(import) external class(TOUTPUTPROGRESSWIZARDPAGE, PROGRESSBAR) __pascal void TOUTPUTPROGRESSWIZARDPAGE->PROGRESSBAR(__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDFORM, LICENSEACCEPTEDRADIO) __pascal void TWIZARDFORM->LICENSEACCEPTEDRADIO(__in __unknown,__in __unknown)
+
+.function(import) external class(TRADIOBUTTON, CHECKED, property) __pascal void TRADIOBUTTON->CHECKED(__in __unknown,__in __unknown)
+
+.function(import) external class(TFONT, SIZE, property) __pascal void TFONT->SIZE(__in __unknown,__in __unknown)
+
+.function(export) void ONEMBEDDEDMEDIAPLAYEREVENT(__in S32 Arg1,__in S32 Arg2,__in S32 Arg3)
+	pushtype S32 ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	assign Var3, S32(16777215)
+	pushtype TPANEL ; StackCount = 4
+	assign Var4, Global4
+	call TPANEL->COLOR
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype BOOLEAN ; StackCount = 3
+	eq Var3, Arg1, S32(1)
+	sfz Var3
+	pop ; StackCount = 2
+	jf loc_877
+	pushtype TPANEL ; StackCount = 3
+	assign Var3, Global4
+	call TCONTROL->HIDE
+	pop ; StackCount = 2
+	pushtype TPANEL ; StackCount = 3
+	assign Var3, Global4
+	pushvar Var1 ; StackCount = 4
+	call TCONTROL->WIDTH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype TPANEL ; StackCount = 3
+	assign Var3, Global4
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->HEIGHT_2
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype TCOMPONENT ; StackCount = 3
+	assign Var3, Global3
+	pushtype U32_2 ; StackCount = 4
+	assign Var4, U32_2(35)
+	pushvar Global10 ; StackCount = 5
+	call TCONTROL->CREATE
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	assign Var3, S32(16777215)
+	pushtype TBITMAPIMAGE ; StackCount = 4
+	assign Var4, Global10
+	call TBITMAPIMAGE->BACKCOLOR
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype TBITMAPIMAGE ; StackCount = 3
+	assign Var3, Global10
+	call TCONTROL->SHOW
+	pop ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	pushtype TPANEL ; StackCount = 4
+	assign Var4, Global4
+	pushvar Var3 ; StackCount = 5
+	call TCONTROL->WIDTH
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushtype TBITMAPIMAGE ; StackCount = 4
+	assign Var4, Global10
+	call TCONTROL->WIDTH_2
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	pushtype TPANEL ; StackCount = 4
+	assign Var4, Global4
+	pushvar Var3 ; StackCount = 5
+	call TCONTROL->HEIGHT_2
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushtype TBITMAPIMAGE ; StackCount = 4
+	assign Var4, Global10
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype BOOLEAN ; StackCount = 3
+	ge Var3, Global5, Global6
+	jz loc_1d4, Var3
+	pushtype BOOLEAN ; StackCount = 4
+	lt Var4, Global5, Global7
+	and Var3, Var4
+	pop ; StackCount = 3
+loc_1d4:
+	sfz Var3
+	pop ; StackCount = 2
+	jf loc_33f
+	pushtype BOOLEAN ; StackCount = 3
+	pushtype BOOLEAN ; StackCount = 4
+	assign Var4, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\500x300.bmp")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("{tmp}\\500x300.bmp")
+	pushvar Var6 ; StackCount = 8
+	call EXPANDCONSTANT
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushvar Var3 ; StackCount = 7
+	call FILECOPY
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_3 ; StackCount = 4
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\500x300")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	assign Var4, Var5
+	pop ; StackCount = 4
+	add Var4, UnicodeString_3(".bmp")
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushtype TBITMAP ; StackCount = 4
+	pushtype TBITMAPIMAGE ; StackCount = 5
+	assign Var5, Global10
+	pushvar Var4 ; StackCount = 6
+	call TBITMAPIMAGE->BITMAP
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	call TGRAPHIC->LOADFROMFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	jump loc_817
+loc_33f:
+	pushtype BOOLEAN ; StackCount = 3
+	ge Var3, Global5, Global7
+	jz loc_382, Var3
+	pushtype BOOLEAN ; StackCount = 4
+	lt Var4, Global5, Global8
+	and Var3, Var4
+	pop ; StackCount = 3
+loc_382:
+	sfz Var3
+	pop ; StackCount = 2
+	jf loc_4ed
+	pushtype BOOLEAN ; StackCount = 3
+	pushtype BOOLEAN ; StackCount = 4
+	assign Var4, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\634x382.bmp")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("{tmp}\\634x382.bmp")
+	pushvar Var6 ; StackCount = 8
+	call EXPANDCONSTANT
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushvar Var3 ; StackCount = 7
+	call FILECOPY
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_3 ; StackCount = 4
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\634x382")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	assign Var4, Var5
+	pop ; StackCount = 4
+	add Var4, UnicodeString_3(".bmp")
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushtype TBITMAP ; StackCount = 4
+	pushtype TBITMAPIMAGE ; StackCount = 5
+	assign Var5, Global10
+	pushvar Var4 ; StackCount = 6
+	call TBITMAPIMAGE->BITMAP
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	call TGRAPHIC->LOADFROMFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	jump loc_817
+loc_4ed:
+	pushtype BOOLEAN ; StackCount = 3
+	le Var3, Global5, Global8
+	jz loc_530, Var3
+	pushtype BOOLEAN ; StackCount = 4
+	gt Var4, Global9, Global8
+	and Var3, Var4
+	pop ; StackCount = 3
+loc_530:
+	sfz Var3
+	pop ; StackCount = 2
+	jf loc_69b
+	pushtype BOOLEAN ; StackCount = 3
+	pushtype BOOLEAN ; StackCount = 4
+	assign Var4, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\779x469.bmp")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("{tmp}\\779x469.bmp")
+	pushvar Var6 ; StackCount = 8
+	call EXPANDCONSTANT
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushvar Var3 ; StackCount = 7
+	call FILECOPY
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_3 ; StackCount = 4
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\779x469")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	assign Var4, Var5
+	pop ; StackCount = 4
+	add Var4, UnicodeString_3(".bmp")
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushtype TBITMAP ; StackCount = 4
+	pushtype TBITMAPIMAGE ; StackCount = 5
+	assign Var5, Global10
+	pushvar Var4 ; StackCount = 6
+	call TBITMAPIMAGE->BITMAP
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	call TGRAPHIC->LOADFROMFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	jump loc_817
+loc_69b:
+	pushtype BOOLEAN ; StackCount = 3
+	ge Var3, Global5, Global9
+	sfz Var3
+	pop ; StackCount = 2
+	jf loc_817
+	pushtype BOOLEAN ; StackCount = 3
+	pushtype BOOLEAN ; StackCount = 4
+	assign Var4, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\975x585.bmp")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("{tmp}\\975x585.bmp")
+	pushvar Var6 ; StackCount = 8
+	call EXPANDCONSTANT
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushvar Var3 ; StackCount = 7
+	call FILECOPY
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_3 ; StackCount = 4
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("{app}\\975x585")
+	pushvar Var5 ; StackCount = 7
+	call EXPANDCONSTANT
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	assign Var4, Var5
+	pop ; StackCount = 4
+	add Var4, UnicodeString_3(".bmp")
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushtype TBITMAP ; StackCount = 4
+	pushtype TBITMAPIMAGE ; StackCount = 5
+	assign Var5, Global10
+	pushvar Var4 ; StackCount = 6
+	call TBITMAPIMAGE->BITMAP
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	call TGRAPHIC->LOADFROMFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+loc_817:
+	pushtype TWINCONTROL ; StackCount = 3
+	pushtype TNEWNOTEBOOKPAGE ; StackCount = 4
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 5
+	assign Var5, Global3
+	pushvar Var4 ; StackCount = 6
+	call TWIZARDPAGE->SURFACE
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	assign Var3, Var4
+	pop ; StackCount = 3
+	pushtype TBITMAPIMAGE ; StackCount = 4
+	assign Var4, Global10
+	call TCONTROL->PARENT_2
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype TCONTROL ; StackCount = 3
+	assign Var3, Global10
+	call CENTERINPARENT
+	pop ; StackCount = 2
+loc_877:
+	ret
+
+.function(import) external class(TCONTROL, HIDE) __fastcall void TCONTROL->HIDE()
+
+.function(import) external class(TCONTROL, HEIGHT) __pascal void TCONTROL->HEIGHT_2(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, CREATE) __fastcall returnsval TCONTROL->CREATE(__in __unknown)
+
+.function(import) external class(TBITMAPIMAGE, BACKCOLOR, property) __pascal void TBITMAPIMAGE->BACKCOLOR(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, SHOW) __fastcall void TCONTROL->SHOW()
+
+.function(import) external internal returnsval FILECOPY(__in __unknown,__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDPAGE, SURFACE) __pascal void TWIZARDPAGE->SURFACE(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, PARENT, property) __pascal void TCONTROL->PARENT_2(__in __unknown,__in __unknown)
+
+.function(export) BOOLEAN NEXTBUTTONCLICK(__in S32 Arg1)
+	pushtype S32 ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	pushtype WideString ; StackCount = 4
+	pushtype UnicodeString_2 ; StackCount = 5
+	pushtype S32 ; StackCount = 6
+	pushtype S32 ; StackCount = 7
+	pushtype S32 ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype TBITMAPIMAGE ; StackCount = 10
+	pushtype TWIZARDFORM ; StackCount = 11
+	assign Var11, WIZARDFORM
+	pushvar Var10 ; StackCount = 12
+	call TWIZARDFORM->WIZARDSMALLBITMAPIMAGE
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	eq Var9, Arg1, S32(10)
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_21cd
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype TNEWBUTTON ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TDOWNLOADWIZARDPAGE->ABORTBUTTON
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 9
+	assign Var9, Global3
+	call TDOWNLOADWIZARDPAGE->SHOW
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushtype UnicodeString_2 ; StackCount = 11
+	assign Var11, UnicodeString_3("{app}\\")
+	pushvar Var10 ; StackCount = 12
+	call EXPANDCONSTANT
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pushvar Var9 ; StackCount = 11
+	call CREATEDIR
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype BOOLEAN ; StackCount = 10
+	assign Var10, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("{app}\\Animation-with-icon.avi")
+	pushvar Var11 ; StackCount = 13
+	call EXPANDCONSTANT
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	pushtype UnicodeString_2 ; StackCount = 13
+	assign Var13, UnicodeString_3("{tmp}\\Animation-with-icon.avi")
+	pushvar Var12 ; StackCount = 14
+	call EXPANDCONSTANT
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pushvar Var9 ; StackCount = 13
+	call FILECOPY
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 10
+	assign Var10, Global3
+	pushvar Var9 ; StackCount = 11
+	call TWIZARDPAGE->SURFACEHEIGHT
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	sub Var9, S32(70)
+	pushtype TNEWSTATICTEXT ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG1LABEL
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TCONTROL->TOP
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 10
+	assign Var10, Global3
+	pushvar Var9 ; StackCount = 11
+	call TWIZARDPAGE->SURFACEHEIGHT
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	sub Var9, S32(40)
+	pushtype TNEWPROGRESSBAR ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->PROGRESSBAR
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TCONTROL->TOP
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TCONTROL ; StackCount = 9
+	pushtype TNEWPROGRESSBAR ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->PROGRESSBAR
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	assign Var9, Var10
+	pop ; StackCount = 9
+	call CENTERINPARENT2
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype TNEWSTATICTEXT ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(16777215)
+	pushtype TNEWSTATICTEXT ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TNEWSTATICTEXT->COLOR
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TCOMPONENT ; StackCount = 9
+	assign Var9, Global3
+	pushtype U32_2 ; StackCount = 10
+	assign Var10, U32_2(34)
+	pushvar Global4 ; StackCount = 11
+	call TCONTROL->CREATE
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TPANELBEVEL ; StackCount = 9
+	assign Var9, TPANELBEVEL(0)
+	pushtype TPANEL ; StackCount = 10
+	assign Var10, Global4
+	call TPANEL->BEVELOUTER
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TWINCONTROL ; StackCount = 9
+	pushtype TNEWNOTEBOOKPAGE ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TWIZARDPAGE->SURFACE
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	assign Var9, Var10
+	pop ; StackCount = 9
+	pushtype TPANEL ; StackCount = 10
+	assign Var10, Global4
+	call TCONTROL->PARENT_2
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TCONTROL ; StackCount = 9
+	assign Var9, Global4
+	call CENTERINPARENT
+	pop ; StackCount = 8
+	pushtype TPANEL ; StackCount = 9
+	assign Var9, Global4
+	pushvar Var2 ; StackCount = 10
+	call TCONTROL->WIDTH
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TPANEL ; StackCount = 9
+	assign Var9, Global4
+	pushvar Var3 ; StackCount = 10
+	call TCONTROL->HEIGHT_2
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(16777215)
+	pushtype TPANEL ; StackCount = 10
+	assign Var10, Global4
+	call TPANEL->COLOR
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype UnicodeString_3 ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushtype UnicodeString_2 ; StackCount = 11
+	assign Var11, UnicodeString_3("{app}")
+	pushvar Var10 ; StackCount = 12
+	call EXPANDCONSTANT
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	assign Var9, Var10
+	pop ; StackCount = 9
+	add Var9, UnicodeString_3("\\Animation-with-icon.avi")
+	assign Var5, Var9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushvar Var9 ; StackCount = 10
+	call ISWIN64
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_720
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("fa127e707421be7a57ee781b9bf25501241cbf963ec0ddd12a3937bf602837d7")
+	pushtype UnicodeString_2 ; StackCount = 10
+	assign Var10, UnicodeString_3("64bit_Download.zip")
+	pushtype UnicodeString_2 ; StackCount = 11
+	assign Var11, UnicodeString_3("https://cloud.stellarinfo.com/upload/SDR_v10_2/10_2_64.zip")
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 12
+	assign Var12, Global3
+	call TDOWNLOADWIZARDPAGE->ADD
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	jump loc_88d
+loc_720:
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("caab93a30c322b5696d03da9819f665309f04cc6bd2ede7e5ac55bf27937e1db")
+	pushtype UnicodeString_2 ; StackCount = 10
+	assign Var10, UnicodeString_3("32bit_Download.zip")
+	pushtype UnicodeString_2 ; StackCount = 11
+	assign Var11, UnicodeString_3("https://cloud.stellarinfo.com/upload/SDR_v10_2/10_2_32.zip")
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 12
+	assign Var12, Global3
+	call TDOWNLOADWIZARDPAGE->ADD
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_88d:
+	starteh loc_219e, null, null, loc_21b6
+	starteh null, loc_102f, null, loc_219c
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 10
+	assign Var10, UnicodeString_3("")
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	call TOUTPUTPROGRESSWIZARDPAGE->SETTEXT
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TCONTROL ; StackCount = 9
+	assign Var9, Global4
+	call CENTERINPARENT
+	pop ; StackCount = 8
+	pushtype TPANEL ; StackCount = 9
+	assign Var9, Global4
+	pushvar Var2 ; StackCount = 10
+	call TCONTROL->WIDTH
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TPANEL ; StackCount = 9
+	assign Var9, Global4
+	pushvar Var3 ; StackCount = 10
+	call TCONTROL->HEIGHT_2
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype TPANEL ; StackCount = 9
+	assign Var9, Global4
+	call TCONTROL->SHOW
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(16777215)
+	pushtype TPANEL ; StackCount = 10
+	assign Var10, Global4
+	call TPANEL->COLOR
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	assign Var9, BOOLEAN(0)
+	pushtype TNEWBUTTON ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TDOWNLOADWIZARDPAGE->ABORTBUTTON
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TCONTROL->VISIBLE
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype Type36 ; StackCount = 10
+	assign Var10, Type36(ONEMBEDDEDMEDIAPLAYEREVENT)
+	pushtype Pointer ; StackCount = 11
+	setptr Var11, Var3
+	pushtype Pointer ; StackCount = 12
+	setptr Var12, Var2
+	pushtype S32 ; StackCount = 13
+	pushtype TPANEL ; StackCount = 14
+	assign Var14, Global4
+	pushvar Var13 ; StackCount = 15
+	call TWINCONTROL->HANDLE
+	pop ; StackCount = 14
+	pop ; StackCount = 13
+	pushtype WideString ; StackCount = 14
+	assign Var14, Var5
+	pushvar Var9 ; StackCount = 15
+	call files:mediaplayer.dll!DSInitializeVideoFile
+	pop ; StackCount = 14
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(16777215)
+	pushtype TPANEL ; StackCount = 10
+	assign Var10, Global4
+	call TPANEL->COLOR
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushvar Var9 ; StackCount = 10
+	call files:mediaplayer.dll!DSPlayMediaFile
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S64 ; StackCount = 9
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 10
+	assign Var10, Global3
+	pushvar Var9 ; StackCount = 11
+	call TDOWNLOADWIZARDPAGE->DOWNLOAD
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("")
+	pushtype TNEWSTATICTEXT ; StackCount = 10
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 11
+	assign Var11, Global3
+	pushvar Var10 ; StackCount = 12
+	call TOUTPUTPROGRESSWIZARDPAGE->MSG2LABEL
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	call TNEWSTATICTEXT->CAPTION
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	assign RetVal, BOOLEAN(1)
+	pushtype BOOLEAN ; StackCount = 9
+	pushvar Var9 ; StackCount = 10
+	call ISWIN64
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_d98
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype BOOLEAN ; StackCount = 10
+	assign Var10, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("{app}\\64bit_Download.zip")
+	pushvar Var11 ; StackCount = 13
+	call EXPANDCONSTANT
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	pushtype UnicodeString_2 ; StackCount = 13
+	assign Var13, UnicodeString_3("{tmp}\\64bit_Download.zip")
+	pushvar Var12 ; StackCount = 14
+	call EXPANDCONSTANT
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pushvar Var9 ; StackCount = 13
+	call FILECOPY
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype String_3 ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushtype UnicodeString_2 ; StackCount = 11
+	assign Var11, UnicodeString_3("{app}\\")
+	pushvar Var10 ; StackCount = 12
+	call EXPANDCONSTANT
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	assign Var9, Var10
+	pop ; StackCount = 9
+	pushtype String_3 ; StackCount = 10
+	pushtype UnicodeString_2 ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("{app}\\64bit_Download.zip")
+	pushvar Var11 ; StackCount = 13
+	call EXPANDCONSTANT
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	assign Var10, Var11
+	pop ; StackCount = 10
+	call UNZIP
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype Pointer ; StackCount = 10
+	setptr Var10, Var1
+	pushtype TEXECWAIT ; StackCount = 11
+	assign Var11, TEXECWAIT(1)
+	pushtype S32 ; StackCount = 12
+	assign Var12, S32(0)
+	pushtype UnicodeString_2 ; StackCount = 13
+	assign Var13, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 14
+	assign Var14, UnicodeString_3("/verysilent")
+	pushtype UnicodeString_2 ; StackCount = 15
+	pushtype UnicodeString_2 ; StackCount = 16
+	assign Var16, UnicodeString_3("{app}\\K-Lite_Codec_Pack_1375_Basic.exe")
+	pushvar Var15 ; StackCount = 17
+	call EXPANDCONSTANT
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pushtype UnicodeString_2 ; StackCount = 16
+	assign Var16, UnicodeString_3("")
+	pushvar Var9 ; StackCount = 17
+	call SHELLEXEC
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	jump loc_102d
+loc_d98:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype BOOLEAN ; StackCount = 10
+	assign Var10, BOOLEAN(0)
+	pushtype UnicodeString_2 ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("{app}\\32bit_Download.zip")
+	pushvar Var11 ; StackCount = 13
+	call EXPANDCONSTANT
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	pushtype UnicodeString_2 ; StackCount = 13
+	assign Var13, UnicodeString_3("{tmp}\\32bit_Download.zip")
+	pushvar Var12 ; StackCount = 14
+	call EXPANDCONSTANT
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pushvar Var9 ; StackCount = 13
+	call FILECOPY
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype String_3 ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushtype UnicodeString_2 ; StackCount = 11
+	assign Var11, UnicodeString_3("{app}\\")
+	pushvar Var10 ; StackCount = 12
+	call EXPANDCONSTANT
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	assign Var9, Var10
+	pop ; StackCount = 9
+	pushtype String_3 ; StackCount = 10
+	pushtype UnicodeString_2 ; StackCount = 11
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("{app}\\32bit_Download.zip")
+	pushvar Var11 ; StackCount = 13
+	call EXPANDCONSTANT
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	assign Var10, Var11
+	pop ; StackCount = 10
+	call UNZIP
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype Pointer ; StackCount = 10
+	setptr Var10, Var1
+	pushtype TEXECWAIT ; StackCount = 11
+	assign Var11, TEXECWAIT(1)
+	pushtype S32 ; StackCount = 12
+	assign Var12, S32(0)
+	pushtype UnicodeString_2 ; StackCount = 13
+	assign Var13, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 14
+	assign Var14, UnicodeString_3("/verysilent")
+	pushtype UnicodeString_2 ; StackCount = 15
+	pushtype UnicodeString_2 ; StackCount = 16
+	assign Var16, UnicodeString_3("{app}\\K-Lite_Codec_Pack_1375_Basic.exe")
+	pushvar Var15 ; StackCount = 17
+	call EXPANDCONSTANT
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pushtype UnicodeString_2 ; StackCount = 16
+	assign Var16, UnicodeString_3("")
+	pushvar Var9 ; StackCount = 17
+	call SHELLEXEC
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_102d:
+	endtry
+loc_102f:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("en")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_11ad
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("Installer needs to download additional components. Connect your computer to the internet to complete installation.")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_11ad:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("fr")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1351
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("L’installateur doit télécharger des composants supplémentaires. Connectez votre ordinateur à Internet pour une installation complète.")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1351:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("de")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1501
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("Der Installer muss zusätzliche Komponenten herunterladen. Verbinden Sie Ihren Computer mit dem Internet, um die Installation abzuschließen.")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1501:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("it")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1677
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("L’impianto deve scaricare altri componenti. Collega il tuo computer a Internet per completare l’installazione.")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1677:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("es")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1801
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("El instalador necesita descargar componentes adicionales. Conecta tu ordenador a Internet para completar la instalación.")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1801:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("jp")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1923
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("インストーラーは追加のコンポーネントをダウンロードする必要があります.コンピュータをインターネットに接続して、インストールを完了します。")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1923:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("ko")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1a1d
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(4)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(5)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(3)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("추가 구성 요소를 다운로드 해야 합니다.설치를 완료하려면 컴퓨터를 인터넷에 연결합니다.")
+	pushvar Var7 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1a1d:
+	pushtype BOOLEAN ; StackCount = 9
+	eq Var9, Var7, S32(4)
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1a44
+loc_1a44:
+	pushtype BOOLEAN ; StackCount = 9
+	eq Var9, Var7, S32(2)
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_218e
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("en")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1b63
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("Do you want to cancel the installation process?")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1b63:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("fr")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1c5d
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("Voulez-vous annuler le processus d’installation?")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1c5d:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("de")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1d55
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("Möchtest du den Installationsprozess abbrechen?")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1d55:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("it")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1e49
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("Vuole annullare il processo di installazione?")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1e49:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("es")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1f37
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("¿Desea cancelar el proceso de instalación?")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1f37:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("jp")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_1ffb
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("インストールプロセスをキャンセルしますか？")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_1ffb:
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype UnicodeString_2 ; StackCount = 10
+	pushvar Var10 ; StackCount = 11
+	call ACTIVELANGUAGE
+	pop ; StackCount = 10
+	eq Var9, Var10, UnicodeString_3("ko")
+	pop ; StackCount = 9
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_20bb
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(7)
+	pushtype S32 ; StackCount = 10
+	assign Var10, S32(4)
+	pushtype TMSGBOXTYPE ; StackCount = 11
+	assign Var11, TMSGBOXTYPE(1)
+	pushtype UnicodeString_2 ; StackCount = 12
+	assign Var12, UnicodeString_3("설치 프로세스를 취소 하시겠습니까?")
+	pushvar Var8 ; StackCount = 13
+	call SUPPRESSIBLEMSGBOX
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+loc_20bb:
+	pushtype BOOLEAN ; StackCount = 9
+	eq Var9, Var8, S32(6)
+	sfz Var9
+	pop ; StackCount = 8
+	jf loc_218e
+	pushtype BOOLEAN ; StackCount = 9
+	pushtype BOOLEAN ; StackCount = 10
+	assign Var10, BOOLEAN(1)
+	pushtype BOOLEAN ; StackCount = 11
+	assign Var11, BOOLEAN(1)
+	pushtype BOOLEAN ; StackCount = 12
+	assign Var12, BOOLEAN(1)
+	pushtype UnicodeString_2 ; StackCount = 13
+	pushtype UnicodeString_2 ; StackCount = 14
+	pushtype UnicodeString_2 ; StackCount = 15
+	assign Var15, UnicodeString_3("{app}\\")
+	pushvar Var14 ; StackCount = 16
+	call EXPANDCONSTANT
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pushvar Var13 ; StackCount = 15
+	call EXTRACTFILEDIR
+	pop ; StackCount = 14
+	pop ; StackCount = 13
+	pushvar Var9 ; StackCount = 14
+	call DELTREE
+	pop ; StackCount = 13
+	pop ; StackCount = 12
+	pop ; StackCount = 11
+	pop ; StackCount = 10
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	assign Var9, S32(9)
+	call kernel32.dll!ExitProcess
+	pop ; StackCount = 8
+	jump loc_218e
+loc_218e:
+	assign RetVal, BOOLEAN(0)
+	endcatch
+loc_219c:
+	endtry
+loc_219e:
+	pushtype TDOWNLOADWIZARDPAGE ; StackCount = 9
+	assign Var9, Global3
+	call TOUTPUTPROGRESSWIZARDPAGE->HIDE
+	pop ; StackCount = 8
+	endfinally
+loc_21b6:
+	pushtype BOOLEAN ; StackCount = 9
+	pushvar Var9 ; StackCount = 10
+	call files:mediaplayer.dll!DSStopMediaPlay
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	jump loc_21d9
+loc_21cd:
+	assign RetVal, BOOLEAN(1)
+loc_21d9:
+	ret
+
+.function(import) external class(TWIZARDFORM, WIZARDSMALLBITMAPIMAGE) __pascal void TWIZARDFORM->WIZARDSMALLBITMAPIMAGE(__in __unknown,__in __unknown)
+
+.function(import) external class(TDOWNLOADWIZARDPAGE, SHOW) __fastcall void TDOWNLOADWIZARDPAGE->SHOW()
+
+.function(import) external internal returnsval CREATEDIR(__in __unknown)
+
+.function(import) external class(TNEWSTATICTEXT, COLOR, property) __pascal void TNEWSTATICTEXT->COLOR(__in __unknown,__in __unknown)
+
+.function(import) external class(TPANEL, BEVELOUTER, property) __pascal void TPANEL->BEVELOUTER(__in __unknown,__in __unknown)
+
+.function(import) external internal returnsval ISWIN64()
+
+.function(import) external class(TDOWNLOADWIZARDPAGE, ADD) __fastcall void TDOWNLOADWIZARDPAGE->ADD(__in __unknown,__in __unknown,__in __unknown)
+
+.function(import) external class(TOUTPUTPROGRESSWIZARDPAGE, SETTEXT) __fastcall void TOUTPUTPROGRESSWIZARDPAGE->SETTEXT(__in __unknown,__in __unknown)
+
+.function(import) external class(TWINCONTROL, HANDLE) __pascal void TWINCONTROL->HANDLE(__in __unknown,__in __unknown)
+
+.function(import) external class(TDOWNLOADWIZARDPAGE, DOWNLOAD) __fastcall returnsval TDOWNLOADWIZARDPAGE->DOWNLOAD()
+
+.function(import) external internal returnsval SHELLEXEC(__in __unknown,__in __unknown,__in __unknown,__in __unknown,__in __unknown,__in __unknown,__out __unknown)
+
+.function(import) external internal returnsval SUPPRESSIBLEMSGBOX(__in __unknown,__in __unknown,__in __unknown,__in __unknown)
+
+.function(import) external internal returnsval DELTREE(__in __unknown,__in __unknown,__in __unknown,__in __unknown)
+
+.function(import) external internal returnsval EXTRACTFILEDIR(__in __unknown)
+
+.function(import) external class(TOUTPUTPROGRESSWIZARDPAGE, HIDE) __fastcall void TOUTPUTPROGRESSWIZARDPAGE->HIDE()
+
+.function(export) void CURPAGECHANGED(__in S32 Arg1)
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, UnicodeString_3("{tmp}\\64bit_Download.zip")
+	pushvar Var2 ; StackCount = 4
+	call EXPANDCONSTANT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call FILEEXISTS
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	setz Var1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_382
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	assign Var3, UnicodeString_3("{tmp}\\32bit_Download.zip")
+	pushvar Var2 ; StackCount = 4
+	call EXPANDCONSTANT
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call FILEEXISTS
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	setz Var1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_382
+	pushtype S32 ; StackCount = 1
+	assign Var1, Arg1
+	pushtype BOOLEAN ; StackCount = 2
+	eq Var2, S32(8), Var1
+	jz loc_197, Var2
+	pushtype TNOTIFYEVENT ; StackCount = 3
+	pushtype TNEWBUTTON ; StackCount = 4
+	pushtype TWIZARDFORM ; StackCount = 5
+	assign Var5, WIZARDFORM
+	pushvar Var4 ; StackCount = 6
+	call TWIZARDFORM->NEXTBUTTON
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pushvar Var3 ; StackCount = 5
+	call TBUTTON->ONCLICK
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushtype TOBJECT ; StackCount = 4
+	pushtype TOBJECT ; StackCount = 5
+	pushtype Pointer ; StackCount = 6
+	setptr Var6, Var5
+	call Class->SetNil
+	pop ; StackCount = 5
+	assign Var4, Var5
+	pop ; StackCount = 4
+	callvar Var3 ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	jump loc_197
+loc_197:
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	assign Var1, Arg1
+	pushtype BOOLEAN ; StackCount = 3
+	eq Var2, S32(9), Var1
+	jz loc_23a, Var2
+	pushtype TNOTIFYEVENT ; StackCount = 4
+	pushtype TNEWBUTTON ; StackCount = 5
+	pushtype TWIZARDFORM ; StackCount = 6
+	assign Var5, WIZARDFORM
+	pushvar Var4 ; StackCount = 7
+	call TWIZARDFORM->NEXTBUTTON
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pushvar Var3 ; StackCount = 6
+	call TBUTTON->ONCLICK
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pushtype TOBJECT ; StackCount = 5
+	pushtype TOBJECT ; StackCount = 6
+	pushtype Pointer ; StackCount = 7
+	setptr Var6, Var5
+	call Class->SetNil
+	pop ; StackCount = 6
+	assign Var4, Var5
+	pop ; StackCount = 5
+	callvar Var3 ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	jump loc_23a
+loc_23a:
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushtype S32 ; StackCount = 3
+	assign Var1, Arg1
+	pushtype BOOLEAN ; StackCount = 4
+	eq Var2, S32(10), Var1
+	jz loc_2dd, Var2
+	pushtype TNOTIFYEVENT ; StackCount = 5
+	pushtype TNEWBUTTON ; StackCount = 6
+	pushtype TWIZARDFORM ; StackCount = 7
+	assign Var5, WIZARDFORM
+	pushvar Var4 ; StackCount = 8
+	call TWIZARDFORM->NEXTBUTTON
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushvar Var3 ; StackCount = 7
+	call TBUTTON->ONCLICK
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pushtype TOBJECT ; StackCount = 6
+	pushtype TOBJECT ; StackCount = 7
+	pushtype Pointer ; StackCount = 8
+	setptr Var6, Var5
+	call Class->SetNil
+	pop ; StackCount = 7
+	assign Var4, Var5
+	pop ; StackCount = 6
+	callvar Var3 ; StackCount = 7
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	jump loc_2dd
+loc_2dd:
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushtype S32 ; StackCount = 4
+	assign Var1, Arg1
+	pushtype BOOLEAN ; StackCount = 5
+	eq Var2, S32(12), Var1
+	jz loc_380, Var2
+	pushtype TNOTIFYEVENT ; StackCount = 6
+	pushtype TNEWBUTTON ; StackCount = 7
+	pushtype TWIZARDFORM ; StackCount = 8
+	assign Var5, WIZARDFORM
+	pushvar Var4 ; StackCount = 9
+	call TWIZARDFORM->NEXTBUTTON
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pushvar Var3 ; StackCount = 8
+	call TBUTTON->ONCLICK
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pushtype TOBJECT ; StackCount = 7
+	pushtype TOBJECT ; StackCount = 8
+	pushtype Pointer ; StackCount = 9
+	setptr Var6, Var5
+	call Class->SetNil
+	pop ; StackCount = 8
+	assign Var4, Var5
+	pop ; StackCount = 7
+	callvar Var3 ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	jump loc_380
+loc_380:
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+loc_382:
+	pushtype BOOLEAN ; StackCount = 5
+	eq Var1, Arg1, S32(2)
+	sfz Var1
+	pop ; StackCount = 4
+	jf loc_45d
+	pushtype TNEWSTATICTEXT ; StackCount = 5
+	pushtype TWIZARDFORM ; StackCount = 6
+	assign Var2, WIZARDFORM
+	pushvar Var1 ; StackCount = 7
+	call TWIZARDFORM->PAGEDESCRIPTIONLABEL
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	call TCONTROL->HIDE
+	pop ; StackCount = 4
+	pushtype S32 ; StackCount = 5
+	assign Var1, S32(50)
+	pushtype TNEWSTATICTEXT ; StackCount = 6
+	pushtype TWIZARDFORM ; StackCount = 7
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 8
+	call TWIZARDFORM->PAGENAMELABEL
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pushtype S32 ; StackCount = 5
+	assign Var1, S32(12)
+	pushtype TFONT ; StackCount = 6
+	pushtype TNEWSTATICTEXT ; StackCount = 7
+	pushtype TWIZARDFORM ; StackCount = 8
+	assign Var4, WIZARDFORM
+	pushvar Var3 ; StackCount = 9
+	call TWIZARDFORM->PAGENAMELABEL
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pushvar Var2 ; StackCount = 8
+	call TNEWSTATICTEXT->FONT
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	call TFONT->SIZE
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+loc_45d:
+	pushtype BOOLEAN ; StackCount = 5
+	eq Var1, Arg1, S32(6)
+	sfz Var1
+	pop ; StackCount = 4
+	jf loc_4c1
+	pushtype S32 ; StackCount = 5
+	assign Var1, S32(20)
+	pushtype TNEWSTATICTEXT ; StackCount = 6
+	pushtype TWIZARDFORM ; StackCount = 7
+	assign Var3, WIZARDFORM
+	pushvar Var2 ; StackCount = 8
+	call TWIZARDFORM->SELECTDIRLABEL
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	call TCONTROL->HEIGHT
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+loc_4c1:
+	ret
+
+.function(import) external class(TWIZARDFORM, NEXTBUTTON) __pascal void TWIZARDFORM->NEXTBUTTON(__in __unknown,__in __unknown)
+
+.function(import) external class(TBUTTON, ONCLICK) __pascal void TBUTTON->ONCLICK(__in __unknown,__in __unknown)
+
+.function(import) external class(Class, SetNil) __pascal returnsval Class->SetNil(__out __unknown)
+
+.function(import) external class(TWIZARDFORM, PAGEDESCRIPTIONLABEL) __pascal void TWIZARDFORM->PAGEDESCRIPTIONLABEL(__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDFORM, PAGENAMELABEL) __pascal void TWIZARDFORM->PAGENAMELABEL(__in __unknown,__in __unknown)
+
+.function(import) external class(TNEWSTATICTEXT, FONT) __pascal void TNEWSTATICTEXT->FONT(__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDFORM, SELECTDIRLABEL) __pascal void TWIZARDFORM->SELECTDIRLABEL(__in __unknown,__in __unknown)
+
+.function(export) void DEINITIALIZESETUP()
+	pushtype BOOLEAN ; StackCount = 1
+	pushvar Var1 ; StackCount = 2
+	call files:mediaplayer.dll!DSStopMediaPlay
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	ret
+
+.function(export) void CURUNINSTALLSTEPCHANGED(__in TUNINSTALLSTEP Arg1)
+	pushtype S32 ; StackCount = 1
+	pushtype BOOLEAN ; StackCount = 2
+	eq Var2, Arg1, TUNINSTALLSTEP(3)
+	sfz Var2
+	pop ; StackCount = 1
+	jf loc_17b
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype Pointer ; StackCount = 3
+	setptr Var3, Var1
+	pushtype TEXECWAIT ; StackCount = 4
+	assign Var4, TEXECWAIT(0)
+	pushtype S32 ; StackCount = 5
+	assign Var5, S32(5)
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 8
+	assign Var8, UnicodeString_3("https://www.stellarinfo.com/uninstallation/?product=windows-data-recovery-professional.php")
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("")
+	pushvar Var2 ; StackCount = 10
+	call SHELLEXEC
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+loc_17b:
+	ret
+
+.function(export) void CURSTEPCHANGED(__in TSETUPSTEP Arg1)
+	pushtype S32 ; StackCount = 1
+	pushtype BOOLEAN ; StackCount = 2
+	eq Var2, Arg1, TSETUPSTEP(2)
+	sfz Var2
+	pop ; StackCount = 1
+	jf loc_11e
+	pushtype BOOLEAN ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call ISWIN64
+	pop ; StackCount = 2
+	sfz Var2
+	pop ; StackCount = 1
+	jf loc_b5
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_2 ; StackCount = 4
+	assign Var4, UnicodeString_3("{app}\\64bit_Download.zip")
+	pushvar Var3 ; StackCount = 5
+	call EXPANDCONSTANT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call DELETEFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	jump loc_11e
+loc_b5:
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype UnicodeString_2 ; StackCount = 3
+	pushtype UnicodeString_2 ; StackCount = 4
+	assign Var4, UnicodeString_3("{app}\\32bit_Download.zip")
+	pushvar Var3 ; StackCount = 5
+	call EXPANDCONSTANT
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call DELETEFILE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+loc_11e:
+	pushtype BOOLEAN ; StackCount = 2
+	eq Var2, Arg1, TSETUPSTEP(3)
+	sfz Var2
+	pop ; StackCount = 1
+	jf loc_27e
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype Pointer ; StackCount = 3
+	setptr Var3, Var1
+	pushtype TEXECWAIT ; StackCount = 4
+	assign Var4, TEXECWAIT(0)
+	pushtype S32 ; StackCount = 5
+	assign Var5, S32(5)
+	pushtype UnicodeString_2 ; StackCount = 6
+	assign Var6, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("")
+	pushtype UnicodeString_2 ; StackCount = 8
+	assign Var8, UnicodeString_3("https://www.stellarinfo.com/installation/windows-data-recovery-professional.php")
+	pushtype UnicodeString_2 ; StackCount = 9
+	assign Var9, UnicodeString_3("")
+	pushvar Var2 ; StackCount = 10
+	call SHELLEXEC
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+loc_27e:
+	ret
+
+

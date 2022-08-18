@@ -20,6 +20,7 @@ namespace IFPSLib
 
         internal const int VERSION_MIN_ATTRIBUTES = 21;
         internal const int VERSION_MAX_SETSTACKTYPE = 22; // Is this correct?
+        internal const int VERSION_MIN_DLL_LOAD_FLAGS = 23;
         internal const int VERSION_MIN_STATICARRAYSTART = 23;
 
         /// <summary>

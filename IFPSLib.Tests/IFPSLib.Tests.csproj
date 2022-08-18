@@ -59,6 +59,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="CompiledCode.bin" />
+    <None Include="CompiledCode_v22.bin" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CompiledCode.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CompiledCode_v22.txt" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
