@@ -383,7 +383,7 @@ namespace IFPSAsmLib
                     // __in|__val|__out|__ref type|__unknown name
                     var arg = new FunctionArgument();
                     bool isInVal = child.Value == Constants.FUNCTION_ARG_IN || child.Value == Constants.FUNCTION_ARG_VAL;
-                    if (!isInVal && child.Value != Constants.FUNCTION_ARG_OUT && child.Value == Constants.FUNCTION_ARG_REF)
+                    if (!isInVal && child.Value != Constants.FUNCTION_ARG_OUT && child.Value != Constants.FUNCTION_ARG_REF)
                         child.ThrowInvalid(string.Format("In function \"{0}\": Unknown argument type", ret.Name));
                     arg.ArgumentType = isInVal ? FunctionArgumentType.In : FunctionArgumentType.Out;
                     next = child.Next;
