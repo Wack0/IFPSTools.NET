@@ -22,6 +22,7 @@ namespace IFPSAsmLib
         internal const char BINARY_FALSE = '0';
         internal const char BINARY_TRUE = '1';
 
+        internal const string ELEMENT_OBFUSCATE = ".obfuscate";
         internal const string ELEMENT_VERSION = ".version";
         internal const string ELEMENT_ENTRYPOINT = ".entry";
         internal const string ELEMENT_TYPE = ".type";

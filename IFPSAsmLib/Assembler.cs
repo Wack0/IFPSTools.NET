@@ -225,14 +225,19 @@ namespace IFPSAsmLib
                     break;
                 // record(types...)
                 case Constants.TYPE_RECORD:
-                    if (next != null) next.ThrowInvalid();
+                    // next is optional record element name, there can be no more elements after that
+                    if (next != null && (next.Next != null || next.NextChild != null)) next.ThrowInvalid();
                     var typeList = new List<IType>();
+                    var nameList = new List<string>();
                     for (next = child; next != null; next = next.NextChild)
                     {
+                        var childName = string.Empty;
+                        if (next.Next != null) childName = next.Next.Value;
                         if (!types.TryGetValue(next.Value, out childType)) next.ThrowInvalid("Invalid record element type");
                         typeList.Add(childType);
+                        nameList.Add(childName);
                     }
-                    ret = new RecordType(typeList);
+                    ret = new RecordType(typeList, nameList);
                     break;
                 // set(bitsize)
                 case Constants.TYPE_SET:
@@ -536,6 +541,8 @@ namespace IFPSAsmLib
             return LocalVariable.Create(idx - 1);
         }
 
+        private static readonly char[] SPLIT_DOT = new char[] { '.' };
+
         private static Operand ParseOperandValue(
             ParserElement value,
             ScriptFunction function,
@@ -554,6 +561,7 @@ namespace IFPSAsmLib
             // variable: name
             // immediate index: name[int_elem]
             // variable index: name[elem_var]
+            // immediate index for record: name[elem_name]
             if (value.NextChild != null)
             {
                 // immediate
@@ -573,11 +581,32 @@ namespace IFPSAsmLib
                 return new Operand(variable);
             }
 
+            // indexed variable
             var baseName = val.Substring(0, indexOfStart);
             string element = val.Substring(indexOfStart + 1, val.Length - indexOfStart - 2);
             var baseVar = ParseVariable(baseName, function, globals, aliases);
             if (baseVar == null) value.ThrowInvalid(string.Format("In function {0}: Used nonexistant variable", function.Name));
+            // check for immediate index
             if (uint.TryParse(element, out var elementIdx)) return new Operand(baseVar, elementIdx);
+            // not immediate index. if the base is a record, then check the element names
+            var baseRecord = baseVar.Type as RecordType;
+            if (baseRecord != null && !string.IsNullOrEmpty(element))
+            {
+                elementIdx = (uint)baseRecord.ElementNames.IndexOf(element);
+                if ((int)elementIdx != -1) return new Operand(baseVar, elementIdx);
+            }
+            // might be type.element
+            var elemSplit = element.Split(SPLIT_DOT, 2);
+            if (elemSplit.Length == 2 && types.TryGetValue(elemSplit[0], out var wantedType))
+            {
+                baseRecord = wantedType as RecordType;
+                if (baseRecord != null)
+                {
+                    elementIdx = (uint)baseRecord.ElementNames.IndexOf(elemSplit[1]);
+                    if ((int)elementIdx != -1) return new Operand(baseVar, elementIdx);
+                }
+            }
+            // must be a variable
             var elemVar = ParseVariable(element, function, globals, aliases);
             if (elemVar == null) value.ThrowInvalid(string.Format("In function {0}: Used nonexistant variable", function.Name));
             return new Operand(baseVar, elemVar);
@@ -627,7 +656,7 @@ namespace IFPSAsmLib
                     if (next == null) insn.ThrowInvalid();
                     next.ExpectValidName();
                     next.EnsureNoNextChild();
-                    if (!functions.TryGetValue(next.Value, out var funcOp)) insn.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown function", function.Name));
+                    if (!functions.TryGetValue(next.Value, out var funcOp)) next.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown function", function.Name));
                     if (next.Next != null) next.Next.ThrowInvalid();
                     return Instruction.Create(opcode, funcOp);
                 case OperandType.InlineType:
@@ -636,7 +665,7 @@ namespace IFPSAsmLib
                         if (next == null) insn.ThrowInvalid();
                         next.ExpectValidName();
                         next.EnsureNoNextChild();
-                        if (!types.TryGetValue(next.Value, out var typeOp)) insn.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
+                        if (!types.TryGetValue(next.Value, out var typeOp)) next.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
                         if (next.Next != null) next.Next.ThrowInvalid();
                         return Instruction.Create(opcode, typeOp);
                     }
@@ -666,7 +695,7 @@ namespace IFPSAsmLib
                         next = next.Next;
                         next.ExpectValidName();
                         next.EnsureNoNextChild();
-                        if (!types.TryGetValue(next.Value, out var typeOp)) insn.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
+                        if (!types.TryGetValue(next.Value, out var typeOp)) next.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
                         if (next.Next != null) next.Next.ThrowInvalid();
                         return Instruction.Create(opcode, op0, op1, typeOp);
                     }
@@ -676,7 +705,7 @@ namespace IFPSAsmLib
                         next = next.Next;
                         next.ExpectValidName();
                         next.EnsureNoNextChild();
-                        if (!types.TryGetValue(next.Value, out var typeOp)) insn.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
+                        if (!types.TryGetValue(next.Value, out var typeOp)) next.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
                         next = next.Next;
                         next.ExpectValidName();
                         var variable = ParseVariable(next.Value, function, globals, aliases);
@@ -883,6 +912,20 @@ namespace IFPSAsmLib
             }
 
             if (entryPoint != null) ret.EntryPoint = functionsTable[entryPoint];
+
+            // if obfuscation is required then rename all exported functions to "A".
+            if (parsed.OfType(ElementParentType.Obfuscate).Any())
+            {
+                foreach (var func in ret.Functions.OfType<ScriptFunction>())
+                {
+                    if (func.Exported)
+                    {
+                        // assumption: script executor only care about InitializeUninstall
+                        if (func.Name.ToLower() == "initializeuninstall") continue;
+                        func.Name = "A";
+                    }
+                }
+            }
 
             return ret;
         }

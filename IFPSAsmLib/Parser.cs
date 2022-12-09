@@ -386,6 +386,7 @@ namespace IFPSAsmLib
     public enum ElementParentType : byte
     {
         Unknown,
+        Obfuscate,
         FileVersion,
         EntryPoint,
         Attribute,
@@ -526,12 +527,12 @@ namespace IFPSAsmLib
             bool baseType
         )
         {
-            ParserElement currentChild = null, nextChild = null;
+            ParserElement currentChild, nextChild;
             str.AdvanceWhiteSpace(ref location, true);
             var typeNext = str.GetEntity(ref location, ParserSeparatorType.StartBody, false);
             typeNext.ExpectValidName();
             current.Next = next = new ParserElement(typeNext, parentType);
-            if (baseType && parentType == ElementParentType.Type && next.Value == "funcptr")
+            if (baseType && parentType == ElementParentType.Type && next.Value == Constants.TYPE_FUNCTION_POINTER)
             {
                 ParseTokenWithUnknownBody(str, ref location, parentType, next, ref next, false);
                 typeNext = str.GetEntity(ref location, ParserSeparatorType.NextOrEndBody, false);
@@ -580,6 +581,13 @@ namespace IFPSAsmLib
                     var typeString = type.ToString();
                     switch (typeString)
                     {
+                        case Constants.ELEMENT_OBFUSCATE:
+                            // .obfuscate
+                            if (type.FoundSeparator) str.EnsureBodyEmpty(ref location);
+                            parentType = ElementParentType.Obfuscate;
+                            current = new ParserElement(type, parentType);
+                            if (!str.AdvanceWhiteSpaceUntilNewLine(ref location)) current.Next.ThrowInvalid();
+                            return current;
                         case Constants.ELEMENT_VERSION:
                             // .version int
                             if (type.FoundSeparator) str.EnsureBodyEmpty(ref location);
