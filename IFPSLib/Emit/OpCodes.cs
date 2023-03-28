@@ -80,7 +80,7 @@ namespace IFPSLib.Emit
         /// </summary>
         public static readonly OpCode Mod = new OpCode("mod", Code.Mod, OperandType.InlineValueValue, FlowControl.Next, OpCodeType.Macro);
         /// <summary>
-        /// Shifts the first value left by the second value; <c>op0 <<= op1</c>
+        /// Shifts the first value left by the second value; <c>op0 &lt;&lt;= op1</c>
         /// </summary>
         public static readonly OpCode Shl = new OpCode("shl", Code.Shl, OperandType.InlineValueValue, FlowControl.Next, OpCodeType.Macro);
         /// <summary>
@@ -88,7 +88,7 @@ namespace IFPSLib.Emit
         /// </summary>
         public static readonly OpCode Shr = new OpCode("shr", Code.Shr, OperandType.InlineValueValue, FlowControl.Next, OpCodeType.Macro);
         /// <summary>
-        /// Bitwise ANDs the first value by the second value; <c>op0 &= op1</c>
+        /// Bitwise ANDs the first value by the second value; <c>op0 &amp;= op1</c>
         /// </summary>
         public static readonly OpCode And = new OpCode("and", Code.And, OperandType.InlineValueValue, FlowControl.Next, OpCodeType.Macro);
         /// <summary>
@@ -194,7 +194,7 @@ namespace IFPSLib.Emit
         /// </summary>
         public static readonly OpCode CallVar = new OpCode("callvar", Code.CallVar, OperandType.InlineValue, FlowControl.Call, OpCodeType.Primitive, StackBehaviour.Push1);
         /// <summary>
-        /// op0 must be a pointer.<br/>
+        /// op0 must be a pointer, which may be a null pointer.<br/>
         /// If op1 is not a pointer, loads the equivalent address of op1 into op0; <c>op0 = &amp;op1</c><br/>
         /// If op1 is a pointer, loads op1 into op0; <c>op0 = op1</c>
         /// </summary>
@@ -253,7 +253,11 @@ namespace IFPSLib.Emit
         /// </summary>
         public static readonly OpCode Not = new OpCode("not", Code.Not, OperandType.InlineValue, FlowControl.Next, OpCodeType.Primitive);
         /// <summary>
-        /// <c>*op0 = *op1</c>
+        /// Copy constructor.<br/>
+        /// Operand 0 must be a pointer, which may be a null pointer.<br/>
+        /// First, <c>op0</c> is set to newly constructed pointer of <c>op1</c>'s type (if <c>op1</c> is a pointer, then <c>*op1</c>'s type).<br/>
+        /// If Operand 1 is a pointer, <c>*op0 = *op1</c><br/>
+        /// Otherwise, <c>*op0 = op1</c>
         /// </summary>
         public static readonly OpCode Cpval = new OpCode("cpval", Code.Cpval, OperandType.InlineValueValue, FlowControl.Next, OpCodeType.Primitive);
         /// <summary>

@@ -147,8 +147,8 @@ namespace IFPSLib.Emit
                     "dll(\"{0}\",\"{1}\"{2}{3}) {4}",
                     DllName.Replace("\"", "\\\""),
                     ProcedureName.Replace("\"", "\\\""),
-                    DelayLoad ? "delayload, " : "",
-                    LoadWithAlteredSearchPath ? "alteredsearchpath" : "",
+                    DelayLoad ? ", delayload" : "",
+                    LoadWithAlteredSearchPath ? ", alteredsearchpath" : "",
                     base.ToString()
                 );
             }

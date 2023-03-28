@@ -41,6 +41,8 @@ namespace IFPSLib.Emit
         internal BytecodeOperandType m_Type;
         private Value m_Value;
 
+        public BytecodeOperandType Type => m_Type;
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private T EnsureType<T>(ref T value, BytecodeOperandType type)
         {
@@ -75,12 +77,14 @@ namespace IFPSLib.Emit
 
         public Operand(IVariable var)
         {
+            if (var == null) throw new ArgumentNullException(nameof(var));
             m_Type = BytecodeOperandType.Variable;
             m_Value.Variable = var;
         }
 
         public Operand(IVariable arr, uint immIdx)
         {
+            if (arr == null) throw new ArgumentNullException(nameof(arr));
             m_Type = BytecodeOperandType.IndexedImmediate;
             m_Value.Indexed.Variable = arr;
             m_Value.Indexed.Index.m_Immediate = new StrongBox<uint>(immIdx);
@@ -88,9 +92,17 @@ namespace IFPSLib.Emit
 
         public Operand(IVariable arr, IVariable varIdx)
         {
+            if (arr == null) throw new ArgumentNullException(nameof(arr));
+            if (varIdx == null) throw new ArgumentNullException(nameof(varIdx));
             m_Type = BytecodeOperandType.IndexedVariable;
             m_Value.Indexed.Variable = arr;
             m_Value.Indexed.Index.Variable = varIdx;
+        }
+
+        public Operand(Operand op)
+        {
+            m_Type = op.m_Type;
+            m_Value = op.m_Value;
         }
 
         public static Operand Create<TType>(Types.PrimitiveType type, TType value)
@@ -100,20 +112,31 @@ namespace IFPSLib.Emit
 
         public static Operand Create<TType>(TType value)
         {
+            // this is supposed to be for only primitives, but derived interfaces can also lead here.
+            // check for those derived interfaces.
+            switch (value)
+            {
+                case Types.IType type:
+                    return Create(type);
+                case IFunction fn:
+                    return Create(fn);
+                case IVariable var:
+                    return Create(var);
+            }
             return new Operand(TypedData.Create(value));
         }
 
-        internal static Operand Create(Types.IType value)
+        public static Operand Create(Types.IType value)
         {
             return new Operand(TypedData.Create(value));
         }
 
-        internal static Operand Create(Instruction value)
+        public static Operand Create(Instruction value)
         {
             return new Operand(TypedData.Create(value));
         }
 
-        internal static Operand Create(IFunction value)
+        public static Operand Create(IFunction value)
         {
             return new Operand(TypedData.Create(value));
         }

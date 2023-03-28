@@ -7,7 +7,7 @@ namespace IFPSLib.Emit
     /// <summary>
     /// Type of a PascalScript operand at the bytecode level.
     /// </summary>
-    internal enum BytecodeOperandType : byte
+    public enum BytecodeOperandType : byte
     {
         /// <summary>
         /// Operand refers to a local or global variable, or an argument.

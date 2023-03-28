@@ -85,6 +85,7 @@ namespace IFPSLib.Emit
         /// <param name="operands">Operands</param>
         internal Instruction(OpCode opcode, List<Operand> operands) : this(opcode)
         {
+            if (operands.Any((op) => op == null)) throw new ArgumentNullException("operand");
             m_Operands = operands;
         }
 
@@ -179,6 +180,16 @@ namespace IFPSLib.Emit
         /// <returns>New instruction</returns>
         public static Instruction Create<TType>(OpCode opcode, IVariable op0, TType val)
             => Create(opcode, Operand.Create(op0), Operand.Create(val));
+
+        /// <summary>
+        /// Creates a new instruction with two variable operands
+        /// </summary>
+        /// <param name="opcode">Opcode</param>
+        /// <param name="op0">First operand</param>
+        /// <param name="op1">Second operand</param>
+        /// <returns>New instruction</returns>
+        public static Instruction Create(OpCode opcode, IVariable op0, Operand op1)
+            => Create(opcode, Operand.Create(op0), op1);
 
         /// <summary>
         /// Creates a new branch instruction with an operand

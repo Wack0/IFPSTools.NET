@@ -160,6 +160,7 @@ namespace IFPSLib
         internal class SaveContext
         {
             internal readonly Dictionary<IType, int> tblTypes;
+            internal readonly Dictionary<PascalTypeCode, int> tblPrimitiveTypes;
             internal readonly Dictionary<IFunction, int> tblFunctions;
             internal readonly Dictionary<GlobalVariable, int> tblGlobals;
             internal readonly Dictionary<IFunction, long> tblFunctionOffsets;
@@ -168,13 +169,19 @@ namespace IFPSLib
             internal SaveContext(Script script)
             {
                 tblTypes = new Dictionary<IType, int>();
+                tblPrimitiveTypes = new Dictionary<PascalTypeCode, int>();
                 tblFunctions = new Dictionary<IFunction, int>();
                 tblGlobals = new Dictionary<GlobalVariable, int>();
                 tblFunctionOffsets = new Dictionary<IFunction, long>();
 
                 FileVersion = script.FileVersion;
 
-                for (int i = 0; i < script.Types.Count; i++) tblTypes.Add(script.Types[i], i);
+                for (int i = 0; i < script.Types.Count; i++)
+                {
+                    var type = script.Types[i];
+                    tblTypes.Add(type, i);
+                    if (type is PrimitiveType && !tblPrimitiveTypes.ContainsKey(type.BaseType)) tblPrimitiveTypes.Add(type.BaseType, i);
+                }
                 for (int i = 0; i < script.Functions.Count; i++) tblFunctions.Add(script.Functions[i], i);
                 for (int i = 0; i < script.GlobalVariables.Count; i++) tblGlobals.Add(script.GlobalVariables[i], i);
             }
@@ -185,11 +192,15 @@ namespace IFPSLib
                 {
                     throw new ArgumentOutOfRangeException(string.Format("Used an unknown type"));
                 }
-                if (!tblTypes.TryGetValue(type, out var idx))
+                if (tblTypes.TryGetValue(type, out var idx)) return idx;
+
+                // For a primitive type, check the primitives table too.
+                if (type is PrimitiveType)
                 {
-                    throw new KeyNotFoundException(string.Format("Used unreferenced type {0}, make sure it's added to the Types list.", type.Name));
+                    if (tblPrimitiveTypes.TryGetValue(type.BaseType, out idx)) return idx;
                 }
-                return idx;
+
+                throw new KeyNotFoundException(string.Format("Used unreferenced type {0}, make sure it's added to the Types list.", type.Name));
             }
 
             internal int GetFunctionIndex(IFunction function)

@@ -48,7 +48,8 @@ namespace IFPSLib.Emit
 
                 // Next are arguments. First char is the argument type ('@' means in, otherwise '!'), followed by the type index
                 ret.Arguments = new List<FunctionArgument>(decl.Length - 1);
-                for (int i = 1; i < decl.Length; i++) {
+                for (int i = 1; i < decl.Length; i++)
+                {
                     var arg = new FunctionArgument();
                     arg.ArgumentType = (decl[i][0] == ARGUMENT_TYPE_IN ? FunctionArgumentType.In : FunctionArgumentType.Out);
                     if (!int.TryParse(decl[i].Substring(1), out var idxType) || idxType < 0) arg.Type = null;
@@ -56,6 +57,11 @@ namespace IFPSLib.Emit
                     arg.Name = string.Format("Arg{0}", i);
                     ret.Arguments.Add(arg);
                 }
+            }
+            else
+            {
+                ret.Name = string.Format("func_{0:x}", ret.CodeOffset);
+                ret.Arguments = new List<FunctionArgument>();
             }
 
             return ret;

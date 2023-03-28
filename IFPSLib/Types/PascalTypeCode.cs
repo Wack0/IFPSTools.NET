@@ -60,8 +60,8 @@ namespace IFPSLib.Types
         {
             { typeof(byte), PascalTypeCode.U8 },
             { typeof(sbyte), PascalTypeCode.S8 },
-            { typeof(ushort), PascalTypeCode.S16 },
-            { typeof(short), PascalTypeCode.U16 },
+            { typeof(ushort), PascalTypeCode.U16 },
+            { typeof(short), PascalTypeCode.S16 },
             { typeof(uint), PascalTypeCode.U32 },
             { typeof(int), PascalTypeCode.S32 },
             { typeof(long), PascalTypeCode.S64 },

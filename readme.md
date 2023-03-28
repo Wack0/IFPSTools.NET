@@ -14,6 +14,7 @@ The API is modeled on dnlib's.
 A known bug is that the `Extended` primitive in IFPSLib will always refer internally to an 80-bit floating point value; any compiled IFPS script intended for an architecture that is not x86 (32-bit) will use 64-bit floating point values.
 
 ## IFPSAsmLib
+
 Library implementing an assembler for IFPS scripts.
 
 Depends on IFPSLib.
@@ -31,6 +32,18 @@ Usage: `ifpsdasm CompiledCode.bin` will disassemble `CompiledCode.bin` into `Com
 Wrapper around IFPSAsmLib.
 
 Usage: `ifpsasm file.txt` will assemble `file.txt` into `file.bin`
+
+## LibIFPSCC
+
+Implements an ANSI C compiler targeting PascalScript bytecode. Fork of [phisiart's C compiler](https://github.com/phisiart/C-Compiler).
+
+Further details below.
+
+## ifpscc
+
+Wrapper around LibIFPSCC.
+
+Usage: `ifpscc [-A|--disassemble] [-O=out.bin|--output=out.bin] files...` - where `--disassemble` writes the disassembly of the compiler output to stdout, and if `--output` is not passed, compiled script will be written to `[first C file passed].bin`.
 
 ## uninno
 
@@ -106,3 +119,66 @@ The `examples` directory contains a few example scripts, intended to be used wit
 It is possible to assemble or save a script which would be considered invalid by the runtime.
 
 Notably, even if it is not used by your script, a compiled script without the `primitive(Pointer)` type included is invalid; the runtime expects it to be present and calling any function in a script without such a type present leads to a null pointer dereference.
+
+Opcodes involving COM variants and COM interfaces can specifically compare the type name against `"IDISPATCH"`.
+
+Passing arrays to imported functions may require the type name of the array to start with `!OPENARRAY`.
+
+## LibIFPSCC details
+
+This compiler specifically targets PascalScript for x86 Windows (for Inno Setup). It has been tested for some time, but please report any bugs you find.
+
+A preprocessor is not implemented (might happen in the future, not sure).
+
+Static functions or typedefs will not be exported unless needed.
+
+No inbuilt runtime types or functions are imported by default, you will need to specify prototypes yourself. For a "generic" function like GetArrayLength/SetArrayLength, do not provide an argument list in the prototype.
+
+Unbounded arrays are allowed, as the runtime supports them.
+
+Initialiser lists are supported in function calls, where the type of the initialised object is the type of that function parameter.
+
+Additional types:
+- `__int64` becomes `primitive(S64)`
+- `__String` becomes `primitive(String)`
+- `unsigned __String` becomes `primitive(UnicodeString)`
+- `__variant` becomes `primitive(Variant)`
+- `__interface("guid")` specifies a COM interface
+- `void*` (and arrays of pointer, pointer to pointer, ...) becomes `primitive(U32)` internally.
+
+Because this is intended for use with `uninno` / etc, `class()` types are not (yet) supported.
+
+Casting to and from pointers are fully supported, thanks to some tricks.
+- `__fastcall` calling convention is Delphi style (on x86, first argument in `eax`). This means that calling an exported function from a DLL that performs no operation allows simple casting from reference to integer.
+  - `ntdll!RtlDebugPrintTimes` is used for this. On free builds of NT this is a no-op (and checked builds aren't a thing anymore)
+- For casting to a reference type, a `memcpy` (actually `ntdll!RtlMoveMemory`) is done to a null pointer.
+  - The runtime doesn't support pointer to pointer, we work around this by using `Pointer[1]`. This also works around null derefs in the runtime when doing almost anything to a null pointer.
+  - PascalScript objects have a pointer to the type information located before the object value, which pointers are always obtained to.
+  - Pointers additionally have an additional pointer afterwards, to the type being referenced: `struct Pointer { TypeHeader hdr; void* pValue; void* pType; }`
+  - Therefore, casting to a reference type is effectively done by: `void CreateValidPointer(u32 ptr, u32 pObjForType, ArrayOfPointer* outPtr) { memcpy(&outPtr[0]->pValue, &ptr, sizeof(ptr)); pObjForType -= sizeof(ptr); memcpy(&outPtr[0]->pType, &pObjForType, sizeof(ptr)); }`
+  - pObjForType is obtained by creating a new instance of the wanted type on the stack.
+
+Unions are supported by emitting a byte array of sizeof(union) and casting to the correct pointer type when needed.
+
+Types and functions support additional attributes. For example:
+
+- `typedef __variant __attribute(__open) OpenArrayOfVariant[];` - unbounded array of COM variants, which will be marshaled to a C array when passed to an imported function.
+- `typedef void * PVOID ; typedef PVOID __attribute(__open) OpenArrayOfConst[];` - unbounded array of any object, which will be marshaled correctly when passed to an imported function (only used for Format() function).
+- `typedef __interface("bca8b44d-aad6-3a86-8ab7-03349f4f2da2") __attribute(__dispatch) IClrType;` - COM interface; expected to be an IDispatch when in a variant.
+- `static IntPtr __attribute(__stdcall) __attribute(__dll("kernel32.dll", "LoadLibraryW")) LoadLibraryW(PWSTR filename);` - stdcall calling convention function, imported from kernel32.dll!LoadLibraryW
+- `static void __attribute(__internal) OleCheck(HRESULT hr);` - function implemented internally by the PascalScript runtime
+- `static HRESULT __attribute(__com(7)) __attribute(__stdcall) IClrObject_ToString(IClrMethodInfo this, IntPtr* ret);` - stdcall calling convention function, the 7th entry in the vtable of a COM object
+
+Initialised global variables are supported by emitting the initialisation instructions in a separate function (with an additional initialisation global boolean) and having all non-static functions call it first.  
+The script's entry point is also set to the initialiser function.
+
+An `__attribute(__open)` array of any pointer will be emitted as array of const (that is, open array of pointer).  
+"Implicit cast to pointer" for array-of-const element assignment will emit `cpval` instruction (that is, copy constructor), like the official PascalScript compiler.
+
+Because the PascalScript runtime is an interpreter, the compiler has a few optimisations for size (that is, number of instructions):
+
+- Removing un-needed nops where possible
+- Removing pops directly before ret (return instruction fixes up the stack itself)
+- Immediate operands are only spilled to stack when needed.
+  - For example, emitting `add Var1, UnicodeString("ABCD")` instead of (what the official PascalScript compiler does) `pushtype UnicodeString ; assign Var2, Var1 ; add Var2, UnicodeString("ABCD") ; assign Var1, Var2 ; pop`, saving 4 instructions.
+

@@ -64,6 +64,35 @@ namespace IFPSLib
             return (TType)Value;
         }
 
+        private static void TrimDecimalString(StringBuilder sb)
+        {
+            // find the "e" looking from the end
+            int idx = sb.Length;
+            for (int i = sb.Length - 1; i >= 0; i--)
+            {
+                if (sb[i] == 'e')
+                {
+                    idx = i - 1;
+                    break;
+                }
+            }
+
+            // remove while character is '0'
+            int length = 0;
+            while (idx >= 0 && sb[idx] == '0')
+            {
+                length++;
+                idx--;
+            }
+            if (sb[idx] == '.') // need at least one zero
+            {
+                length--;
+                idx++;
+            }
+            if (length == 0) return;
+            sb.Remove(idx + 1, length);
+        }
+
         internal static TypedData Load(BinaryReader br, Script script)
         {
             var idxType = br.Read<uint>();
@@ -98,8 +127,13 @@ namespace IFPSLib
                 case PascalTypeCode.Double:
                     return new TypedData(type, br.Read<double>());
                 case PascalTypeCode.Extended:
-                    // BUGBUG: there must be something beter than this... but for now, it'll do
-                    return new TypedData(type, decimal.Parse(br.Read<ExtF80>().ToString()));
+                    {
+                        // BUGBUG: there must be something beter than this... but for now, it'll do
+                        var sb = new StringBuilder();
+                        ExtF80.PrintFloat80(sb, br.Read<ExtF80>(), PrintFloatFormat.ScientificFormat, 19);
+                        TrimDecimalString(sb);
+                        return new TypedData(type, decimal.Parse(sb.ToString(), System.Globalization.NumberStyles.Float));
+                    }
 
                 case PascalTypeCode.Currency:
                     return new TypedData(type, new CurrencyWrapper(decimal.FromOACurrency(br.Read<long>())));
