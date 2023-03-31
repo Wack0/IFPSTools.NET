@@ -186,6 +186,7 @@ namespace IFPSLib.Emit
         /// <summary>
         /// Operand 1 must be a <see cref="Types.ClassType"/>, operand 2 is a <see cref="Types.TypeType"/> that must be a <see cref="Types.ClassType"/>
         /// Checks if operand 1 is of the <see cref="Types.ClassType"/> referenced by operand 2.
+        /// Operand 2 can also be a variable of type <see cref="UInt32"/> containing the index of the type to compare against.
         /// </summary>
         public static readonly OpCode Is = new OpCode("is", Code.Is, OperandType.InlineCmpValueType, FlowControl.Next, OpCodeType.Macro);
 

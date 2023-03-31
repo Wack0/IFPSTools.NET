@@ -29,6 +29,8 @@ namespace IFPSLib.Emit
 
         private List<Operand> m_Operands = new List<Operand>();
 
+        private static readonly Operand s_opU32 = Operand.Create<uint>(0);
+
         /// <summary>
         /// Gets or sets the operand at the specified index.
         /// </summary>
@@ -380,6 +382,13 @@ namespace IFPSLib.Emit
             return FixBranchOffset(br, br.Read<uint>());
         }
 
+        private static Operand ReadTypeForCmpValueType(BinaryReader br, Script script, ScriptFunction function)
+        {
+            var operand = Operand.LoadValue(br, script, function);
+            if (operand.Type == BytecodeOperandType.Immediate) return Operand.Create(script.Types[(int)operand.ImmediateAs<uint>()]);
+            return operand;
+        }
+
         internal static Instruction Load(BinaryReader br, Script script, ScriptFunction function)
         {
             var ret = new Instruction();
@@ -449,7 +458,7 @@ namespace IFPSLib.Emit
                     ret.m_Operands = new List<Operand>(3) {
                         Operand.LoadValue(br, script, function),
                         Operand.LoadValue(br, script, function),
-                        Operand.Create(script.Types[(int)br.Read<uint>()])
+                        ReadTypeForCmpValueType(br, script, function)
                     };
                     break;
                 case OperandType.InlineEH:
@@ -565,7 +574,7 @@ namespace IFPSLib.Emit
                         ret += m_Operands[0].Size + m_Operands[1].Size + m_Operands[2].Size;
                         break;
                     case OperandType.InlineCmpValueType:
-                        ret += m_Operands[0].Size + m_Operands[1].Size + sizeof(int);
+                        ret += m_Operands[0].Size + m_Operands[1].Size + (m_Operands[2].Type != BytecodeOperandType.Immediate ? m_Operands[2] : s_opU32).Size;
                         break;
                     case OperandType.InlineEH:
                         ret += sizeof(uint) * 4;
@@ -664,7 +673,14 @@ namespace IFPSLib.Emit
                 case OperandType.InlineCmpValueType:
                     m_Operands[0].Save(bw, ctx);
                     m_Operands[1].Save(bw, ctx);
-                    bw.Write<int>(ctx.GetTypeIndex(m_Operands[2].ImmediateAs<IType>()));
+                    if (m_Operands[2].Type == BytecodeOperandType.Immediate)
+                    {
+                        Operand.Create((uint)ctx.GetTypeIndex(m_Operands[2].ImmediateAs<IType>())).Save(bw, ctx);
+                    }
+                    else
+                    {
+                        m_Operands[2].Save(bw, ctx);
+                    }
                     break;
                 case OperandType.InlineEH:
                     bw.Write<uint>(GetEHOffset(m_Operands[0], table));

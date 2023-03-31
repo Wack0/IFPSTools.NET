@@ -39,7 +39,7 @@ namespace IFPSLib.Emit
         /// </summary>
         InlineCmpValue,
         /// <summary>
-        /// Two <see cref="InlineValue"/>s followed by <see cref="InlineType"/>
+        /// Three <see cref="InlineValue"/>s where the last is a <see cref="UInt32"/> type index
         /// </summary>
         InlineCmpValueType,
         /// <summary>
