@@ -313,7 +313,11 @@ namespace IFPSLib
             switch (Type.BaseType)
             {
                 case PascalTypeCode.Type:
-                    return ValueAs<IType>().Name;
+                    {
+                        var type = ValueAs<IType>();
+                        if (type is UnknownType) return "$UNKNOWN";
+                        return type.Name;
+                    }
                 case PascalTypeCode.Instruction:
                     if (Value == null) return "null";
                     return string.Format("loc_{0}", ValueAs<Emit.Instruction>().Offset.ToString("x"));

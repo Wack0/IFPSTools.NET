@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Collections;
+using System.Net;
+using System.Data;
 
 namespace IFPSLib.Emit
 {
@@ -380,6 +382,31 @@ namespace IFPSLib.Emit
             return FixBranchOffset(br, br.Read<uint>());
         }
 
+        private static T TryReadIndex<T>(BinaryReader br, IList<T> list)
+        {
+            var index = (int)br.Read<uint>();
+            if (index < list.Count) return list[index];
+            return default;
+        }
+
+        private static Operand TryReadFunction(BinaryReader br, Script script)
+        {
+            var func = TryReadIndex(br, script.Functions);
+            if (func == null) func = new ScriptFunction()
+            {
+                Name = "INVALID",
+                Arguments = new List<FunctionArgument>()
+            };
+            return Operand.Create(func);
+        }
+
+        private static Operand TryReadType(BinaryReader br, Script script)
+        {
+            var type = TryReadIndex(br, script.Types);
+            if (type == null) type = UnknownType.Instance;
+            return Operand.Create(type);
+        }
+
         internal static Instruction Load(BinaryReader br, Script script, ScriptFunction function)
         {
             var ret = new Instruction();
@@ -437,10 +464,10 @@ namespace IFPSLib.Emit
                     ret.m_Operands = new List<Operand>(2) { new Operand(new TypedData(InstructionType.Instance, FixBranchOffset(br, brOffset))), valOp };
                     break;
                 case OperandType.InlineFunction:
-                    ret.m_Operands = new List<Operand>(1) { Operand.Create(script.Functions[(int)br.Read<uint>()]) };
+                    ret.m_Operands = new List<Operand>(1) { TryReadFunction(br, script) };
                     break;
                 case OperandType.InlineType:
-                    ret.m_Operands = new List<Operand>(1) { Operand.Create(script.Types[(int)br.Read<uint>()]) };
+                    ret.m_Operands = new List<Operand>(1) { TryReadType(br, script) };
                     break;
                 case OperandType.InlineCmpValue:
                     ret.m_Operands = new List<Operand>(3) { Operand.LoadValue(br, script, function), Operand.LoadValue(br, script, function), Operand.LoadValue(br, script, function) };
@@ -449,7 +476,7 @@ namespace IFPSLib.Emit
                     ret.m_Operands = new List<Operand>(3) {
                         Operand.LoadValue(br, script, function),
                         Operand.LoadValue(br, script, function),
-                        Operand.Create(script.Types[(int)br.Read<uint>()])
+                        TryReadType(br, script)
                     };
                     break;
                 case OperandType.InlineEH:
@@ -466,7 +493,7 @@ namespace IFPSLib.Emit
                     break;
                 case OperandType.InlineTypeVariable:
                     ret.m_Operands = new List<Operand>(2) {
-                        Operand.Create(script.Types[(int)br.Read<uint>()]),
+                        TryReadType(br, script),
                         new Operand(VariableBase.Load(br, script, function))
                     };
                     return ret;

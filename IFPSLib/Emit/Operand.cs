@@ -105,6 +105,12 @@ namespace IFPSLib.Emit
             m_Value = op.m_Value;
         }
 
+        private Operand(Exception ex = null)
+        {
+            m_Type = BytecodeOperandType.Invalid;
+            if (ex != null) m_Value.Immediate = new TypedData(Types.UnknownType.Instance, ex);
+        }
+
         public static Operand Create<TType>(Types.PrimitiveType type, TType value)
         {
             return new Operand(TypedData.Create(type, value));
@@ -156,31 +162,39 @@ namespace IFPSLib.Emit
             return new Operand(arr, varIdx);
         }
 
+        public static Operand CreateInvalid(Exception ex = null)
+        {
+            return new Operand(ex);
+        }
+
         internal static Operand LoadValue(BinaryReader br, Script script, ScriptFunction function)
         {
             var type = (BytecodeOperandType)br.ReadByte();
 
-            switch (type)
+            try
             {
-                case BytecodeOperandType.Variable:
-                    return new Operand(VariableBase.Load(br, script, function));
-                case BytecodeOperandType.Immediate:
-                    return new Operand(TypedData.Load(br, script));
-                case BytecodeOperandType.IndexedImmediate:
-                    {
-                        var variable = VariableBase.Load(br, script, function);
-                        var idx = br.Read<uint>();
-                        return Create(variable, idx);
-                    }
-                case BytecodeOperandType.IndexedVariable:
-                    {
-                        var variable = VariableBase.Load(br, script, function);
-                        var idx = VariableBase.Load(br, script, function);
-                        return new Operand(variable, idx);
-                    }
-                default:
-                    throw new ArgumentOutOfRangeException(string.Format("Invalid operand type {0}", (byte)type));
-            }
+                switch (type)
+                {
+                    case BytecodeOperandType.Variable:
+                        return new Operand(VariableBase.Load(br, script, function));
+                    case BytecodeOperandType.Immediate:
+                        return new Operand(TypedData.Load(br, script));
+                    case BytecodeOperandType.IndexedImmediate:
+                        {
+                            var variable = VariableBase.Load(br, script, function);
+                            var idx = br.Read<uint>();
+                            return Create(variable, idx);
+                        }
+                    case BytecodeOperandType.IndexedVariable:
+                        {
+                            var variable = VariableBase.Load(br, script, function);
+                            var idx = VariableBase.Load(br, script, function);
+                            return new Operand(variable, idx);
+                        }
+                    default:
+                        throw new ArgumentOutOfRangeException(string.Format("Invalid operand type {0}", (byte)type));
+                }
+            } catch (Exception ex) { return new Operand(ex); }
         }
 
         public override string ToString()
@@ -195,6 +209,8 @@ namespace IFPSLib.Emit
                     return String.Format("{0}[{1}]", IndexedVariable.Name, IndexImmediate);
                 case BytecodeOperandType.IndexedVariable:
                     return String.Format("{0}[{1}]", IndexedVariable.Name, IndexVariable.Name);
+                case BytecodeOperandType.Invalid:
+                    return "$INVALID";
                 default:
                     return "";
             }

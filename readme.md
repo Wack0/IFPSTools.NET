@@ -19,7 +19,7 @@ Library implementing an assembler for IFPS scripts.
 
 Depends on IFPSLib.
 
-Assembling the output of IFPSLib's disassembler is expected to output an identical binary, not doing so is considered a bug.
+Assembling the output of IFPSLib's disassembler (for sane bytecode with no invalid instructions/operands) is expected to output an identical binary, not doing so is considered a bug.
 
 ## ifpsdasm
 
