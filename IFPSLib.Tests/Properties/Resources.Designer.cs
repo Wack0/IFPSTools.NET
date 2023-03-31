@@ -135,5 +135,39 @@ namespace IFPSLib.Tests.Properties {
                 return ResourceManager.GetString("CompiledCodeDisasm_v22", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] TestIsInsn {
+            get {
+                object obj = ResourceManager.GetObject("TestIsInsn", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .version 23
+        ///
+        ///.type primitive(Pointer) Pointer
+        ///.type primitive(S32) S32
+        ///.type primitive(U32) U32
+        ///.type primitive(U8) U8
+        ///
+        ///.function(export) U8 INITIALIZEUNINSTALL()
+        ///	pushtype U32 ; StackCount = 1
+        ///	pushtype U32 ; StackCount = 2
+        ///	is Var1, Var2, S32
+        ///	is Var1, Var2, Var1
+        ///	ret
+        ///
+        ///
+        ///.
+        /// </summary>
+        internal static string TestIsInsnDisasm {
+            get {
+                return ResourceManager.GetString("TestIsInsnDisasm", resourceCulture);
+            }
+        }
     }
 }

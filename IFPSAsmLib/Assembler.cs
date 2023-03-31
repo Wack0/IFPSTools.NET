@@ -693,11 +693,20 @@ namespace IFPSAsmLib
                         var op1 = ParseOperandValue(next, function, types, globals, functions, aliases, defines);
                         if (next.Next == null) next.ThrowInvalid();
                         next = next.Next;
-                        next.ExpectValidName();
-                        next.EnsureNoNextChild();
-                        if (!types.TryGetValue(next.Value, out var typeOp)) next.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
+                        Operand op2 = null;
+                        try
+                        {
+                            op2 = ParseOperandValue(next, function, types, globals, functions, aliases, defines);
+                        }
+                        catch
+                        {
+                            next.ExpectValidName();
+                            next.EnsureNoNextChild();
+                            if (!types.TryGetValue(next.Value, out var typeOp)) next.ThrowInvalid(string.Format("In function \"{0}\": Referenced unknown type", function.Name));
+                            op2 = Operand.Create(typeOp);
+                        }
                         if (next.Next != null) next.Next.ThrowInvalid();
-                        return Instruction.Create(opcode, op0, op1, typeOp);
+                        return Instruction.Create(opcode, op0, op1, op2);
                     }
                 case OperandType.InlineTypeVariable:
                     {

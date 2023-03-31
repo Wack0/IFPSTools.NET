@@ -10,18 +10,16 @@ namespace IFPSLib.Tests
     [TestClass]
     public class ScriptTest
     {
-        private static readonly string origB64 = Convert.ToBase64String(Resources.CompiledCode);
-        private static readonly string origB64_22 = Convert.ToBase64String(Resources.CompiledCode_v22);
-
-        [TestMethod]
-        public void TestLoadSave()
+        private void TestLoadSaveImpl(byte[] compiled)
         {
+            // Convert to base64.
+            string orig = Convert.ToBase64String(compiled);
             // Load the script.
-            var script = Script.Load(Resources.CompiledCode);
+            var script = Script.Load(compiled);
             // Ensure it's not null.
             Assert.IsNotNull(script);
             // For an official script (compiled by inno setup), the entrypoint is the first function.
-            Assert.AreEqual(script.EntryPoint, script.Functions[0]);
+            if (script.EntryPoint != null) Assert.AreEqual(script.EntryPoint, script.Functions[0]);
             // Save the script.
             var savedBytes = script.Save();
             // Convert to base64 for later.
@@ -33,50 +31,53 @@ namespace IFPSLib.Tests
             // Ensure both saved scripts equal each other.
             Assert.AreEqual(saved, savedTwice);
             // Ensure the saved script equals the original.
-            Assert.AreEqual(saved, origB64);
+            Assert.AreEqual(saved, orig);
             // Ensure the disassemblies are equal.
             Assert.AreEqual(script.Disassemble(), scriptSaved.Disassemble());
+        }
+
+        private void TestAsmImpl(string disasm, byte[] compiled)
+        {
+            string orig = Convert.ToBase64String(compiled);
+            var script = Assembler.Assemble(disasm);
+            var savedB64 = Convert.ToBase64String(script.Save());
+            Assert.AreEqual(savedB64, orig);
+        }
+
+        [TestMethod]
+        public void TestLoadSave()
+        {
+            TestLoadSaveImpl(Resources.CompiledCode);
         }
 
         [TestMethod]
         public void TestAsm()
         {
-            var script = Assembler.Assemble(Resources.CompiledCodeDisasm);
-            var savedB64 = Convert.ToBase64String(script.Save());
-            Assert.AreEqual(savedB64, origB64);
+            TestAsmImpl(Resources.CompiledCodeDisasm, Resources.CompiledCode);
         }
 
         [TestMethod]
         public void TestLoadSaveV22()
         {
-            // Load the script.
-            var script = Script.Load(Resources.CompiledCode_v22);
-            // Ensure it's not null.
-            Assert.IsNotNull(script);
-            // For an official script (compiled by inno setup), the entrypoint is the first function.
-            Assert.AreEqual(script.EntryPoint, script.Functions[0]);
-            // Save the script.
-            var savedBytes = script.Save();
-            // Convert to base64 for later.
-            var saved = Convert.ToBase64String(savedBytes);
-            // Load the saved script.
-            var scriptSaved = Script.Load(savedBytes);
-            // Save again.
-            var savedTwice = Convert.ToBase64String(scriptSaved.Save());
-            // Ensure both saved scripts equal each other.
-            Assert.AreEqual(saved, savedTwice);
-            // Ensure the saved script equals the original.
-            Assert.AreEqual(saved, origB64_22);
-            // Ensure the disassemblies are equal.
-            Assert.AreEqual(script.Disassemble(), scriptSaved.Disassemble());
+            TestLoadSaveImpl(Resources.CompiledCode_v22);
         }
 
         [TestMethod]
         public void TestAsmV22()
         {
-            var script = Assembler.Assemble(Resources.CompiledCodeDisasm_v22);
-            var savedB64 = Convert.ToBase64String(script.Save());
-            Assert.AreEqual(savedB64, origB64);
+            TestAsmImpl(Resources.CompiledCodeDisasm_v22, Resources.CompiledCode_v22);
+        }
+
+        [TestMethod]
+        public void TestLoadSaveIs()
+        {
+            TestLoadSaveImpl(Resources.TestIsInsn);
+        }
+
+        [TestMethod]
+        public void TestAsmIs()
+        {
+            TestAsmImpl(Resources.TestIsInsnDisasm, Resources.TestIsInsn);
         }
     }
 }

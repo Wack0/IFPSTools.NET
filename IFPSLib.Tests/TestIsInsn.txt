@@ -1,0 +1,15 @@
+.version 23
+
+.type primitive(Pointer) Pointer
+.type primitive(S32) S32
+.type primitive(U32) U32
+.type primitive(U8) U8
+
+.function(export) U8 INITIALIZEUNINSTALL()
+	pushtype U32 ; StackCount = 1
+	pushtype U32 ; StackCount = 2
+	is Var1, Var2, S32
+	is Var1, Var2, Var1
+	ret
+
+

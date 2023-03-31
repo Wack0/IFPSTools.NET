@@ -250,7 +250,8 @@ namespace IFPSLib.Emit
         /// <returns>New instruction</returns>
         public static Instruction Create(OpCode opcode, Operand op0, Operand op1, Operand op2)
         {
-            if (opcode.OperandType != OperandType.InlineCmpValue) throw new ArgumentOutOfRangeException(nameof(opcode), "Opcode does not have three value operands");
+            if (opcode.OperandType != OperandType.InlineCmpValue && opcode.OperandType != OperandType.InlineCmpValueType)
+                throw new ArgumentOutOfRangeException(nameof(opcode), "Opcode does not have three value operands");
             return new Instruction(opcode, new List<Operand>(3) { op0, op1, op2 });
         }
 
