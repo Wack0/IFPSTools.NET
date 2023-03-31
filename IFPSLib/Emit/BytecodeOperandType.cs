@@ -24,10 +24,6 @@ namespace IFPSLib.Emit
         /// <summary>
         /// Operand refers to an element of an indexed variable, where the index is specified as a local or global variable, or an argument.
         /// </summary>
-        IndexedVariable,
-        /// <summary>
-        /// Operand is invalid. Stops execution.
-        /// </summary>
-        Invalid = 0xff
+        IndexedVariable
     }
 }
