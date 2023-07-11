@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 
 namespace LexicalAnalysis {
     /// <summary>
@@ -166,16 +167,16 @@ namespace LexicalAnalysis {
             );
 
         private State _state;
-        private String _scanned;
+        private StringBuilder _scanned;
 
         public FSAOperator() {
             this._state = State.START;
-            this._scanned = "";
+            this._scanned = new StringBuilder();
         }
 
         public override sealed void Reset() {
             this._state = State.START;
-            this._scanned = "";
+            this._scanned.Clear();
         }
 
         public override sealed FSAStatus GetStatus() {
@@ -192,11 +193,11 @@ namespace LexicalAnalysis {
         }
 
         public override sealed Token RetrieveToken() {
-            return new TokenOperator(TokenOperator.Operators[this._scanned.Substring(0, this._scanned.Length - 1)]);
+            return new TokenOperator(TokenOperator.Operators[this._scanned.ToString(0, this._scanned.Length - 1)]);
         }
 
         public override sealed void ReadChar(Char ch) {
-            this._scanned = this._scanned + ch;
+            this._scanned = this._scanned.Append(ch);
             switch (this._state) {
                 case State.END:
                 case State.ERROR:
@@ -386,7 +387,7 @@ namespace LexicalAnalysis {
         }
 
         public override sealed void ReadEOF() {
-            this._scanned = this._scanned + '0';
+            this._scanned = this._scanned.Append('0');
             switch (this._state) {
                 case State.FINISH:
                 case State.SUB:

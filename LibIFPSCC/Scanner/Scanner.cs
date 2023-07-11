@@ -36,21 +36,31 @@ namespace LexicalAnalysis {
         private IEnumerable<Token> Lex() {
             var tokens = new List<Token>();
             int line = 1, column = 1, lastColumn = column;
+            char lastChr = '\0';
             for (Int32 i = 0; i < this.Source.Length; ++i) {
-                if (i > 0 && this.Source[i - 1] == '\n')
+                if (lastChr == '\n')
                 {
                     line++;
                     lastColumn = 1;
                     column = 1;
                 }
                 else column++;
-                this.FSAs.ForEach(fsa => fsa.ReadChar(this.Source[i]));
+                bool isRunning = false;
+                int endIdx = -1;
+                var chr = Source[i];
+                for (int fsaIdx = 0; fsaIdx < FSAs.Count; fsaIdx++)
+                {
+                    var fsa = FSAs[fsaIdx];
+                    fsa.ReadChar(chr);
+                    var status = fsa.GetStatus();
+                    if (status == FSAStatus.RUNNING) isRunning = true;
+                    else if (endIdx == -1 && status == FSAStatus.END) endIdx = fsaIdx;
+                }
 
                 // if no running
-                if (this.FSAs.FindIndex(fsa => fsa.GetStatus() == FSAStatus.RUNNING) == -1) {
-                    Int32 idx = this.FSAs.FindIndex(fsa => fsa.GetStatus() == FSAStatus.END);
-                    if (idx != -1) {
-                        Token token = this.FSAs[idx].RetrieveToken();
+                if (!isRunning) {
+                    if (endIdx != -1) {
+                        Token token = this.FSAs[endIdx].RetrieveToken();
                         if (token.Kind != TokenKind.NONE) {
                             token.Line = line;
                             token.Column = lastColumn;
@@ -58,19 +68,26 @@ namespace LexicalAnalysis {
                             tokens.Add(token);
                         }
                         i--; column--;
-                        if (this.Source[i] == '\n') line--;
-                        this.FSAs.ForEach(fsa => fsa.Reset());
+                        if (lastChr == '\n') line--;
+                        foreach (var fsa in FSAs) fsa.Reset();
                     } else {
                         Console.WriteLine("error");
                     }
                 }
+                if (!isRunning || endIdx == -1) lastChr = chr;
             }
 
-            this.FSAs.ForEach(fsa => fsa.ReadEOF());
+            var endIdx2 = -1;
+            for (int fsaIdx = 0; fsaIdx < FSAs.Count; fsaIdx++)
+            {
+                var fsa = FSAs[fsaIdx];
+                fsa.ReadEOF();
+                if (endIdx2 != -1) continue;
+                if (fsa.GetStatus() == FSAStatus.END) endIdx2 = fsaIdx;
+            }
             // find END
-            Int32 idx2 = this.FSAs.FindIndex(fsa => fsa.GetStatus() == FSAStatus.END);
-            if (idx2 != -1) {
-                Token token = this.FSAs[idx2].RetrieveToken();
+            if (endIdx2 != -1) {
+                Token token = this.FSAs[endIdx2].RetrieveToken();
                 if (token.Kind != TokenKind.NONE) {
                     token.Line = line;
                     token.Column = column + 1;

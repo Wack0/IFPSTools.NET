@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace LexicalAnalysis {
     /// <summary>
@@ -60,7 +61,7 @@ namespace LexicalAnalysis {
             DPL
         };
 
-        private String _raw;
+        private StringBuilder _raw;
         private Int64 _intPart;
         private Int64 _fracPart;
         private Int64 _fracCount;
@@ -77,7 +78,7 @@ namespace LexicalAnalysis {
             this._expPart = 0;
             this._suffix = TokenFloat.FloatSuffix.NONE;
             this._expPos = true;
-            this._raw = "";
+            this._raw = new StringBuilder();
         }
 
         public override void Reset() {
@@ -88,7 +89,7 @@ namespace LexicalAnalysis {
             this._expPart = 0;
             this._suffix = TokenFloat.FloatSuffix.NONE;
             this._expPos = true;
-            this._raw = "";
+            this._raw.Clear();
         }
 
         public override FSAStatus GetStatus() {
@@ -111,11 +112,11 @@ namespace LexicalAnalysis {
             } else {
                 val = (this._intPart + this._fracPart * Math.Pow(0.1, this._fracCount)) * Math.Pow(10, -this._expPart);
             }
-            return new TokenFloat(val, this._suffix, this._raw.Substring(0, this._raw.Length - 1));
+            return new TokenFloat(val, this._suffix, this._raw.ToString(0, this._raw.Length - 1));
         }
 
         public override void ReadChar(Char ch) {
-            this._raw += ch;
+            this._raw.Append(ch);
             switch (this._state) {
                 case State.ERROR:
                 case State.END:

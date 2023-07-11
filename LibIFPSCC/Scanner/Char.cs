@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace LexicalAnalysis {
     /// <summary>
@@ -61,7 +62,7 @@ namespace LexicalAnalysis {
         }
 
         private State _state;
-        private String _scanned;
+        private StringBuilder _scanned;
 
         // quote : Char
         // ============
@@ -71,11 +72,11 @@ namespace LexicalAnalysis {
         public FSAChar(Char quote) {
             this._state = State.START;
             this._quote = quote;
-            this._scanned = "";
+            this._scanned = new StringBuilder();
         }
 
         public override void Reset() {
-            this._scanned = "";
+            this._scanned.Clear();
             this._state = State.START;
         }
 
@@ -106,7 +107,7 @@ namespace LexicalAnalysis {
         // ==========================
         // 
         public String RetrieveRaw() {
-            return this._scanned.Substring(0, this._scanned.Length - 1);
+            return this._scanned.ToString(0, this._scanned.Length - 1);
         }
 
         // RetrieveChar : () -> Char
@@ -157,7 +158,7 @@ namespace LexicalAnalysis {
         // Implementation of the FSA
         // 
         public override void ReadChar(Char ch) {
-            this._scanned = this._scanned + ch;
+            this._scanned = this._scanned.Append(ch);
             switch (this._state) {
                 case State.END:
                 case State.ERROR:
@@ -230,7 +231,7 @@ namespace LexicalAnalysis {
         // ==================
         // 
         public override void ReadEOF() {
-            this._scanned = this._scanned + '0';
+            this._scanned = this._scanned.Append('0');
             switch (this._state) {
                 case State.C:
                 case State.SO:

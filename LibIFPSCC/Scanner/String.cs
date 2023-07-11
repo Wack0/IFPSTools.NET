@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace LexicalAnalysis {
     /// <summary>
@@ -54,22 +55,22 @@ namespace LexicalAnalysis {
 
         private State _state;
         private readonly FSAChar _fsachar;
-        private String _val;
-        private String _raw;
+        private StringBuilder _val;
+        private StringBuilder _raw;
         private bool unicode = false;
 
         public FSAString() {
             this._state = State.START;
             this._fsachar = new FSAChar('\"');
-            this._raw = "";
-            this._val = "";
+            this._raw = new StringBuilder();
+            this._val = new StringBuilder();
         }
 
         public override void Reset() {
             this._state = State.START;
             this._fsachar.Reset();
-            this._raw = "";
-            this._val = "";
+            this._raw.Clear();
+            this._val.Clear();
             unicode = false;
         }
 
@@ -87,8 +88,8 @@ namespace LexicalAnalysis {
         }
 
         public override Token RetrieveToken() {
-            if (unicode) return new TokenUnicodeString(this._val, this._raw);
-            return new TokenString(this._val, this._raw);
+            if (unicode) return new TokenUnicodeString(this._val.ToString(), this._raw.ToString());
+            return new TokenString(this._val.ToString(), this._raw.ToString());
         }
 
         public override void ReadChar(Char ch) {
@@ -129,8 +130,8 @@ namespace LexicalAnalysis {
                         switch (this._fsachar.GetStatus()) {
                             case FSAStatus.END:
                                 this._state = State.Q;
-                                this._val = this._val + this._fsachar.RetrieveChar();
-                                this._raw = this._raw + this._fsachar.RetrieveRaw();
+                                this._val.Append(this._fsachar.RetrieveChar());
+                                this._raw.Append(this._fsachar.RetrieveRaw());
                                 this._fsachar.Reset();
                                 ReadChar(ch);
                                 break;

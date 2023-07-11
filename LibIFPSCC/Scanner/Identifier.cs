@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 
 namespace LexicalAnalysis {
     /// <summary>
@@ -24,16 +26,16 @@ namespace LexicalAnalysis {
             ID
         };
         private State _state;
-        private String _scanned;
+        private StringBuilder _scanned;
 
         public FSAIdentifier() {
             this._state = State.START;
-            this._scanned = "";
+            this._scanned = new StringBuilder();
         }
 
         public override void Reset() {
             this._state = State.START;
-            this._scanned = "";
+            this._scanned.Clear();
         }
 
         public override FSAStatus GetStatus() {
@@ -50,7 +52,7 @@ namespace LexicalAnalysis {
         }
 
         public override Token RetrieveToken() {
-            String name = this._scanned.Substring(0, this._scanned.Length - 1);
+            String name = this._scanned.ToString(0, this._scanned.Length - 1);
             if (TokenKeyword.Keywords.ContainsKey(name)) {
                 return new TokenKeyword(TokenKeyword.Keywords[name]);
             }
@@ -58,7 +60,7 @@ namespace LexicalAnalysis {
         }
 
         public override void ReadChar(Char ch) {
-            this._scanned = this._scanned + ch;
+            this._scanned = this._scanned.Append(ch);
             switch (this._state) {
                 case State.END:
                 case State.ERROR:
@@ -82,7 +84,7 @@ namespace LexicalAnalysis {
         }
 
         public override void ReadEOF() {
-            this._scanned = this._scanned + '0';
+            this._scanned = this._scanned.Append('0');
             switch (this._state) {
                 case State.ID:
                     this._state = State.END;

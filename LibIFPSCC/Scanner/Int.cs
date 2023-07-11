@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace LexicalAnalysis {
     /// <summary>
@@ -69,21 +70,21 @@ namespace LexicalAnalysis {
         };
 
         private Int64 _val;
-        private String _raw;
+        private StringBuilder _raw;
         private TokenInt.IntSuffix _suffix;
         private State _state;
 
         public FSAInt() {
             this._state = State.START;
             this._val = 0;
-            this._raw = "";
+            this._raw = new StringBuilder();
             this._suffix = TokenInt.IntSuffix.NONE;
         }
 
         public override void Reset() {
             this._state = State.START;
             this._val = 0;
-            this._raw = "";
+            this._raw.Clear();
             this._suffix = TokenInt.IntSuffix.NONE;
         }
 
@@ -101,11 +102,11 @@ namespace LexicalAnalysis {
         }
 
         public override Token RetrieveToken() {
-            return new TokenInt(this._val, this._suffix, this._raw.Substring(0, this._raw.Length - 1));
+            return new TokenInt(this._val, this._suffix, this._raw.ToString(0, this._raw.Length - 1));
         }
 
         public override void ReadChar(Char ch) {
-            this._raw += ch;
+            this._raw.Append(ch);
             switch (this._state) {
                 case State.ERROR:
                 case State.END:
