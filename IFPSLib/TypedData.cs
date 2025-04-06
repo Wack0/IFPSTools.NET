@@ -8,6 +8,7 @@ using SharpFloat.FloatingPoint;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using System.Globalization;
 
 namespace IFPSLib
 {
@@ -132,7 +133,7 @@ namespace IFPSLib
                         var sb = new StringBuilder();
                         ExtF80.PrintFloat80(sb, br.Read<ExtF80>(), PrintFloatFormat.ScientificFormat, 19);
                         TrimDecimalString(sb);
-                        return new TypedData(type, decimal.Parse(sb.ToString(), System.Globalization.NumberStyles.Float));
+                        return new TypedData(type, decimal.Parse(sb.ToString(), System.Globalization.NumberStyles.Float, new CultureInfo("en")));
                     }
 
                 case PascalTypeCode.Currency:
@@ -207,7 +208,7 @@ namespace IFPSLib
                     WriteValue<double>(bw);
                     break;
                 case PascalTypeCode.Extended:
-                    if (!ExtF80.TryParse(ValueAs<decimal>().ToString(), out var extf))
+                    if (!ExtF80.TryParse(ValueAs<decimal>().ToString(new CultureInfo("en")), out var extf))
                         throw new ArgumentOutOfRangeException("Value {0} cannot fit into an 80-bit floating point number");
                     bw.Write(extf);
                     break;
