@@ -17,6 +17,7 @@ namespace IFPSLib
     /// </summary>
     public class TypedData
     {
+        private static readonly CultureInfo s_Culture = new CultureInfo("en");
         public IType Type { get; }
         public object Value { get; }
 
@@ -129,11 +130,11 @@ namespace IFPSLib
                     return new TypedData(type, br.Read<double>());
                 case PascalTypeCode.Extended:
                     {
-                        // BUGBUG: there must be something beter than this... but for now, it'll do
+                        // BUGBUG: there must be something better than this... but for now, it'll do
                         var sb = new StringBuilder();
                         ExtF80.PrintFloat80(sb, br.Read<ExtF80>(), PrintFloatFormat.ScientificFormat, 19);
                         TrimDecimalString(sb);
-                        return new TypedData(type, decimal.Parse(sb.ToString(), System.Globalization.NumberStyles.Float, new CultureInfo("en")));
+                        return new TypedData(type, decimal.Parse(sb.ToString(), NumberStyles.Float, s_Culture));
                     }
 
                 case PascalTypeCode.Currency:
@@ -208,7 +209,7 @@ namespace IFPSLib
                     WriteValue<double>(bw);
                     break;
                 case PascalTypeCode.Extended:
-                    if (!ExtF80.TryParse(ValueAs<decimal>().ToString(new CultureInfo("en")), out var extf))
+                    if (!ExtF80.TryParse(ValueAs<decimal>().ToString(s_Culture), out var extf))
                         throw new ArgumentOutOfRangeException("Value {0} cannot fit into an 80-bit floating point number");
                     bw.Write(extf);
                     break;
@@ -343,7 +344,7 @@ namespace IFPSLib
                         sb.Append(')');
                         return sb.ToString();
                     }
-                    return string.Format("{0}({1})", Type.Name, Value);
+                    return string.Format(s_Culture, "{0}({1})", Type.Name, Value);
             }
         }
     }
