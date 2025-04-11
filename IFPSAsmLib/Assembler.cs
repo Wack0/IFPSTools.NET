@@ -542,7 +542,7 @@ namespace IFPSAsmLib
             {
                 if (value.StartsWith(Constants.VARIABLE_ARG_PREFIX)) {
                     if (!int.TryParse(value.Substring(Constants.VARIABLE_ARG_PREFIX.Length), out var argIdx)) return null;
-                    argIdx--;
+                    if (function.ReturnArgument == null) argIdx--;
                     if (argIdx < 0) return null;
                     return function.CreateArgumentVariable(argIdx);
                 }
