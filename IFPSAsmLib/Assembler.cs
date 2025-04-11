@@ -9,6 +9,8 @@ using IFPSLib.Emit.FDecl;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
 
 namespace IFPSAsmLib
 {
@@ -98,6 +100,7 @@ namespace IFPSAsmLib
 
     public static class Assembler
     {
+        private static readonly CultureInfo s_Culture = new CultureInfo("en");
         private static IEnumerable<ParsedBody> OfType(this IEnumerable<ParsedBody> self, ElementParentType type)
         {
             return self.Where(x => x.Element.ParentType == type);
@@ -856,7 +859,7 @@ namespace IFPSAsmLib
             }
         }
 
-        public static Script Assemble(List<ParsedBody> parsed)
+        private static Script AssembleImpl(List<ParsedBody> parsed)
         {
             int version = Script.VERSION_HIGHEST;
             {
@@ -937,6 +940,21 @@ namespace IFPSAsmLib
             }
 
             return ret;
+        }
+
+        public static Script Assemble(List<ParsedBody> parsed)
+        {
+            // Set the current thread's culture to english when assembling, to ensure float/double/decimal parsing works correctly.
+            var currentCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = s_Culture;
+            try
+            {
+                return AssembleImpl(parsed);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+            }
         }
 
         public static Script Assemble(string str) => Assemble(Parser.Parse(str));
