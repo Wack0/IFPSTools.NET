@@ -124,8 +124,14 @@
   <data name="CompiledCodeDisasm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CompiledCode.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="CompiledCodeDisasm_float80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CompiledCode_float80.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="CompiledCodeDisasm_v22" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CompiledCode_v22.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="CompiledCode_float80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CompiledCode_float80.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="CompiledCode_v22" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CompiledCode_v22.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

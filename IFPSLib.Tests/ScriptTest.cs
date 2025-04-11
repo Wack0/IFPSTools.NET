@@ -79,5 +79,17 @@ namespace IFPSLib.Tests
         {
             TestAsmImpl(Resources.TestIsInsnDisasm, Resources.TestIsInsn);
         }
+
+        [TestMethod]
+        public void TestLoadSaveFloat80()
+        {
+            TestLoadSaveImpl(Resources.CompiledCode_float80);
+        }
+
+        [TestMethod]
+        public void TestAsmFloat80()
+        {
+            TestAsmImpl(Resources.CompiledCodeDisasm_float80, Resources.CompiledCode_float80);
+        }
     }
 }

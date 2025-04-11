@@ -73,6 +73,16 @@ namespace IFPSLib.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] CompiledCode_float80 {
+            get {
+                object obj = ResourceManager.GetObject("CompiledCode_float80", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] CompiledCode_v22 {
             get {
                 object obj = ResourceManager.GetObject("CompiledCode_v22", resourceCulture);
@@ -128,7 +138,36 @@ namespace IFPSLib.Tests.Properties {
         ///.type primitive(S16) S16
         ///.type primitive(U16) U16
         ///.type primitive(S8) S8
-        ///.type(export) funcptr(void()) ANY [rest of string was truncated]&quot;;.
+        ///.type primitive(String) String_2        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CompiledCodeDisasm_float80 {
+            get {
+                return ResourceManager.GetString("CompiledCodeDisasm_float80", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .version 22
+        ///
+        ///.entry !MAIN
+        ///
+        ///.type primitive(Pointer) Pointer
+        ///.type primitive(U32) U32
+        ///.type primitive(Variant) Variant
+        ///.type primitive(PChar) PChar
+        ///.type primitive(Currency) Currency
+        ///.type primitive(Extended) Extended
+        ///.type primitive(Double) Double
+        ///.type primitive(Single) Single
+        ///.type primitive(String) String
+        ///.type primitive(U32) U32_2
+        ///.type primitive(S32) S32
+        ///.type primitive(S16) S16
+        ///.type primitive(U16) U16
+        ///.type primitive(S8) S8
+        ///.type primitive(Char) Char
+        ///.type primitive(U32) U32_3
+        ///.ty [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CompiledCodeDisasm_v22 {
             get {

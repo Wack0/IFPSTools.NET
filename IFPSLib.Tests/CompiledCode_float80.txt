@@ -1,0 +1,820 @@
+.version 23
+
+.entry !MAIN
+
+.type primitive(Pointer) Pointer
+.type primitive(U32) U32
+.type primitive(Variant) Variant
+.type primitive(PChar) PChar
+.type primitive(Currency) Currency
+.type primitive(Extended) Extended
+.type primitive(Double) Double
+.type primitive(Single) Single
+.type primitive(S64) S64
+.type primitive(String) String
+.type primitive(U32) U32_2
+.type primitive(S32) S32
+.type primitive(S16) S16
+.type primitive(U16) U16
+.type primitive(S8) S8
+.type primitive(String) String_2
+.type primitive(UnicodeString) UnicodeString
+.type primitive(UnicodeString) UnicodeString_2
+.type primitive(String) String_3
+.type primitive(UnicodeString) UnicodeString_3
+.type primitive(WideString) WideString
+.type primitive(WideChar) WideChar
+.type primitive(WideChar) WideChar_2
+.type primitive(Char) Char
+.type primitive(U8) U8
+.type primitive(U16) U16_2
+.type primitive(U32) U32_3
+.type(export) primitive(U8) BOOLEAN
+.type primitive(U8) U8_2
+.type(export) class(TBUTTON) TBUTTON
+.type record(U32_2,S32,S32,S32,U32_2,U32_2,U16,U16,U16,U16,U16,S32,S32,U32_2,U32_2,PChar,PChar,S32,S32) Type30
+.type record(S32,PChar,PChar,PChar,U32_2) Type31
+.type record(S32,S32) Type32
+.type(export) record(S32,S32,S32,S32) TRECT
+.type record(U32_2,U32_2,TRECT,TRECT,Type32) Type34
+.type(export) class(TWIZARDFORM) TWIZARDFORM
+.type(export) class(TRICHEDITVIEWER) TRICHEDITVIEWER
+.type(export) class(TOBJECT) TOBJECT
+.type(export) class(TNEWRADIOBUTTON) TNEWRADIOBUTTON
+.type(export) class(TCONTROL) TCONTROL
+.type(export) class(TCOMPONENT) TCOMPONENT
+.type(export) class(TNEWNOTEBOOKPAGE) TNEWNOTEBOOKPAGE
+.type(export) funcptr(void(__in)) TNOTIFYEVENT
+.type(export) class(TWINCONTROL) TWINCONTROL
+
+.global TBUTTON Global0
+
+.function(export) void !MAIN()
+	ret
+
+.function(import) external dll("gdi32.dll","GetDeviceCaps") __stdcall returnsval gdi32.dll!GetDeviceCaps(__in __unknown,__in __unknown)
+
+.function(import) external dll("comdlg32.dll","PrintDlgA") __stdcall returnsval comdlg32.dll!PrintDlgA(__out __unknown)
+
+.function(import) external dll("gdi32.dll","DeleteDC") __stdcall returnsval gdi32.dll!DeleteDC(__in __unknown)
+
+.function(import) external dll("gdi32.dll","StartDocA") __stdcall returnsval gdi32.dll!StartDocA(__in __unknown,__in __unknown)
+
+.function(import) external dll("gdi32.dll","StartPage") __stdcall returnsval gdi32.dll!StartPage(__in __unknown)
+
+.function(import) external dll("gdi32.dll","EndPage") __stdcall returnsval gdi32.dll!EndPage(__in __unknown)
+
+.function(import) external dll("gdi32.dll","EndDoc") __stdcall returnsval gdi32.dll!EndDoc(__in __unknown)
+
+.function(import) external dll("gdi32.dll","AbortDoc") __stdcall returnsval gdi32.dll!AbortDoc(__in __unknown)
+
+.function(import) external dll("user32.dll","SendMessageA") __stdcall returnsval user32.dll!SendMessageA(__in __unknown,__in __unknown,__in __unknown,__out __unknown)
+
+.function(import) external dll("user32.dll","SendMessageA") __stdcall returnsval user32.dll!SendMessageA_2(__in __unknown,__in __unknown,__in __unknown,__out __unknown)
+
+.function(export) BOOLEAN ISUPGRADE()
+	pushtype UnicodeString_2 ; StackCount = 1
+	pushtype TWIZARDFORM ; StackCount = 2
+	pushvar Var2 ; StackCount = 3
+	call WIZARDFORM
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call TWIZARDFORM->PREVAPPDIR
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	ne RetVal, Var1, UnicodeString_3("")
+	ret
+
+.function(import) external internal returnsval WIZARDFORM()
+
+.function(import) external class(TWIZARDFORM, PREVAPPDIR) __pascal void TWIZARDFORM->PREVAPPDIR(__in __unknown,__in __unknown)
+
+.function(export) BOOLEAN ISPORTABLE()
+	pushtype UnicodeString_2 ; StackCount = 1
+	pushtype UnicodeString_2 ; StackCount = 2
+	assign Var2, UnicodeString_3("{param:portable|0}")
+	pushvar Var1 ; StackCount = 3
+	call EXPANDCONSTANT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	eq RetVal, Var1, WideChar_2("1")
+	pop ; StackCount = 0
+	ret
+
+.function(import) external internal returnsval EXPANDCONSTANT(__in __unknown)
+
+.function(export) BOOLEAN SELECTPRINTER(__out Type30 Arg1)
+	pushtype S32 ; StackCount = 1
+	pushtype Type30 ; StackCount = 2
+	assign Var2, Arg1
+	pushvar Var1 ; StackCount = 3
+	call SIZEOF
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	assign Arg1[0], Var1
+	pop ; StackCount = 0
+	pushtype TWIZARDFORM ; StackCount = 1
+	pushvar Var1 ; StackCount = 2
+	call WIZARDFORM
+	pop ; StackCount = 1
+	pushvar Arg1[1] ; StackCount = 2
+	call TWINCONTROL->HANDLE
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	assign Arg1[2], S32(0)
+	assign Arg1[3], S32(0)
+	assign Arg1[4], S32(0)
+	assign Arg1[5], S32(262404)
+	assign Arg1[6], S32(0)
+	assign Arg1[7], S32(0)
+	assign Arg1[8], S32(0)
+	assign Arg1[9], S32(0)
+	assign Arg1[10], S32(0)
+	assign Arg1[11], S32(0)
+	assign Arg1[12], S32(0)
+	assign Arg1[13], S32(0)
+	assign Arg1[14], S32(0)
+	assign Arg1[15], UnicodeString_3("")
+	assign Arg1[16], UnicodeString_3("")
+	assign Arg1[17], S32(0)
+	assign Arg1[18], S32(0)
+	pushtype Pointer ; StackCount = 1
+	setptr Var1, Arg1
+	pushvar RetVal ; StackCount = 2
+	call comdlg32.dll!PrintDlgA
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	ret
+
+.function(import) external internal returnsval SIZEOF()
+
+.function(import) external class(TWINCONTROL, HANDLE) __pascal void TWINCONTROL->HANDLE(__in __unknown,__in __unknown)
+
+.function(export) BOOLEAN PRINTRICHEDIT(__in Type30 Arg1,__in TRICHEDITVIEWER Arg2,__in UnicodeString_2 Arg3,__in Double Arg4,__in Double Arg5,__in Double Arg6,__in Double Arg7)
+	pushtype Type31 ; StackCount = 1
+	pushtype Type34 ; StackCount = 2
+	pushtype U32_2 ; StackCount = 3
+	pushtype S32 ; StackCount = 4
+	pushtype S32 ; StackCount = 5
+	pushtype S32 ; StackCount = 6
+	pushtype S32 ; StackCount = 7
+	pushtype S32 ; StackCount = 8
+	pushtype S32 ; StackCount = 9
+	pushtype S32 ; StackCount = 10
+	pushtype S32 ; StackCount = 11
+	pushtype S32 ; StackCount = 12
+	pushtype S32 ; StackCount = 13
+	pushtype S32 ; StackCount = 14
+	assign Var3, Arg1[4]
+	pushtype TRICHEDITVIEWER ; StackCount = 15
+	assign Var15, Arg2
+	pushvar Var4 ; StackCount = 16
+	call TWINCONTROL->HANDLE
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pushtype Type31 ; StackCount = 15
+	assign Var15, Var1
+	pushvar Var1[0] ; StackCount = 16
+	call SIZEOF
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	assign Var1[1], Arg3
+	assign Var1[2], UnicodeString_3("")
+	assign Var1[3], UnicodeString_3("")
+	assign Var1[4], S32(0)
+	pushtype BOOLEAN ; StackCount = 15
+	pushtype S32 ; StackCount = 16
+	pushtype Type31 ; StackCount = 17
+	assign Var17, Var1
+	pushtype U32_2 ; StackCount = 18
+	assign Var18, Var3
+	pushvar Var16 ; StackCount = 19
+	call gdi32.dll!StartDocA
+	pop ; StackCount = 18
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	le Var15, Var16, S32(0)
+	pop ; StackCount = 15
+	sfz Var15
+	pop ; StackCount = 14
+	jf loc_137
+	ret
+loc_137:
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(88)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var8 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(90)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var9 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(8)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var6 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	mul Var6, S32(1440)
+	div Var6, Var8
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(10)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var7 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	mul Var7, S32(1440)
+	div Var7, Var9
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(110)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var10 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	mul Var10, S32(1440)
+	div Var10, Var8
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(111)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var11 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	mul Var11, S32(1440)
+	div Var11, Var9
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(112)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var12 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	mul Var12, S32(1440)
+	div Var12, Var8
+	pushtype S32 ; StackCount = 15
+	assign Var15, S32(113)
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var13 ; StackCount = 17
+	call gdi32.dll!GetDeviceCaps
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	mul Var13, S32(1440)
+	div Var13, Var9
+	pushtype Extended ; StackCount = 15
+	pushtype Double ; StackCount = 16
+	assign Var16, Arg4
+	mul Var16, S32(1440)
+	assign Var15, Var16
+	pop ; StackCount = 15
+	pushvar Var5 ; StackCount = 16
+	call ROUND
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	sub Var5, Var12
+	pushtype BOOLEAN ; StackCount = 15
+	lt Var15, Var5, S32(0)
+	sfz Var15
+	pop ; StackCount = 14
+	jf loc_3ef
+	assign Var5, S32(0)
+loc_3ef:
+	pushtype Pointer ; StackCount = 15
+	setptr Var15, Var2
+	setptr Var15, Var15[2]
+	setptr Var15, Var15[0]
+	assign Var15, Var5
+	pop ; StackCount = 14
+	pushtype Extended ; StackCount = 15
+	pushtype Double ; StackCount = 16
+	assign Var16, Arg5
+	mul Var16, S32(1440)
+	assign Var15, Var16
+	pop ; StackCount = 15
+	pushvar Var5 ; StackCount = 16
+	call ROUND
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	sub Var5, Var13
+	pushtype BOOLEAN ; StackCount = 15
+	lt Var15, Var5, S32(0)
+	sfz Var15
+	pop ; StackCount = 14
+	jf loc_4a9
+	assign Var5, S32(0)
+loc_4a9:
+	pushtype Pointer ; StackCount = 15
+	setptr Var15, Var2
+	setptr Var15, Var15[2]
+	setptr Var15, Var15[1]
+	assign Var15, Var5
+	pop ; StackCount = 14
+	assign Var5, Var10
+	pushtype S32 ; StackCount = 15
+	pushtype Extended ; StackCount = 16
+	pushtype Double ; StackCount = 17
+	assign Var17, Arg6
+	mul Var17, S32(1440)
+	assign Var16, Var17
+	pop ; StackCount = 16
+	pushvar Var15 ; StackCount = 17
+	call ROUND
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	sub Var5, Var15
+	pop ; StackCount = 14
+	sub Var5, Var12
+	pushtype BOOLEAN ; StackCount = 15
+	gt Var15, Var5, Var6
+	sfz Var15
+	pop ; StackCount = 14
+	jf loc_578
+	assign Var5, Var6
+loc_578:
+	pushtype Pointer ; StackCount = 15
+	setptr Var15, Var2
+	setptr Var15, Var15[2]
+	setptr Var15, Var15[2]
+	assign Var15, Var5
+	pop ; StackCount = 14
+	assign Var5, Var11
+	pushtype S32 ; StackCount = 15
+	pushtype Extended ; StackCount = 16
+	pushtype Double ; StackCount = 17
+	assign Var17, Arg7
+	mul Var17, S32(1440)
+	assign Var16, Var17
+	pop ; StackCount = 16
+	pushvar Var15 ; StackCount = 17
+	call ROUND
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	sub Var5, Var15
+	pop ; StackCount = 14
+	sub Var5, Var13
+	pushtype BOOLEAN ; StackCount = 15
+	gt Var15, Var5, Var7
+	sfz Var15
+	pop ; StackCount = 14
+	jf loc_647
+	assign Var5, Var7
+loc_647:
+	pushtype Pointer ; StackCount = 15
+	setptr Var15, Var2
+	setptr Var15, Var15[2]
+	setptr Var15, Var15[3]
+	assign Var15, Var5
+	pop ; StackCount = 14
+	assign Var2[3], Var2[2]
+	assign Var2[0], Var3
+	assign Var2[1], Var3
+	pushtype S32 ; StackCount = 15
+	pushtype S32 ; StackCount = 16
+	assign Var16, S32(-1)
+	pushtype S32 ; StackCount = 17
+	assign Var17, S32(0)
+	pushtype S32 ; StackCount = 18
+	assign Var18, S32(177)
+	pushtype S32 ; StackCount = 19
+	assign Var19, Var4
+	pushvar Var15 ; StackCount = 20
+	call SENDMESSAGE
+	pop ; StackCount = 19
+	pop ; StackCount = 18
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pushtype S32 ; StackCount = 15
+	pushtype Pointer ; StackCount = 16
+	setptr Var16, Var2[4]
+	pushtype S32 ; StackCount = 17
+	assign Var17, S32(0)
+	pushtype S32 ; StackCount = 18
+	assign Var18, S32(1076)
+	pushtype S32 ; StackCount = 19
+	assign Var19, Var4
+	pushvar Var15 ; StackCount = 20
+	call user32.dll!SendMessageA
+	pop ; StackCount = 19
+	pop ; StackCount = 18
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	assign RetVal, BOOLEAN(1)
+	pushtype BOOLEAN ; StackCount = 15
+loc_787:
+	pushtype BOOLEAN ; StackCount = 16
+	pushtype Pointer ; StackCount = 17
+	setptr Var17, Var2
+	setptr Var17, Var17[4]
+	setptr Var17, Var17[0]
+	pushtype Pointer ; StackCount = 18
+	setptr Var18, Var2
+	setptr Var18, Var18[4]
+	setptr Var18, Var18[1]
+	lt Var16, Var17, Var18
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	assign Var15, Var16
+	pop ; StackCount = 15
+	jz loc_81d, Var15
+	and Var15, RetVal
+loc_81d:
+	jz loc_9cf, Var15
+	pushtype S32 ; StackCount = 16
+	pushtype U32_2 ; StackCount = 17
+	assign Var17, Var3
+	pushvar Var16 ; StackCount = 18
+	call gdi32.dll!StartPage
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	gt RetVal, Var16, S32(0)
+	pop ; StackCount = 15
+	pushtype BOOLEAN ; StackCount = 16
+	assign Var16, RetVal
+	setz Var16
+	sfz Var16
+	pop ; StackCount = 15
+	jf loc_887
+	jump loc_9cf
+loc_887:
+	pushtype Pointer ; StackCount = 16
+	setptr Var16, Var2
+	pushtype S32 ; StackCount = 17
+	assign Var17, S32(-1)
+	pushtype S32 ; StackCount = 18
+	assign Var18, S32(1081)
+	pushtype S32 ; StackCount = 19
+	assign Var19, Var4
+	pushvar Var14 ; StackCount = 20
+	call user32.dll!SendMessageA_2
+	pop ; StackCount = 19
+	pop ; StackCount = 18
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pushtype BOOLEAN ; StackCount = 16
+	pushtype BOOLEAN ; StackCount = 17
+	pushtype Pointer ; StackCount = 18
+	setptr Var18, Var2
+	setptr Var18, Var18[4]
+	setptr Var18, Var18[0]
+	le Var17, Var14, Var18
+	pop ; StackCount = 17
+	assign Var16, Var17
+	pop ; StackCount = 16
+	sfz Var16
+	pop ; StackCount = 15
+	jf loc_958
+	assign RetVal, BOOLEAN(0)
+	jump loc_9cf
+	jump loc_9ca
+loc_958:
+	pushtype Pointer ; StackCount = 16
+	setptr Var16, Var2
+	setptr Var16, Var16[4]
+	setptr Var16, Var16[0]
+	assign Var16, Var14
+	pop ; StackCount = 15
+	pushtype S32 ; StackCount = 16
+	pushtype U32_2 ; StackCount = 17
+	assign Var17, Var3
+	pushvar Var16 ; StackCount = 18
+	call gdi32.dll!EndPage
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	gt RetVal, Var16, S32(0)
+	pop ; StackCount = 15
+loc_9ca:
+	jump loc_787
+loc_9cf:
+	pop ; StackCount = 14
+	pushtype S32 ; StackCount = 15
+	pushtype S32 ; StackCount = 16
+	assign Var16, S32(0)
+	pushtype S32 ; StackCount = 17
+	assign Var17, S32(0)
+	pushtype S32 ; StackCount = 18
+	assign Var18, S32(1081)
+	pushtype S32 ; StackCount = 19
+	assign Var19, Var4
+	pushvar Var15 ; StackCount = 20
+	call SENDMESSAGE
+	pop ; StackCount = 19
+	pop ; StackCount = 18
+	pop ; StackCount = 17
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	pushtype BOOLEAN ; StackCount = 15
+	assign Var15, RetVal
+	sfz Var15
+	pop ; StackCount = 14
+	jf loc_a77
+	pushtype S32 ; StackCount = 15
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var15 ; StackCount = 17
+	call gdi32.dll!EndDoc
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+	jump loc_a9a
+loc_a77:
+	pushtype S32 ; StackCount = 15
+	pushtype U32_2 ; StackCount = 16
+	assign Var16, Var3
+	pushvar Var15 ; StackCount = 17
+	call gdi32.dll!AbortDoc
+	pop ; StackCount = 16
+	pop ; StackCount = 15
+	pop ; StackCount = 14
+loc_a9a:
+	ret
+
+.function(import) external internal returnsval ROUND(__in __unknown)
+
+.function(import) external internal returnsval SENDMESSAGE(__in __unknown,__in __unknown,__in __unknown,__in __unknown)
+
+.function(export) void PRINTBUTTONCLICK(__in TOBJECT Arg1)
+	pushtype Type30 ; StackCount = 1
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype Pointer ; StackCount = 3
+	setptr Var3, Var1
+	pushvar Var2 ; StackCount = 4
+	call SELECTPRINTER
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	setz Var2
+	sfz Var2
+	pop ; StackCount = 1
+	jf loc_3b
+	ret
+loc_3b:
+	starteh loc_124, null, null, loc_14d
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype Double ; StackCount = 3
+	assign Var3, Extended(0.50)
+	pushtype Double ; StackCount = 4
+	assign Var4, Extended(0.50)
+	pushtype Double ; StackCount = 5
+	assign Var5, Extended(0.50)
+	pushtype Double ; StackCount = 6
+	assign Var6, Extended(0.50)
+	pushtype UnicodeString_2 ; StackCount = 7
+	assign Var7, UnicodeString_3("License")
+	pushtype TRICHEDITVIEWER ; StackCount = 8
+	pushtype TWIZARDFORM ; StackCount = 9
+	pushvar Var9 ; StackCount = 10
+	call WIZARDFORM
+	pop ; StackCount = 9
+	pushvar Var8 ; StackCount = 10
+	call TWIZARDFORM->LICENSEMEMO
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pushtype Type30 ; StackCount = 9
+	assign Var9, Var1
+	pushvar Var2 ; StackCount = 10
+	call PRINTRICHEDIT
+	pop ; StackCount = 9
+	pop ; StackCount = 8
+	pop ; StackCount = 7
+	pop ; StackCount = 6
+	pop ; StackCount = 5
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	endtry
+loc_124:
+	pushtype BOOLEAN ; StackCount = 2
+	pushtype U32_2 ; StackCount = 3
+	assign Var3, Var1[4]
+	pushvar Var2 ; StackCount = 4
+	call gdi32.dll!DeleteDC
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	endfinally
+loc_14d:
+	ret
+
+.function(import) external class(TWIZARDFORM, LICENSEMEMO) __pascal void TWIZARDFORM->LICENSEMEMO(__in __unknown,__in __unknown)
+
+.function(export) void ADJUSTPRINTBUTTON()
+	pushtype BOOLEAN ; StackCount = 1
+	pushtype TBUTTON ; StackCount = 2
+	assign Var2, Global0
+	pushvar Var1 ; StackCount = 3
+	call !ASSIGNED
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_138
+	pushtype S32 ; StackCount = 1
+	pushtype TRICHEDITVIEWER ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	pushvar Var3 ; StackCount = 4
+	call WIZARDFORM
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->LICENSEMEMO
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call TCONTROL->LEFT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TRICHEDITVIEWER ; StackCount = 3
+	pushtype TWIZARDFORM ; StackCount = 4
+	pushvar Var4 ; StackCount = 5
+	call WIZARDFORM
+	pop ; StackCount = 4
+	pushvar Var3 ; StackCount = 5
+	call TWIZARDFORM->LICENSEMEMO
+	pop ; StackCount = 4
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->WIDTH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	add Var1, Var2
+	pop ; StackCount = 1
+	pushtype S32 ; StackCount = 2
+	pushtype TBUTTON ; StackCount = 3
+	assign Var3, Global0
+	pushvar Var2 ; StackCount = 4
+	call TCONTROL->WIDTH
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	sub Var1, Var2
+	pop ; StackCount = 1
+	pushtype TBUTTON ; StackCount = 2
+	assign Var2, Global0
+	call TCONTROL->LEFT_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype S32 ; StackCount = 1
+	pushtype TNEWRADIOBUTTON ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	pushvar Var3 ; StackCount = 4
+	call WIZARDFORM
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->LICENSEACCEPTEDRADIO
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call TCONTROL->TOP
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushtype TBUTTON ; StackCount = 2
+	assign Var2, Global0
+	call TCONTROL->TOP_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+loc_138:
+	ret
+
+.function(import) external internal returnsval !ASSIGNED(__in __unknown)
+
+.function(import) external class(TCONTROL, LEFT) __pascal void TCONTROL->LEFT(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, WIDTH) __pascal void TCONTROL->WIDTH(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, LEFT, property) __pascal void TCONTROL->LEFT_2(__in __unknown,__in __unknown)
+
+.function(import) external class(TWIZARDFORM, LICENSEACCEPTEDRADIO) __pascal void TWIZARDFORM->LICENSEACCEPTEDRADIO(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, TOP) __pascal void TCONTROL->TOP(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, TOP, property) __pascal void TCONTROL->TOP_2(__in __unknown,__in __unknown)
+
+.function(export) void CREATEPRINTBUTTON()
+	pushtype TCOMPONENT ; StackCount = 1
+	pushtype TNEWNOTEBOOKPAGE ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	pushvar Var3 ; StackCount = 4
+	call WIZARDFORM
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->LICENSEPAGE
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	assign Var1, Var2
+	pop ; StackCount = 1
+	pushtype U32_2 ; StackCount = 2
+	assign Var2, U32_2(29)
+	pushvar Global0 ; StackCount = 3
+	call TCONTROL->CREATE
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype UnicodeString_2 ; StackCount = 1
+	assign Var1, UnicodeString_3("&Print")
+	pushtype TBUTTON ; StackCount = 2
+	assign Var2, Global0
+	call TBUTTON->CAPTION
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype TNOTIFYEVENT ; StackCount = 1
+	assign Var1, TNOTIFYEVENT(PRINTBUTTONCLICK)
+	pushtype TBUTTON ; StackCount = 2
+	assign Var2, Global0
+	call TBUTTON->ONCLICK
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	pushtype TWINCONTROL ; StackCount = 1
+	pushtype TNEWRADIOBUTTON ; StackCount = 2
+	pushtype TWIZARDFORM ; StackCount = 3
+	pushvar Var3 ; StackCount = 4
+	call WIZARDFORM
+	pop ; StackCount = 3
+	pushvar Var2 ; StackCount = 4
+	call TWIZARDFORM->LICENSEACCEPTEDRADIO
+	pop ; StackCount = 3
+	pop ; StackCount = 2
+	pushvar Var1 ; StackCount = 3
+	call TCONTROL->PARENT
+	pop ; StackCount = 2
+	pop ; StackCount = 1
+	pushtype TBUTTON ; StackCount = 2
+	assign Var2, Global0
+	call TCONTROL->PARENT_2
+	pop ; StackCount = 1
+	pop ; StackCount = 0
+	ret
+
+.function(import) external class(TCONTROL, CREATE) __fastcall returnsval TCONTROL->CREATE(__in __unknown)
+
+.function(import) external class(TWIZARDFORM, LICENSEPAGE) __pascal void TWIZARDFORM->LICENSEPAGE(__in __unknown,__in __unknown)
+
+.function(import) external class(TBUTTON, CAPTION, property) __pascal void TBUTTON->CAPTION(__in __unknown,__in __unknown)
+
+.function(import) external class(TBUTTON, ONCLICK, property) __pascal void TBUTTON->ONCLICK(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, PARENT) __pascal void TCONTROL->PARENT(__in __unknown,__in __unknown)
+
+.function(import) external class(TCONTROL, PARENT, property) __pascal void TCONTROL->PARENT_2(__in __unknown,__in __unknown)
+
+.function(export) void INITIALIZEWIZARD()
+	call CREATEPRINTBUTTON
+	ret
+
+.function(export) void CURPAGECHANGED(__in S32 Arg1)
+	call ADJUSTPRINTBUTTON
+	ret
+
+.function(export) BOOLEAN SHOULDSKIPPAGE(__in S32 Arg1)
+	assign RetVal, BOOLEAN(0)
+	pushtype BOOLEAN ; StackCount = 1
+	pushvar Var1 ; StackCount = 2
+	call ISUPGRADE
+	pop ; StackCount = 1
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_90
+	pushtype BOOLEAN ; StackCount = 1
+	eq Var1, Arg1, S32(6)
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_5d
+	assign RetVal, BOOLEAN(1)
+loc_5d:
+	pushtype BOOLEAN ; StackCount = 1
+	eq Var1, Arg1, S32(8)
+	sfz Var1
+	pop ; StackCount = 0
+	jf loc_90
+	assign RetVal, BOOLEAN(1)
+loc_90:
+	ret
+
+
