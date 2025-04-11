@@ -148,7 +148,12 @@ namespace IFPSLib.Emit
         {
             var isVoid = ReturnArgument == null;
             var ret = ArgumentVariable.Create(index + (isVoid ? 0 : 1), isVoid);
-            ret.Name = Arguments[index].Name;
+            if (!Exported)
+            {
+                if (!isVoid && index == 0) ret.Name = "RetVal";
+                else ret.Name = string.Format("Arg{0}", index + (isVoid ? 0 : 1));
+            }
+            else ret.Name = Arguments[index].Name;
             return ret;
         }
 
