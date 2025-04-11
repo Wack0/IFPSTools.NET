@@ -71,6 +71,7 @@ namespace IFPSAsmLib
 
         internal const string VARIABLE_RET = "retval";
         internal const string VARIABLE_LOCAL_PREFIX = "var";
+        internal const string VARIABLE_ARG_PREFIX = "arg";
 
         internal const string LABEL_NULL = "null";
     }

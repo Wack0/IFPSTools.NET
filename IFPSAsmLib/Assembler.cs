@@ -537,6 +537,16 @@ namespace IFPSAsmLib
                 return function.CreateArgumentVariable(i);
             }
             value = value.ToLower();
+            // For a non-exported function, allow use of hardcoded Argx to refer to unknown arguments
+            if (!function.Exported)
+            {
+                if (value.StartsWith(Constants.VARIABLE_ARG_PREFIX)) {
+                    if (!int.TryParse(value.Substring(Constants.VARIABLE_ARG_PREFIX.Length), out var argIdx)) return null;
+                    argIdx--;
+                    if (argIdx < 0) return null;
+                    return function.CreateArgumentVariable(argIdx);
+                }
+            }
             if (value == Constants.VARIABLE_RET) return function.CreateReturnVariable();
             if (!value.StartsWith(Constants.VARIABLE_LOCAL_PREFIX)) return null;
             if (!int.TryParse(value.Substring(Constants.VARIABLE_LOCAL_PREFIX.Length), out var idx)) return null;
