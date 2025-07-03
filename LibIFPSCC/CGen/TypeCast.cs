@@ -88,7 +88,11 @@ namespace ABT {
                     // regular com interface cast
                     state.CGenPushStackSize();
                     // typeNo
-                    state.FunctionState.PushType(state.TypeU32);
+                    {
+                        // ensure TypeU32 is emitted
+                        state.TypeU32.ToString();
+                    }
+                    state.FunctionState.Push(Operand.Create((uint)state.EmitTypeAndGetIndex(Type)));
                     // self
 
                     var comInterface = state.FunctionState.AddLocal();
@@ -115,7 +119,11 @@ namespace ABT {
                     op = retLoc != null ? retLoc : state.FunctionState.PushType(state.EmitType(Type));
                     state.CGenPushStackSize();
                     // typeNo
-                    state.FunctionState.PushType(state.TypeU32);
+                    {
+                        // ensure TypeU32 is emitted
+                        state.TypeU32.ToString();
+                    }
+                    state.FunctionState.Push(Operand.Create((uint)state.EmitTypeAndGetIndex(Type)));
                     // self
                     state.FunctionState.Push(ret);
                     // retval

@@ -573,6 +573,11 @@ namespace CodeGeneration {
             return ret;
         }
 
+        public int EmitTypeAndGetIndex(ABT.ExprType type, bool forGlobal = false)
+        {
+            return Script.Types.IndexOf(EmitType(type, forGlobal));
+        }
+
         public void ChangeTypeName(ABT.IExprTypeWithName type, string name)
         {
             Types.IType emit = null;
