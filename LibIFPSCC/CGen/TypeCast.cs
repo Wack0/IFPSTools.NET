@@ -69,6 +69,7 @@ namespace ABT {
                     state.CGenPopStackSize();
                     return Operand.Create(op.Variable, 0);
 
+                /*
                 case TypeCastType.VARIANT_TO_COM_INTERFACE:
                     // this might be interface and might be dispatch.
                     op = retLoc != null ? retLoc : state.FunctionState.PushType(state.EmitType(Type));
@@ -114,6 +115,52 @@ namespace ABT {
                     state.CurrInsns.Add(Instruction.Create(OpCodes.Call, state.ComInterfaceCast));
                     state.CGenPopStackSize();
                     return op;
+                */
+
+                case TypeCastType.VARIANT_TO_COM_INTERFACE:
+                    {
+                        // cast from variant to com interface
+                        op = retLoc != null ? retLoc : state.FunctionState.PushType(state.EmitType(Type));
+                        state.CGenPushStackSize();
+                        // u32 type = VarType(variant)
+                        var varType = state.FunctionState.PushType(state.TypeU16);
+                        state.CGenPushStackSize();
+                        state.FunctionState.Push(ret);
+                        state.FunctionState.PushVar(varType);
+                        state.CurrInsns.Add(Instruction.Create(OpCodes.Call, state.VarType));
+                        state.CGenPopStackSize();
+                        // if (varType == vtUnknown) { change variant type to VT_DISPATCH }
+                        const ushort VT_DISPATCH = 9;
+                        const ushort VT_UNKNOWN = 0x0d;
+                        state.CurrInsns.Add(Instruction.Create(OpCodes.Sub, varType, Operand.Create(VT_UNKNOWN)));
+
+                        var insnUnknown = Instruction.Create(OpCodes.PushType, state.TypeIDispatch);
+                        var insnEnd = Instruction.Create(OpCodes.Assign, op, ret);
+
+                        state.CurrInsns.Add(Instruction.Create(OpCodes.JumpNZ, insnEnd, varType));
+                        // get ptr then cast to u16*
+
+                        state.CGenPushStackSize();
+                        var ptr = state.FunctionState.PushType(state.TypeArrayOfPointer);
+                        state.CGenPushStackSize();
+                        dummyForType = state.FunctionState.PushType(state.TypeU16);
+                        dummyU32 = state.FunctionState.PushType(state.TypeU32);
+                        state.CGenPushStackSize();
+                        state.FunctionState.PushVar(ret);
+                        state.FunctionState.PushVar(dummyU32);
+                        state.CurrInsns.Add(Instruction.Create(OpCodes.Call, state.CastPointerRef));
+                        state.CGenPopStackSize();
+                        state.FunctionState.PushVar(ptr);
+                        state.FunctionState.Push(dummyU32);
+                        state.FunctionState.PushVar(dummyForType);
+                        state.CurrInsns.Add(Instruction.Create(OpCodes.Call, state.CastRefPointer));
+                        state.CGenPopStackSize();
+                        state.CurrInsns.Add(Instruction.Create(OpCodes.Assign, Operand.Create(ptr.Variable, 0), Operand.Create(VT_DISPATCH)));
+                        state.CGenPopStackSize();
+                        state.CurrInsns.Add(insnEnd);
+                        state.CGenPopStackSize();
+                        return op;
+                    }
 
                 case TypeCastType.COM_INTERFACE:
                     op = retLoc != null ? retLoc : state.FunctionState.PushType(state.EmitType(Type));

@@ -518,6 +518,7 @@ namespace CodeGeneration {
         }
 
         public static readonly ABT.ComInterfaceType ExprTypeIDispatch = new ABT.ComInterfaceType(GUID_IDISPATCH);
+        public static readonly ABT.ComInterfaceType ExprTypeIUnknown = new ABT.ComInterfaceType(GUID_IUNKNOWN);
 
         // Fixes up any types that the runtime expects to be exported with a specific name
         private static void FixUpTypeForRuntime(ABT.ExprType type, Types.IType emit)

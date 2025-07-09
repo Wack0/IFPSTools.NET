@@ -840,6 +840,13 @@ namespace ABT {
                 {
                     expr = new TypeCast(TypeCastType.COM_INTERFACE, expr, CGenState.ExprTypeIDispatch, env);
                 }
+                // runtime doesn't implement from variant to interface not IDispatch for some reason
+
+                if (expr.Type.Kind == ExprTypeKind.COM_VARIANT && type.Kind == ExprTypeKind.COM_INTERFACE)
+                {
+                    var castToUnknown = new TypeCast(TypeCastType.VARIANT_TO_COM_INTERFACE, expr, CGenState.ExprTypeIDispatch, env);
+                    return new TypeCast(TypeCastType.COM_INTERFACE, castToUnknown, type, env);
+                }
                 return new TypeCast(TypeCastType.RUNTIME_IMPLEMENTED, expr, type, env);
             }
 
