@@ -38,6 +38,11 @@ namespace IFPSLib
             return new TypedData(type, value);
         }
 
+        public static TypedData Create(SetType type, BitArray value)
+        {
+            return new TypedData(type, value);
+        }
+
         public static TypedData Create<TType>(TType value)
             => Create(PrimitiveType.Create<TType>(), value);
 

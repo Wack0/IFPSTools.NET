@@ -515,7 +515,7 @@ namespace IFPSAsmLib
                         if (!bit && chr != Constants.BINARY_FALSE) return null;
                         ba[i] = bit;
                     }
-                    return TypedData.Create(type, ba);
+                    return TypedData.Create(itype as SetType, ba);
 
                 default:
                     return null;
