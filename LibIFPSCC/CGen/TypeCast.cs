@@ -134,7 +134,6 @@ namespace ABT {
                         const ushort VT_UNKNOWN = 0x0d;
                         state.CurrInsns.Add(Instruction.Create(OpCodes.Sub, varType, Operand.Create(VT_UNKNOWN)));
 
-                        var insnUnknown = Instruction.Create(OpCodes.PushType, state.TypeIDispatch);
                         var insnEnd = Instruction.Create(OpCodes.Assign, op, ret);
 
                         state.CurrInsns.Add(Instruction.Create(OpCodes.JumpNZ, insnEnd, varType));
