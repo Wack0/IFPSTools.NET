@@ -40,6 +40,7 @@ namespace IFPSAsmLib
         internal const string FUNCTION_EXTERNAL_DLL = "dll";
         internal const string FUNCTION_EXTERNAL_COM = "com";
         internal const string FUNCTION_EXTERNAL_CLASS = "class";
+        internal const string FUNCTION_EXTERNAL_NODECL = "nodecl";
 
         internal const string FUNCTION_EXTERNAL_CLASS_PROPERTY = "property";
 

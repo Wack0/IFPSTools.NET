@@ -704,7 +704,8 @@ namespace IFPSAsmLib
                             return current;
                         case Constants.ELEMENT_FUNCTION:
                             // function
-                            // .function [(export)] external callingconv internal|com(vtblindex)|class(...)|dll(...) returnsval|void name (...)
+                            // .function [(export)] external [callingconv internal|com(vtblindex)|class(...)|dll(...) returnsval|void name (...)
+                            // .function [(export)] external nodecl returnsval|void name
                             // .function [(export)] void|typename name(...)
 
                             parentType = ElementParentType.Function;
@@ -729,6 +730,7 @@ namespace IFPSAsmLib
                             next = next.Next;
 
                             str.AdvanceWhiteSpace(ref location, true);
+                            bool noDecl = false;
                             if (next.Value == Constants.FUNCTION_EXTERNAL)
                             {
                                 str.AdvanceWhiteSpace(ref location, true);
@@ -817,20 +819,29 @@ namespace IFPSAsmLib
                                             nextChild.NextChild = nextChild = new ParserElement(typeNext, parentType);
                                         }
                                     }
+                                    else if (typeNext.Equals(Constants.FUNCTION_EXTERNAL_NODECL))
+                                    {
+                                        typeNext.ExpectSeparatorType(ParserSeparatorType.Unknown);
+                                        next.Next = next = new ParserElement(typeNext, parentType);
+                                        noDecl = true;
+                                    }
                                     else
                                         typeNext.ThrowInvalid();
 
-                                    str.AdvanceWhiteSpace(ref location, true);
-                                    // calling convention
-                                    typeNext = str.GetEntity(ref location);
-                                    if (
-                                        !typeNext.Equals(Constants.FUNCTION_FASTCALL) &&
-                                        !typeNext.Equals(Constants.FUNCTION_PASCAL) &&
-                                        !typeNext.Equals(Constants.FUNCTION_CDECL) &&
-                                        !typeNext.Equals(Constants.FUNCTION_STDCALL)
-                                    )
-                                        typeNext.ThrowInvalid();
-                                    next.Next = next = new ParserElement(typeNext, parentType);
+                                    if (!noDecl)
+                                    {
+                                        str.AdvanceWhiteSpace(ref location, true);
+                                        // calling convention
+                                        typeNext = str.GetEntity(ref location);
+                                        if (
+                                            !typeNext.Equals(Constants.FUNCTION_FASTCALL) &&
+                                            !typeNext.Equals(Constants.FUNCTION_PASCAL) &&
+                                            !typeNext.Equals(Constants.FUNCTION_CDECL) &&
+                                            !typeNext.Equals(Constants.FUNCTION_STDCALL)
+                                        )
+                                            typeNext.ThrowInvalid();
+                                        next.Next = next = new ParserElement(typeNext, parentType);
+                                    }
                                 }
                                 str.AdvanceWhiteSpace(ref location, true);
                                 // returnsval|void
@@ -840,7 +851,13 @@ namespace IFPSAsmLib
                             }
 
                             // name(...), will be looked at later
-                            ParseTokenWithUnknownBody(str, ref location, parentType, next, ref next, false);
+                            if (!noDecl) ParseTokenWithUnknownBody(str, ref location, parentType, next, ref next, false);
+                            else
+                            {
+                                typeNext = str.GetEntity(ref location);
+                                typeNext.ExpectValidName();
+                                next.Next = next = new ParserElement(typeNext, parentType);
+                            }
 
                             if (!str.AdvanceWhiteSpaceUntilNewLine(ref location)) next.ThrowInvalid();
                             return current;

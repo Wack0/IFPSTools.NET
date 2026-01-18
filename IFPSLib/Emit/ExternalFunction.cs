@@ -397,7 +397,12 @@ namespace IFPSLib.Emit
             if (Exported) sb.Append("(import)");
             sb.Append(" external ");
             if (Declaration != null)
+            {
                 sb.Append(Declaration);
+            } else
+            {
+                sb.Append("nodecl");
+            }
             sb.Append(' ');
             sb.Append(ReturnArgument != null ? "returnsval " : "void ");
             sb.Append(Name);

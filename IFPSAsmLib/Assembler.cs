@@ -298,6 +298,7 @@ namespace IFPSAsmLib
             var next = function.Next;
             ParserElement child = null;
             bool isExternal = next.Value == Constants.FUNCTION_EXTERNAL;
+            bool hasDeclaration = true;
             if (isExternal)
             {
                 next = next.Next;
@@ -358,6 +359,9 @@ namespace IFPSAsmLib
 
                         ext.Declaration = com;
                         break;
+                    case Constants.FUNCTION_EXTERNAL_NODECL:
+                        hasDeclaration = false;
+                        break;
                 }
                 next = next.Next;
             } else
@@ -383,35 +387,38 @@ namespace IFPSAsmLib
             if (functions.ContainsKey(ret.Name)) next.ThrowInvalid("Function already defined");
 
             // arguments
-            ret.Arguments = new List<FunctionArgument>();
-            if (next.NextChild.Value != "")
+            if (hasDeclaration)
             {
-                for (child = next.NextChild; child != null; child = child.NextChild)
+                ret.Arguments = new List<FunctionArgument>();
+                if (next.NextChild.Value != "")
                 {
-                    // __in|__val|__out|__ref type|__unknown name
-                    var arg = new FunctionArgument();
-                    bool isInVal = child.Value == Constants.FUNCTION_ARG_IN || child.Value == Constants.FUNCTION_ARG_VAL;
-                    if (!isInVal && child.Value != Constants.FUNCTION_ARG_OUT && child.Value != Constants.FUNCTION_ARG_REF)
-                        child.ThrowInvalid(string.Format("In function \"{0}\": Unknown argument type", ret.Name));
-                    arg.ArgumentType = isInVal ? FunctionArgumentType.In : FunctionArgumentType.Out;
-                    next = child.Next;
-                    if (next == null) child.ThrowInvalid();
-                    // An external function does not have types here, a script function does.
-                    if (isExternal) arg.Type = UnknownType.Instance;
-                    else
+                    for (child = next.NextChild; child != null; child = child.NextChild)
                     {
-                        if (!types.TryGetValue(next.Value, out var argType)) next.ThrowInvalid(string.Format("In function \"{0}\": Unknown type", ret.Name));
-                        arg.Type = argType;
-                    }
-                    if (next.Next != null)
-                    {
-                        next = next.Next;
+                        // __in|__val|__out|__ref type|__unknown name
+                        var arg = new FunctionArgument();
+                        bool isInVal = child.Value == Constants.FUNCTION_ARG_IN || child.Value == Constants.FUNCTION_ARG_VAL;
+                        if (!isInVal && child.Value != Constants.FUNCTION_ARG_OUT && child.Value != Constants.FUNCTION_ARG_REF)
+                            child.ThrowInvalid(string.Format("In function \"{0}\": Unknown argument type", ret.Name));
+                        arg.ArgumentType = isInVal ? FunctionArgumentType.In : FunctionArgumentType.Out;
+                        next = child.Next;
+                        if (next == null) child.ThrowInvalid();
+                        // An external function does not have types here, a script function does.
+                        if (isExternal) arg.Type = UnknownType.Instance;
+                        else
+                        {
+                            if (!types.TryGetValue(next.Value, out var argType)) next.ThrowInvalid(string.Format("In function \"{0}\": Unknown type", ret.Name));
+                            arg.Type = argType;
+                        }
+                        if (next.Next != null)
+                        {
+                            next = next.Next;
 
-                        next.ExpectValidName();
-                        arg.Name = next.Value;
-                    }
+                            next.ExpectValidName();
+                            arg.Name = next.Value;
+                        }
 
-                    ret.Arguments.Add(arg);
+                        ret.Arguments.Add(arg);
+                    }
                 }
             }
 
