@@ -704,7 +704,7 @@ namespace IFPSAsmLib
                             return current;
                         case Constants.ELEMENT_FUNCTION:
                             // function
-                            // .function [(export)] external [callingconv internal|com(vtblindex)|class(...)|dll(...) returnsval|void name (...)
+                            // .function [(export)] external callingconv internal|com(vtblindex)|class(...)|dll(...) returnsval|void name (...)
                             // .function [(export)] external nodecl returnsval|void name
                             // .function [(export)] void|typename name(...)
 

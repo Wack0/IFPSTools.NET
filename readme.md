@@ -89,6 +89,7 @@ Declarations:
     - `class(<classname>, <funcname>) callingconvention` - an internally implemented class function or property, for example `class(Class, CastToType) __pascal` or `class(TControl, Left, property) __pascal`.
     - `dll("dllname", "procname") callingconvention` - an exported function from a DLL, for example `dll("kernelbase.dll", "ExitProcess") __stdcall`. Additional `delayload` and `alteredsearchpath` arguments are also supported.
     - `internal` - an internally implemented function, for example `MsgBox()` in Inno Setup.
+    - `nodecl` - an internally implemented function, that includes no argument declarations.
     - The allowed calling conventions are `__stdcall`, `__cdecl`, `__pascal` and `__fastcall`.
 - `.function(export) void|<type> name(...)` - declares a function implemented as PascalScript bytecode, which must be followed by at least one instruction. The specified return type must have been previously declared. Parameters are specified as `__in|__out|__val|__ref type name`, for example `__in TControl Arg1`. (`__ref` is equivalent to `__out` and `__val` is equivalent to `__in`)
 - `.alias <name> <varname>` - must be specified as part of a PascalScript bytecode function. Declares an alias of a variable name, valid until the end of the function. Local variables are normally numbered as `Var1` (etc); declaring an alias allows a local variable to be given a name.
