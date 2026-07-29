@@ -40,6 +40,7 @@ namespace IFPSLib.Types
         Interface,
         NotificationVariant,
         UnicodeString,
+        U64, // Added in pascalscript commit a886d7cbb813105db75d1a71e525b5a36ab869e6 at the end of 2025, without incrementing script version. Great job.
 
         PsuedoTypeStart = 0x80,
         Enum = 0x81,
@@ -65,6 +66,7 @@ namespace IFPSLib.Types
             { typeof(uint), PascalTypeCode.U32 },
             { typeof(int), PascalTypeCode.S32 },
             { typeof(long), PascalTypeCode.S64 },
+            { typeof(ulong), PascalTypeCode.U64 },
             { typeof(float), PascalTypeCode.Single },
             { typeof(double), PascalTypeCode.Double },
             { typeof(decimal), PascalTypeCode.Extended },
@@ -92,6 +94,7 @@ namespace IFPSLib.Types
             { PascalTypeCode.S32, typeof(int) },
             { PascalTypeCode.U32, typeof(uint) },
             { PascalTypeCode.S64, typeof(long) },
+            { PascalTypeCode.U64, typeof(ulong) },
             { PascalTypeCode.Single, typeof(float) },
             { PascalTypeCode.Double, typeof(double) },
             { PascalTypeCode.Extended, typeof(decimal) },
@@ -121,6 +124,7 @@ namespace IFPSLib.Types
             PascalTypeCode.U32,
             PascalTypeCode.S32,
             PascalTypeCode.S64,
+            PascalTypeCode.U64,
             PascalTypeCode.Single,
             PascalTypeCode.Double,
             PascalTypeCode.Currency,

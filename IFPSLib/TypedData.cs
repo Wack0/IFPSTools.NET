@@ -128,6 +128,8 @@ namespace IFPSLib
 
                 case PascalTypeCode.S64:
                     return new TypedData(type, br.Read<long>());
+                case PascalTypeCode.U64:
+                    return new TypedData(type, br.Read<ulong>());
 
                 case PascalTypeCode.Single:
                     return new TypedData(type, br.Read<float>());
@@ -206,6 +208,9 @@ namespace IFPSLib
                 case PascalTypeCode.S64:
                     WriteValue<long>(bw);
                     break;
+                case PascalTypeCode.U64:
+                    WriteValue<ulong>(bw);
+                    break;
 
                 case PascalTypeCode.Single:
                     WriteValue<float>(bw);
@@ -275,6 +280,8 @@ namespace IFPSLib
 
                     case PascalTypeCode.S64:
                         return sizeof(long) + HEADER;
+                    case PascalTypeCode.U64:
+                        return sizeof(ulong) + HEADER;
 
                     case PascalTypeCode.Single:
                         return sizeof(float) + HEADER;

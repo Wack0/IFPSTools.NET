@@ -483,6 +483,9 @@ namespace IFPSAsmLib
                 case PascalTypeCode.S64:
                     if (!TryParse<long>(val, out var _long)) return null;
                     return TypedData.Create(type, _long);
+                case PascalTypeCode.U64:
+                    if (!TryParse<ulong>(val, out var _ulong)) return null;
+                    return TypedData.Create(type, _ulong);
 
                 case PascalTypeCode.Single:
                     if (!float.TryParse(val, out var _float)) return null;

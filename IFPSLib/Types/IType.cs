@@ -69,7 +69,7 @@ namespace IFPSLib.Types
                 case PascalTypeCode.Record:
                     return RecordType.Load(br, script);
                 default:
-                    throw new InvalidDataException(string.Format("Invalid type: ", typeCode));
+                    throw new InvalidDataException(string.Format("Invalid type: {0}", typeCode));
             }
         }
 
