@@ -387,6 +387,7 @@ namespace IFPSAsmLib
     {
         Unknown,
         Obfuscate,
+        Nonx86,
         FileVersion,
         EntryPoint,
         Attribute,
@@ -585,6 +586,13 @@ namespace IFPSAsmLib
                             // .obfuscate
                             if (type.FoundSeparator) str.EnsureBodyEmpty(ref location);
                             parentType = ElementParentType.Obfuscate;
+                            current = new ParserElement(type, parentType);
+                            if (!str.AdvanceWhiteSpaceUntilNewLine(ref location)) current.Next.ThrowInvalid();
+                            return current;
+                        case Constants.ELEMENT_NONX86:
+                            // .nonx86
+                            if (type.FoundSeparator) str.EnsureBodyEmpty(ref location);
+                            parentType = ElementParentType.Nonx86;
                             current = new ParserElement(type, parentType);
                             if (!str.AdvanceWhiteSpaceUntilNewLine(ref location)) current.Next.ThrowInvalid();
                             return current;

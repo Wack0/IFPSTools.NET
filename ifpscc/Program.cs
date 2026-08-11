@@ -14,11 +14,12 @@ namespace ifpscc
 
         private static void Usage()
         {
-            Console.WriteLine("Usage: {0} [-A|--disassemble] [-O=out.bin|--output=out.bin] files...", Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location));
+            Console.WriteLine("Usage: {0} [-A|--disassemble] [-O=out.bin|--output=out.bin] [-N|--nonx86] files...", Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location));
             Console.WriteLine();
             Console.WriteLine("C compiler targeting RemObjects PascalScript.");
             Console.WriteLine("if -A or -disassemble is passed, writes the disassembly of the compiler output to stdout");
             Console.WriteLine("if -O or -output is not passed, the compiled script will be written to [first C file passed].bin");
+            Console.WriteLine("if --nonx86 is passed, the script will compile with an Extended type of 64-bit float, otherwise Extended type will be x87 legacy 80-bit float");
         }
 
         static void Main(string[] args)
@@ -77,6 +78,8 @@ namespace ifpscc
             while (!System.Diagnostics.Debugger.IsAttached) System.Threading.Thread.Sleep(100);
 #endif
             var script = Compiler.FromSource(code).Script;
+
+            if (options.ContainsKey("--nonx86") || options.ContainsKey("-N")) script.ExtendedIsDouble = true;
 
             if (options.ContainsKey("--disassemble") || options.ContainsKey("-A"))
             {

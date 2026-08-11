@@ -165,7 +165,7 @@ namespace IFPSLib.Emit
                 case BytecodeOperandType.Variable:
                     return new Operand(VariableBase.Load(br, script, function));
                 case BytecodeOperandType.Immediate:
-                    return new Operand(TypedData.Load(br, script));
+                    return new Operand(TypedData.Load(br, script, function));
                 case BytecodeOperandType.IndexedImmediate:
                     {
                         var variable = VariableBase.Load(br, script, function);

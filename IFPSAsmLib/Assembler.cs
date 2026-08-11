@@ -958,6 +958,12 @@ namespace IFPSAsmLib
                     }
                 }
             }
+            
+            // if nonx86, then extended is double
+            if (parsed.OfType(ElementParentType.Nonx86).Any())
+            {
+                ret.ExtendedIsDouble = true;
+            }
 
             return ret;
         }

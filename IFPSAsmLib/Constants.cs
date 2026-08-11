@@ -30,6 +30,7 @@ namespace IFPSAsmLib
         internal const string ELEMENT_DEFINE = ".define";
         internal const string ELEMENT_GLOBALVARIABLE = ".global";
         internal const string ELEMENT_FUNCTION = ".function";
+        internal const string ELEMENT_NONX86 = ".nonx86";
 
         internal const string ELEMENT_BODY_EXPORTED = "export";
         internal const string ELEMENT_BODY_IMPORTED = "import";

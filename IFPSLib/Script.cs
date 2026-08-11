@@ -46,6 +46,14 @@ namespace IFPSLib
         /// </summary>
         public IList<GlobalVariable> GlobalVariables = new List<GlobalVariable>();
 
+        /// <summary>
+        /// If true, <see cref="PascalTypeCode.Extended"/> is <see cref="PascalTypeCode.Double"/> - used for PascalScript on non-x86 architectures
+        /// </summary>
+        public bool ExtendedIsDouble = false;
+
+        internal bool ScriptStillLoading = false;
+        internal bool ExtendedIsDoubleKnownForLoading = false;
+
         private struct ScriptHeaderAfterMagic
         {
             // Fields get set directly by memcpy
@@ -81,6 +89,7 @@ namespace IFPSLib
             var header = br.Read<ScriptHeaderAfterMagic>();
             if (header.Version < VERSION_LOWEST || header.Version > VERSION_HIGHEST) throw new InvalidDataException(string.Format("Invalid version: {0}", header.Version));
             var ret = new Script(header.Version);
+            ret.ScriptStillLoading = true;
 
             ret.Types = new List<IType>(header.NumTypes);
             var typesToNames = new Dictionary<string, IType>();
@@ -135,6 +144,8 @@ namespace IFPSLib
             if (header.IdxEntryPoint >= 0 && header.IdxEntryPoint < header.NumFuncs)
                 ret.EntryPoint = ret.Functions[header.IdxEntryPoint];
 
+            ret.ScriptStillLoading = false;
+
             return ret;
         }
 
@@ -165,6 +176,7 @@ namespace IFPSLib
             internal readonly Dictionary<GlobalVariable, int> tblGlobals;
             internal readonly Dictionary<IFunction, long> tblFunctionOffsets;
             internal readonly int FileVersion;
+            internal readonly bool ExtendedIsDouble;
 
             internal SaveContext(Script script)
             {
@@ -175,6 +187,7 @@ namespace IFPSLib
                 tblFunctionOffsets = new Dictionary<IFunction, long>();
 
                 FileVersion = script.FileVersion;
+                ExtendedIsDouble = script.ExtendedIsDouble;
 
                 for (int i = 0; i < script.Types.Count; i++)
                 {
@@ -320,6 +333,7 @@ namespace IFPSLib
             var sb = new StringBuilder();
 
             sb.AppendFormat(".version {0}", FileVersion).AppendLine().AppendLine();
+            if (ExtendedIsDouble) sb.AppendLine(".nonx86");
             if (EntryPoint != null) sb.AppendFormat(".entry {0}", EntryPoint.Name).AppendLine().AppendLine();
 
             foreach (var type in Types)

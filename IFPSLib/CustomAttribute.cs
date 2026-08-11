@@ -38,7 +38,7 @@ namespace IFPSLib
                 attr.Arguments = new List<TypedData>(argsLen);
                 for (int idxArg = 0; idxArg < argsLen; idxArg++)
                 {
-                    attr.Arguments.Add(TypedData.Load(br, script));
+                    attr.Arguments.Add(TypedData.Load(br, script, null));
                 }
                 ret.Add(attr);
             }

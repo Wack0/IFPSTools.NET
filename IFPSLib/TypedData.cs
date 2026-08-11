@@ -1,14 +1,16 @@
-﻿using IFPSLib.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.IO;
+﻿using IFPSLib.Emit;
+using IFPSLib.Types;
 using SharpFloat.FloatingPoint;
-using System.Runtime.InteropServices;
+using System;
+using System.Buffers;
 using System.Collections;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace IFPSLib
 {
@@ -100,7 +102,54 @@ namespace IFPSLib
             sb.Remove(idx + 1, length);
         }
 
-        internal static TypedData Load(BinaryReader br, Script script)
+        private static bool DiscoverExtendedIsDouble(BinaryReader br, Script script, ScriptFunction function)
+        {
+            bool attribute = function == null;
+            var position = br.BaseStream.Position;
+            // If remaining length is only enough to read an 80-bit float, extended must be double (there must be at least one additional byte afterwards)
+            if ((br.BaseStream.Length - position) <= Unsafe.SizeOf<ExtF80>()) return true;
+
+            // Grab a 10-byte buffer and read out 10 bytes.
+            var bytes = ArrayPool<byte>.Shared.Rent(10);
+            try
+            {
+                br.Read(bytes, 0, 10);
+                // If this is part of an instruction, the base stream is a slice containing just the function instructions.
+                // Thus, keep trying to load instructions from here, but if an exception occurs, extended must be equal to double.
+                // If the last instruction in the function (ie, after insn read, pos==len) is not a branch or return, this must be invalid.
+                if (!attribute)
+                {
+                    while (br.BaseStream.Position < br.BaseStream.Length)
+                    {
+                        var insn = Instruction.Load(br, script, function);
+                        if (br.BaseStream.Position == br.BaseStream.Length)
+                        {
+                            var fc = insn.OpCode.FlowControl;
+                            if (fc != FlowControl.Branch && fc != FlowControl.Return) return true;
+                        }
+                    }
+                    // Instructions all loaded, extended must be 80-bit float.
+                    return false;
+                } else
+                {
+                    // TODO.
+                    // Does anything actually use attributes with an Extended argument?
+                    // Might try adding this support elsewhere.
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(bytes);
+                br.BaseStream.Position = position;
+            }
+        }
+
+        internal static TypedData Load(BinaryReader br, Script script, ScriptFunction function)
         {
             var idxType = br.Read<uint>();
             var type = script.Types[(int)idxType];
@@ -136,6 +185,16 @@ namespace IFPSLib
                 case PascalTypeCode.Double:
                     return new TypedData(type, br.Read<double>());
                 case PascalTypeCode.Extended:
+                    // TODO: fix when attributes can be dealt with.
+                    if (script.ScriptStillLoading && !script.ExtendedIsDoubleKnownForLoading && function != null)
+                    {
+                        script.ExtendedIsDoubleKnownForLoading = true;
+                        script.ExtendedIsDouble = DiscoverExtendedIsDouble(br, script, function);
+                    }
+                    if (script.ExtendedIsDoubleKnownForLoading && script.ExtendedIsDouble)
+                    {
+                        return new TypedData(type, (decimal)br.Read<double>());
+                    }
                     {
                         // BUGBUG: there must be something better than this... but for now, it'll do
                         var sb = new StringBuilder();
@@ -219,6 +278,11 @@ namespace IFPSLib
                     WriteValue<double>(bw);
                     break;
                 case PascalTypeCode.Extended:
+                    if (ctx.ExtendedIsDouble)
+                    {
+                        bw.Write<double>((double)ValueAs<decimal>());
+                        break;
+                    }
                     if (!ExtF80.TryParse(ValueAs<decimal>().ToString(s_Culture), out var extf))
                         throw new ArgumentOutOfRangeException("Value {0} cannot fit into an 80-bit floating point number");
                     bw.Write(extf);

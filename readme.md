@@ -73,6 +73,7 @@ Quoted string literals are similar to C# regular string literals, except `\U` is
 
 Declarations:
  - `.version <int32>` - script file version. If not present, will be set to `VERSION_HIGHEST` (`23`) by default.
+ - `.nonx86` - specifies the script is to be ran on a version of the PascalScript runtime built for an architecture that is not x86; sets `Extended` type to be equivalent to `double`
  - `.entry <funcname>` - specifies the entry point of the script, which must have the declaration `.function(export) void name()`.
  - `.type <declaration> <name>` - declares a named type (which can be exported if `.type(export)` is used), of which the following are allowed:
    - `primitive(<prim>)` - primitive type, of which `prim` can be `U8` (unsigned 8-bit integer), `S8` (signed 8-bit integer) , `U16` (unsigned 16-bit integer), `S16` (signed 16-bit integer), `U32` (unsigned 32-bit integer), `S32` (signed 32-bit integer), `S64` (signed 64-bit integer), `Single` (32-bit float), `Double` (64-bit float), `Currency` (OLE Automation tagCY), `Extended` (80-bit float), `String` (ASCII string), `Pointer`, `PChar` , `Variant` (OLE Automation VARIANT), `Char` (ASCII character), `UnicodeString`, `WideString` (same as `UnicodeString`), or `WideChar` (UTF-16 character).

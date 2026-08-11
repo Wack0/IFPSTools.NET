@@ -369,7 +369,9 @@ namespace IFPSLib.Emit
 
         private static uint FixBranchOffset(BinaryReader br, uint data)
         {
-            return data + (uint)br.BaseStream.Position;
+            var ret = data + (uint)br.BaseStream.Position;
+            if (ret >= br.BaseStream.Length) throw new InvalidDataException("Branch offset out of range");
+            return ret;
         }
 
         private static uint FixBranchOffsetEH(BinaryReader br, uint data)
