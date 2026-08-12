@@ -132,9 +132,7 @@ namespace IFPSLib
                     return false;
                 } else
                 {
-                    // TODO.
-                    // Does anything actually use attributes with an Extended argument?
-                    // Might try adding this support elsewhere.
+                    // Handled elsewhere, should never get here.
                     return false;
                 }
             }
@@ -185,7 +183,6 @@ namespace IFPSLib
                 case PascalTypeCode.Double:
                     return new TypedData(type, br.Read<double>());
                 case PascalTypeCode.Extended:
-                    // TODO: fix when attributes can be dealt with.
                     if (script.ScriptStillLoading && !script.ExtendedIsDoubleKnownForLoading && function != null)
                     {
                         script.ExtendedIsDoubleKnownForLoading = true;

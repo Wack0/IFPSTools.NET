@@ -80,6 +80,28 @@ namespace IFPSLib
 
         private static Script LoadCore(BinaryReader br)
         {
+            // Attempt loading with ExtendedIsDouble = false first.
+            // If this fails, try again forcing ExtendedIsDouble = true.
+            // This is to deal with the case of attributes containing Extended variables.
+
+            var pos = br.BaseStream.Position;
+            Exception ex = null;
+            try
+            {
+                return LoadCoreAttempt(br, false);
+            }
+            catch (Exception e) { ex = e; }
+
+            br.BaseStream.Position = pos;
+            try
+            {
+                return LoadCoreAttempt(br, true);
+            }
+            catch (Exception e) { throw new AggregateException(ex, e); }
+        }
+
+        private static Script LoadCoreAttempt(BinaryReader br, bool forceExtendedIsDouble)
+        {
             {
                 Span<byte> magic = stackalloc byte[4];
                 br.Read(magic);
@@ -90,6 +112,10 @@ namespace IFPSLib
             if (header.Version < VERSION_LOWEST || header.Version > VERSION_HIGHEST) throw new InvalidDataException(string.Format("Invalid version: {0}", header.Version));
             var ret = new Script(header.Version);
             ret.ScriptStillLoading = true;
+            if (forceExtendedIsDouble)
+            {
+                ret.ExtendedIsDouble = ret.ExtendedIsDoubleKnownForLoading = forceExtendedIsDouble;
+            }
 
             ret.Types = new List<IType>(header.NumTypes);
             var typesToNames = new Dictionary<string, IType>();
